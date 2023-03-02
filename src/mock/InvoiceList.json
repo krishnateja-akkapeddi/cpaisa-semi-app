@@ -1,0 +1,20 @@
+[
+  {
+    "status": 0,
+    "stockistName": "M/s Vijay Meds",
+    "customerName": "Nirmala Agency",
+    "date": "31 Jul, 2021",
+    "amount": "₹ 12,596",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.",
+    "url": "https://picsum.photos/200/300"
+  },
+  {
+    "status": 1,
+    "stockistName": "M/s Vijay Meds",
+    "customerName": "Nirmala Agency",
+    "date": "31 Jul, 2021",
+    "amount": "₹ 12,596",
+    "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.",
+    "url": "https://picsum.photos/id/237/200/300"
+  }
+]

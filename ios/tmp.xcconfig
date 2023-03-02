@@ -1,0 +1,6 @@
+APP_NAME=ChannelPaisaDev
+APP_ID=com.channelpaisa.channelpaisa
+SUFFIX_ID=.dev
+BASE_URL=http:/$()/stageapi.channelpaisa.com/api/v4
+USER_INFO=userInfo
+AUTH_HEADER=Auth-Token

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   LastUpgradeVersion = "1210"
+   version = "1.7">
+   <BuildAction
+      parallelizeBuildables = "YES"
+      buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Env Setup"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;cp &quot;${PROJECT_DIR}/../.env.qat&quot; &quot;${PROJECT_DIR}/../.env&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+                     BuildableName = "ChannelPaisa.app"
+                     BlueprintName = "ChannelPaisa"
+                     ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "XCConfig File Merge"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;&quot;${SRCROOT}/../node_modules/react-native-config/ios/ReactNativeConfig/BuildXCConfig.rb&quot; &quot;${SRCROOT}/..&quot; &quot;${SRCROOT}/tmp.xcconfig&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+                     BuildableName = "ChannelPaisa.app"
+                     BlueprintName = "ChannelPaisa"
+                     ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "GoogleService File Setup"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;GOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist&#10;GOOGLESERVICE_INFO_QAT=${PROJECT_DIR}/${TARGET_NAME}/Firebase/QAT/${GOOGLESERVICE_INFO_PLIST}&#10;PLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app&#10;cp &quot;${GOOGLESERVICE_INFO_QAT}&quot; &quot;${PLIST_DESTINATION}&quot;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+                     BuildableName = "ChannelPaisa.app"
+                     BlueprintName = "ChannelPaisa"
+                     ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+               BuildableName = "ChannelPaisa.app"
+               BlueprintName = "ChannelPaisa"
+               ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES">
+      <Testables>
+      </Testables>
+   </TestAction>
+   <LaunchAction
+      buildConfiguration = "Debug"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      launchStyle = "0"
+      useCustomWorkingDirectory = "NO"
+      ignoresPersistentStateOnLaunch = "NO"
+      debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+            BuildableName = "ChannelPaisa.app"
+            BlueprintName = "ChannelPaisa"
+            ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+   <ProfileAction
+      buildConfiguration = "Release"
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      savedToolIdentifier = ""
+      useCustomWorkingDirectory = "NO"
+      debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
+            BuildableName = "ChannelPaisa.app"
+            BlueprintName = "ChannelPaisa"
+            ReferencedContainer = "container:ChannelPaisa.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
+   </ProfileAction>
+   <AnalyzeAction
+      buildConfiguration = "Debug">
+   </AnalyzeAction>
+   <ArchiveAction
+      buildConfiguration = "Release"
+      revealArchiveInOrganizer = "YES">
+   </ArchiveAction>
+</Scheme>
