@@ -19,12 +19,12 @@ import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-community/netinfo
 import com.reactnativecommunity.netinfo.NetInfoPackage;
+// @react-native-masked-view/masked-view
+import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-config
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-// react-native-document-picker
-import com.reactnativedocumentpicker.DocumentPickerPackage;
 // react-native-fast-image
 import com.dylanvann.fastimage.FastImageViewPackage;
 // react-native-gesture-handler
@@ -33,6 +33,8 @@ import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import com.github.douglasjunior.reactNativeGetLocation.ReactNativeGetLocationPackage;
 // react-native-image-crop-picker
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
+// react-native-linear-gradient
+import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-localization
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 // react-native-permissions
@@ -100,13 +102,14 @@ public class PackageList {
       new ClipboardPackage(),
       new RNDateTimePickerPackage(),
       new NetInfoPackage(),
+      new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
       new ReactNativeConfigPackage(),
-      new DocumentPickerPackage(),
       new FastImageViewPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeGetLocationPackage(),
       new PickerPackage(),
+      new LinearGradientPackage(),
       new ReactNativeLocalizationPackage(),
       new RNPermissionsPackage(),
       new ReanimatedPackage(),

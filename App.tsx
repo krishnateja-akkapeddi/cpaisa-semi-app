@@ -12,9 +12,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <AlertNotificationRoot>
-          <AppNavigator />
-        </AlertNotificationRoot>
+        <AppNavigator />
       </Provider>
     </SafeAreaProvider>
   );
