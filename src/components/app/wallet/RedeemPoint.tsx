@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, Pressable} from 'react-native';
 import {hp} from '../../../utility/responsive/ScreenResponsive';
 import OrganisationList from '../../../components/app/offers/OrganisationList';
@@ -9,20 +9,26 @@ import Spacer from '../../../components/layout/Spacer';
 import AdaptiveButton from '../../../components/button/AdaptiveButton';
 import CompanyCard from '../../../mock/CompanyCard.json';
 import Fonts from '../../../theme/Fonts';
+import {ClientEntity} from '../../../models/interfaces/ClientsListResponse';
 
 const kOrganisations = [...CompanyCard];
 
 interface RedeemProps {
   onDismiss: () => void;
   onCompanySelect: (headTitle: string) => void;
+  orgainisations?: ClientEntity[];
 }
 
 const RedeemPoint: React.FC<RedeemProps> = props => {
   const {onCompanySelect, onDismiss} = props;
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
+  const [selectedOrg, setSelectedOrg] = useState<ClientEntity>();
+
   const onContinueHandler = () => {
-    onCompanySelect('Pfizer');
+    onCompanySelect(selectedOrg?.short_code ?? '');
   };
+
+  useEffect(() => {}, [selectedOrg]);
 
   return (
     <View style={[styles.mainCardStyle]}>
@@ -51,8 +57,15 @@ const RedeemPoint: React.FC<RedeemProps> = props => {
         selectedIds={selectedIds}
         horizontal={true}
         showAll={false}
-        data={kOrganisations}
-        onSelect={ids => setSelectedIds(ids)}
+        fromRedeemPoints={true}
+        data={props.orgainisations}
+        onSelect={ids => {
+          const org = props.orgainisations?.find((val, ind) => {
+            return ind === ids[0] + 1;
+          });
+          setSelectedOrg(org);
+          setSelectedIds(ids);
+        }}
       />
       <Spacer height={hp(1.8)} />
       <AdaptiveButton

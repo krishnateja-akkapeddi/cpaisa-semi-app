@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {SafeAreaView, View, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, View, StyleSheet, Text, Button} from 'react-native';
 import MyUploads from '../../components/app/invoice/MyUploads';
 import UploadDocument from '../../components/app/UploadDocument';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
@@ -10,9 +10,9 @@ import AuthBaseScreen from '../auth/AuthBaseScreen';
 import InvoiceUploadItem from '../../models/interfaces/InvoiceUploadItem';
 import ReviewStatus from '../../models/enum/ReviewStatus';
 
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState, store} from '../../store/Store';
-import {Data} from '../../models/interfaces/AuthResponse';
+import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 import {uploadInvoice} from '../../store/thunks/ApiThunks';
 import RootNavigation from '../../navigation/RootNavigation';
 import AppLoader from '../../components/indicator/AppLoader';
@@ -22,6 +22,8 @@ import {
   ALERT_TYPE,
   AlertNotificationRoot,
 } from 'react-native-alert-notification';
+import {appSlice} from '../../store/slices/AppSlice';
+import {PermissionManager} from '../../utility/permissions/PermissionManager';
 interface FileInfo {
   state: UploadState;
   progress: number;
@@ -32,9 +34,10 @@ enum UploadState {
   finished,
 }
 const InvoiceUploadScreen = () => {
-  const {channel_partner} = useSelector<RootState, Data>(state => {
-    return state.auth.userInfo;
+  const data = useSelector<RootState, AuthResult>(state => {
+    return state?.auth?.authResult;
   });
+  const channel_partner = data?.data?.channel_partner;
   const [hasInvoice, setHasInvoce] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<any>();
   const [uploadingInvoice, setUploadingInvoice] = useState(false);
@@ -46,7 +49,7 @@ const InvoiceUploadScreen = () => {
     state: UploadState.idle,
     progress: 0.0,
   });
-
+  const dispatch = useDispatch();
   const onUploadHandler = async () => {
     try {
       setUploadingInvoice(true);
@@ -62,15 +65,16 @@ const InvoiceUploadScreen = () => {
       try {
         const result = await store.dispatch(uploadInvoice(formData)).unwrap();
         if (result.success) {
-          Dialog.show({
-            type: ALERT_TYPE.SUCCESS,
-            title: 'Success',
-            textBody: AppLocalizedStrings.invoice.uploaded,
-            button: 'close',
-            onHide: () => {
-              RootNavigation.navigate('DashboardScreen');
-            },
-          });
+          dispatch(
+            appSlice.actions.openPopup({
+              message: AppLocalizedStrings.invoice.uploaded,
+              title: AppLocalizedStrings.invoice.invoiceUpload,
+              type: 'success',
+              onSubmit: () => {
+                RootNavigation.navigation.goBack();
+              },
+            }),
+          );
         }
         if (result.errors) {
           Dialog.show({
@@ -98,23 +102,34 @@ const InvoiceUploadScreen = () => {
   };
 
   const uploadDocumentHandler = async () => {
-    const result = await ImageCropPicker.openPicker({
-      cropping: true,
-      enableRotationGesture: false,
-    }).then(result => result);
+    try {
+      const result = await ImageCropPicker.openPicker({
+        cropping: true,
+        enableRotationGesture: false,
+        showCropGuidelines: true,
+      }).then(async result => {
+        return result;
+      });
 
-    setUploadedFile(result);
-    const data: any = {};
-    data.docName = result?.filename ?? 'Invoice';
-    data.mime = result?.mime;
-    data.status = ReviewStatus?.Pending;
-    data.url = result?.path ?? '';
-    setUploadedFileInfo(data);
+      setUploadedFile(result);
 
-    if (invoiceState.state == UploadState.idle) {
-      timer.current = setInterval(() => {
-        setInvoiceState(updateState());
-      }, 50);
+      const data: any = {};
+      data.docName = result?.filename ?? 'Invoice';
+      data.mime = result?.mime;
+      data.status = ReviewStatus?.Pending;
+      data.url = result?.path ?? '';
+      setUploadedFileInfo(data);
+
+      if (invoiceState.state == UploadState.idle) {
+        timer.current = setInterval(() => {
+          setInvoiceState(updateState());
+        }, 50);
+      }
+    } catch (err) {
+      const permission = await PermissionManager.checkPermission('files');
+      console.log('OERM_RAJ', permission);
+
+      console.log('UPLOAD_FILE', err);
     }
   };
 

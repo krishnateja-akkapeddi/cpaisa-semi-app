@@ -20,9 +20,16 @@ import TermsConditionsScreen from '../../screens/drawer/TermsConditionsScreen';
 
 export type AuthStackParamList = {
   SplashScreen: RouteParamList;
-  LoginScreen: RouteParamList;
+  LoginScreen: RouteParamList & {
+    mobileNumber: string;
+    forUpdateContact?: boolean;
+  };
   MobileScreen: RouteParamList;
-  EnterOTPScreen: RouteParamList & {mobileNumber: string};
+  EnterOTPScreen: RouteParamList & {
+    mobileNumber: string;
+    forUpdateContact?: boolean;
+    fromNewContact?: boolean;
+  };
   EnterGSTScreen: RouteParamList;
   EnterDetailsScreen: RouteParamList;
   DocumentUploadScreen: RouteParamList;

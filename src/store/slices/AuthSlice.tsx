@@ -2,8 +2,8 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Slices} from '../../constants/Slices';
 import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 
-const initialState: {userInfo: Data} = {
-  userInfo: {} as Data,
+const initialState: {authResult: AuthResult} = {
+  authResult: {} as AuthResult,
 };
 
 export const authSlice = createSlice({
@@ -12,7 +12,7 @@ export const authSlice = createSlice({
   reducers: {
     clearAuthSlice: () => initialState,
     storeAuthResult: (state, action: PayloadAction<AuthResult>) => {
-      state.userInfo = action.payload.data;
+      state.authResult = action.payload;
     },
   },
 });

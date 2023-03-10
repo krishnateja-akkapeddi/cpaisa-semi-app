@@ -17,67 +17,110 @@ import AuthBaseScreen from './AuthBaseScreen';
 import {hp} from '../../utility/responsive/ScreenResponsive';
 import useTimer from '../../utility/timer/Timer';
 import {store} from '../../store/Store';
-import {verifyOtp} from '../../store/thunks/ApiThunks';
+import {updateContactInfo, verifyOtp} from '../../store/thunks/ApiThunks';
 import {setClientHeaders} from '../../store/workers/ApiWorkers';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
+import {fromPairs} from 'lodash';
+import AppLoader from '../../components/indicator/AppLoader';
 
 const EnterOTPScreen: React.FC<
   AuthStackScreenProps<'EnterOTPScreen'>
 > = props => {
   const [otp, setOtp] = useState('');
-  const [timeLimit, setTimeLimit] = useState(2);
+  const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
+  const [timeLimit, setTimeLimit] = useState(0.5);
   const [seconds, minutes] = useTimer(timeLimit);
   const dispatch = useDispatch();
   const onRequestHandler = () => {};
+  const mobile = props.route.params?.mobileNumber;
+  const fromNewContact = props.route.params?.fromNewContact;
+  const forUpdateContact = props.route.params.forUpdateContact;
 
   const onSubmitHandler = async () => {
-    const mobile = props.route.params?.mobileNumber;
+    setVerifyOtpLoading(true);
     try {
       let params = {
         mobile: mobile,
         otp: otp,
       };
 
-      const data = await store.dispatch(verifyOtp(params)).unwrap();
-      const stringData = JSON.stringify(data);
-
-      if (data?.success) {
-        await setClientHeaders();
-        dispatch(authSlice.actions.storeAuthResult(data));
-        await SharedPreference.shared.setItem(
-          kSharedKeys.userDetails,
-          stringData,
-        );
-        await SharedPreference.shared.setItem(
-          kSharedKeys.authToken,
-          data.data.user.auth_token,
-        );
-        RootNavigation.replace('Drawer');
+      if (forUpdateContact) {
+        const data = await store.dispatch(verifyOtp(params)).unwrap();
+        if (data.success) {
+          RootNavigation.navigate('LoginScreen', {
+            forUpdateContact: true,
+            isLogin: true,
+          });
+        } else {
+          Snackbar.show({text: 'Something went wrong'});
+        }
+        setVerifyOtpLoading(false);
+        return;
+      } else if (fromNewContact) {
+        const updatedContact = await store
+          .dispatch(
+            updateContactInfo({
+              mode: 'mobile',
+              otp: parseInt(params.otp),
+              mobile_value: parseInt(mobile),
+            }),
+          )
+          .unwrap();
+        if (updatedContact.success) {
+          RootNavigation.navigate('LoginScreen');
+        } else {
+          Snackbar.show({text: 'Something went wrong'});
+        }
+        setVerifyOtpLoading(false);
+        return;
+      } else if (!fromNewContact && !forUpdateContact) {
+        const data = await store.dispatch(verifyOtp(params)).unwrap();
+        if (data.success) {
+          const stringData = JSON.stringify(data);
+          await setClientHeaders();
+          dispatch(authSlice.actions.storeAuthResult(data));
+          await SharedPreference.shared.setUser(stringData);
+          await SharedPreference.shared.setToken(data.data.user.auth_token);
+          RootNavigation.replace('Drawer');
+        } else {
+          Snackbar.show({
+            text: data?.errors
+              ? data?.errors?.message
+              : AppLocalizedStrings.somethingWrong,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          });
+        }
       } else {
-        Snackbar.show({
-          text: data?.errors
-            ? data?.errors?.message
-            : AppLocalizedStrings.somethingWrong,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-        });
+        setVerifyOtpLoading(false);
+        return;
       }
+      setVerifyOtpLoading(false);
     } catch (error) {
       console.error('ERROR_FROM_OTP_SCREEN', error);
     }
   };
 
-  useEffect(() => {
-    Snackbar.show({
-      text: AppLocalizedStrings.otpSent,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-    });
-  }, []);
   return (
     <AuthBaseScreen
-      title={AppLocalizedStrings.auth.enterOTP}
+      title={
+        forUpdateContact
+          ? 'Verify Your Account'
+          : fromNewContact
+          ? 'Enter the otp to update your contact'
+          : AppLocalizedStrings.auth.enterOTP
+      }
       iconName="enter_otp">
+      {forUpdateContact && (
+        <View style={styles.resendOTPContainer}>
+          <Text style={styles.resendOTP}>
+            To update contact, you need to first verify your existing contact by
+            entering otp sent to{' '}
+            {<Text style={{fontWeight: 'bold'}}>{mobile}</Text>}
+          </Text>
+        </View>
+      )}
+      {forUpdateContact && <Spacer height={hp('5%')} />}
       <OTPView onSelect={setOtp} />
       <Spacer height={hp('3')} />
       {seconds > 0 ? (
@@ -91,6 +134,7 @@ const EnterOTPScreen: React.FC<
       ) : (
         ''
       )}
+
       <Text style={styles.or}>{AppLocalizedStrings.auth.or}</Text>
       <View style={styles.resendOTPContainer}>
         <Text style={styles.resendOTP}>
@@ -111,8 +155,16 @@ const EnterOTPScreen: React.FC<
         seconds={seconds}
       />
       <AdaptiveButton
-        isDisable={otp.length < 4}
-        title={AppLocalizedStrings.submit}
+        isDisable={otp.length < 4 || verifyOtpLoading}
+        title={
+          verifyOtpLoading ? (
+            <AppLoader loading type="none" />
+          ) : fromNewContact ? (
+            'Update Contact'
+          ) : (
+            AppLocalizedStrings.submit
+          )
+        }
         onPress={onSubmitHandler}
         buttonStyle={styles.btnSubmit}
       />

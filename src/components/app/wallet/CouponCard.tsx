@@ -20,7 +20,7 @@ const barItems: {title: string; date: string}[] = [
   {title: 'Request Raised', date: '12 Apr'},
   {title: 'Request Processed', date: '13 Apr'},
   {title: 'Coupon Generated', date: '15 Apr'},
-  {title: 'Redeemed', date: '17 Apr'},
+  {title: 'Coupon Processed', date: '17 Apr'},
 ];
 
 const CouponCard: React.FC<CouponCardProps> = props => {
@@ -62,7 +62,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
             item?.generated_on,
           );
       } else if (ind === 3) {
-        bItem.date = 'Reedemed';
+        bItem.date = 'N/A';
       }
       return bItem;
     });
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   subscribeButton: {
-    fontSize: Fonts.getFontSize('headline6'),
+    fontSize: Fonts.getFontSize('headline5'),
     fontFamily: Fonts.medium,
     color: Colors.white,
   },

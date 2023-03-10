@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   title: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline4') + 1,
+      Fonts.getFontSize('headline5') + 1,
       'Medium',
       Colors.black,
     ),

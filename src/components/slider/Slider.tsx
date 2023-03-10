@@ -2,7 +2,7 @@ import {StyleSheet, Text, TextStyle, View, ViewStyle} from 'react-native';
 import React, {useState, useMemo, useCallback} from 'react';
 import {Slider as RangeSlider} from '@miblanchard/react-native-slider';
 import Colors from '../../theme/Colors';
-import {wp} from '../../utility/responsive/ScreenResponsive';
+import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Style from '../../constants/Style';
 import Fonts from '../../theme/Fonts';
 
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
     ),
   },
   thumbAbove: {
-    top: 46,
+    top: 56,
   },
 });

@@ -20,15 +20,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AdaptiveButton from '../button/AdaptiveButton';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Style from '../../constants/Style';
-import SVGIcon from '../../utility/svg/SVGIcon';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {AppLocalizedStrings} from '../../localization/Localization';
-import QRCodePopup from '../popup/QRCodePopup';
 import RootNavigation from '../../navigation/RootNavigation';
 import {RootAllMixedParamList} from '../../navigation/navigator/types';
 import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../store/Store';
+import {Convert} from '../../utility/converter/Convert';
+
 interface BottomViewProps {
   title: string;
   icon: string;
@@ -43,9 +41,14 @@ const BOTTOM_VIEW: BottomViewProps[] = [
 const kPaddingHorizontal = wp('4%');
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
-  const userData: Data = useSelector<RootState, Data>(
-    state => state.auth.userInfo,
-  );
+  const [userData, setUserData] = React.useState({} as Data);
+
+  const getUserData = async () => {
+    const data = await SharedPreference.shared.getUser();
+    const objectData: AuthResult = await Convert.toObject(data);
+
+    setUserData(objectData.data);
+  };
 
   const insets = useSafeAreaInsets();
 
@@ -111,7 +114,11 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
   };
 
   React.useEffect(() => {
-    console.log('CODE_DRAWER', userData);
+    getUserData();
+  }, []);
+
+  React.useEffect(() => {
+    console.log('WEGRSDG', userData);
   }, [userData]);
   return (
     <View style={styles.screen}>

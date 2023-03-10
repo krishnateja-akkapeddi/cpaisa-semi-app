@@ -96,14 +96,14 @@ const styles = StyleSheet.create({
   },
   lblDate: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline6'),
+      Fonts.getFontSize('headline5'),
       'Regular',
       Colors.grey,
     ),
   },
   lblStatus: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline6'),
+      Fonts.getFontSize('headline5'),
       'Medium',
       Colors.primary,
     ),

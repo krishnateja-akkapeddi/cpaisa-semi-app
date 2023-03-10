@@ -30,10 +30,6 @@ import StockistStackNavigator, {
   StockistStackParamList,
 } from '../stack/StockistStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
-import {useDispatch, useSelector} from 'react-redux';
-import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
-import {authSlice} from '../../store/slices/AuthSlice';
-import {RootState} from '../../store/Store';
 
 export type DrawerParamList = {
   HomeStack: NavigatorScreenParams<HomeStackParamList>;
@@ -138,3 +134,9 @@ const styles = StyleSheet.create({
 });
 
 export default DrawerNavigator;
+function dispatch(arg0: {
+  payload: import('../../models/interfaces/AuthResponse').AuthResult;
+  type: string;
+}) {
+  throw new Error('Function not implemented.');
+}

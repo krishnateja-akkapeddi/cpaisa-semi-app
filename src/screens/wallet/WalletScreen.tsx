@@ -43,6 +43,8 @@ import {Convert} from '../../utility/converter/Convert';
 import GaScrollView from '../../components/GaScrollView';
 import GaCaughtUp from '../../components/GaCaughtUp';
 import AppLoader from '../../components/indicator/AppLoader';
+// import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import Animated from 'react-native-reanimated';
 
 enum WalletMode {
   Transaction,
@@ -91,13 +93,15 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   const [transactions, setTransactions] = useState(
     Transactions as Transaction[],
   );
+  const [points, setPoints] = useState('100');
   const [coupons, setCoupons] = useState(Coupons as Coupon[]);
   const [organizations, setOrganizations] = useState<ClientEntity[]>();
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const [mode, setMode] = useState(WalletMode.Transaction);
   const [redeemSelectTitle, setRedeemTitle] = useState('');
+  const [couponType, setCouponType] = useState('');
   const [walletSummaryLoading, setWalletSummaryLoading] = useState(false);
-
+  const [sectedReedemOrg, setSectionedReedemOrg] = useState('');
   //wallet summary states
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>();
   const [walletSummaries, setWalletSummaries] = React.useState<PickerItem[]>();
@@ -256,6 +260,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
 
   const onCompanySelect = (title: string) => {
     setRedeemTitle(title);
+    setSectionedReedemOrg(title);
     changeMode(WalletMode.RedeemDetails);
   };
 
@@ -366,17 +371,6 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
           items={segmentBarItems}
           onValueChange={onTransactionModeChange}
         />
-        <AdaptiveButton
-          type="text"
-          isReverse
-          title={AppLocalizedStrings.filter.filter}
-          icon="filter"
-          iconSize={hp('2.3')}
-          iconColor={Colors.primary}
-          buttonStyle={styles.btnFilter}
-          textStyle={styles.btnFilterText}
-          onPress={onFilterHandler}
-        />
       </View>
     );
   }, [transactionMode, onTransactionModeChange, onFilterHandler]);
@@ -391,12 +385,17 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
             {mode === WalletMode.Transaction && segmentContainer}
             {mode === WalletMode.Redeem && (
               <RedeemPoint
+                orgainisations={organizations}
                 onCompanySelect={onCompanySelect}
                 onDismiss={changeMode.bind(this, WalletMode.Transaction)}
               />
             )}
             {mode === WalletMode.RedeemDetails && (
               <RedeemPointDetail
+                couponType={couponType}
+                setCouponType={setCouponType}
+                points={points}
+                setPoints={setPoints}
                 onRedeem={onRedeemSuccessHandler}
                 onDismiss={changeMode.bind(this, WalletMode.Redeem)}
                 title={redeemSelectTitle}
@@ -408,10 +407,10 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     );
   }, [
     mode,
-    OrganisationListComponet,
-    PickerView,
     onRedeemSuccessHandler,
     rewardRequestList,
+    organizations,
+    sectedReedemOrg,
   ]);
 
   // const getDataSource = () => {
@@ -477,8 +476,25 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
               renderItem={renderItem}
               keyExtractor={keyExtractor}
             />
+            <AdaptiveButton
+              type="text"
+              isReverse
+              title={AppLocalizedStrings.filter.filter}
+              icon="filter"
+              iconSize={hp('2.3')}
+              iconColor={Colors.primary}
+              buttonStyle={styles.btnFilter}
+              textStyle={styles.btnFilterText}
+              onPress={onFilterHandler}
+            />
             <View>
               <FlatList renderItem={renderItem} data={rewardRequestList} />
+              {/* <SkeletonPlaceholder borderRadius={4}>
+                  <SkeletonPlaceholder.Item
+                    width={wp('90%')}
+                    height={hp('30%')}
+                  />
+                </SkeletonPlaceholder> */}
 
               {lastPage && currentPage !== lastPage && (
                 <View style={{marginVertical: 40, marginBottom: hp(10)}}>
@@ -531,6 +547,9 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
 
       {showRedeem && (
         <ReedemRequestPopup
+          points={points}
+          company={sectedReedemOrg}
+          couponType={couponType}
           onDismiss={onGoToDashboardHandler.bind(this, false)}
           goToDashboard={onGoToDashboardHandler.bind(this, true)}
         />
@@ -610,7 +629,7 @@ const styles = StyleSheet.create({
   },
   segmentContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   skelLoadingContainer: {
     padding: 16,
@@ -625,7 +644,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 14,
   },
-  btnFilter: {paddingHorizontal: 0, height: 'auto'},
+  btnFilter: {paddingHorizontal: 0, height: 'auto', marginLeft: wp('70%')},
   btnFilterText: {
     ...Style.getTextStyle(
       Fonts.getFontSize('headline4'),

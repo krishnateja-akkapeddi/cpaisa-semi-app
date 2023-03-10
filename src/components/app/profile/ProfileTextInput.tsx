@@ -25,10 +25,18 @@ interface ProfileTextInputProps {
   onChangeText?: (arg0: string) => void;
   handleUpdateContact?: (key: contactType, mode: modeType) => Promise<void>;
   onEditPress?: () => void;
+  isEditable?: boolean;
 }
 
 const ProfileTextInput: React.FC<ProfileTextInputProps> = props => {
-  const {placeholder, title, style, value, onChangeText} = props;
+  const {
+    placeholder,
+    title,
+    style,
+    value,
+    onChangeText,
+    isEditable = true,
+  } = props;
   const [editable, setEditable] = useState(false);
   const onEdit = useCallback(() => {
     // setEditable(val => !val);
@@ -42,21 +50,23 @@ const ProfileTextInput: React.FC<ProfileTextInputProps> = props => {
     <View style={styleContainer}>
       <View style={styles.upperContainer}>
         <Text style={styles.title}>{title}</Text>
-        <AdaptiveButton
-          buttonStyle={styles.edit}
-          textStyle={styles.editText}
-          type="text"
-          title={
-            props.loading ? (
-              <AppLoader size="small" type="none" loading={true} />
-            ) : editable ? (
-              AppLocalizedStrings.save
-            ) : (
-              AppLocalizedStrings.edit
-            )
-          }
-          onPress={props.onEditPress}
-        />
+        {props.isEditable && (
+          <AdaptiveButton
+            buttonStyle={styles.edit}
+            textStyle={styles.editText}
+            type="text"
+            title={
+              props.loading ? (
+                <AppLoader size="small" type="none" loading={true} />
+              ) : editable ? (
+                AppLocalizedStrings.save
+              ) : (
+                AppLocalizedStrings.edit
+              )
+            }
+            onPress={props.onEditPress}
+          />
+        )}
       </View>
       <TextInput
         value={value}
@@ -82,12 +92,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   input: {
-    height: Math.min(hp('5%'), 35),
+    // height: Math.min(hp('5%'), 35),
     paddingHorizontal: 4,
     borderBottomWidth: 1,
     borderColor: Colors.grey,
     paddingBottom: Platform.OS == 'android' ? 7 : 0,
-    ...Style.getTextStyle(Fonts.getFontSize('headline3'), 'Bold', Colors.grey),
+    ...Style.getTextStyle(Fonts.getFontSize('headline5'), 'Bold', Colors.grey),
   },
   title: {
     ...Style.getTextStyle(

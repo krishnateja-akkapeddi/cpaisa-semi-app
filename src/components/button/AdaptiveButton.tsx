@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     borderRadius: Style.kBorderRadius,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: Colors.primary,
   },
   btnDark: {

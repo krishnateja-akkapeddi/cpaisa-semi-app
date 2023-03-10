@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import AdaptiveTextInput from '../../components/input/AdaptiveTextInput';
 import Style from '../../constants/Style';
@@ -9,13 +9,47 @@ import Validator from '../../utility/validation/Validator';
 import AuthBaseScreen from './AuthBaseScreen';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
+import {AuthStackScreenProps} from '../../navigation/stack/AuthStackNavigator';
+import Snackbar from 'react-native-snackbar';
+import {store} from '../../store/Store';
+import {generateOtp} from '../../store/thunks/ApiThunks';
+import Spacer from '../../components/layout/Spacer';
 
-const LoginScreen = () => {
-  const [mobileNo, setMobileNo] = useState('8976733351');
+const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
+  const forUpdateContact = props.route?.params?.forUpdateContact;
+  const [mobileNo, setMobileNo] = useState(
+    forUpdateContact ? '' : '8976733351',
+  );
+
   const loginHandler = async () => {
+    const data = await store
+      .dispatch(generateOtp({mobile_value: mobileNo, mode: 'sms'}))
+      .unwrap();
+    if (data.success) {
+      Snackbar.show({
+        text: 'Otp Sent',
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      });
+      RootNavigation.navigate('AuthStack', {
+        screen: 'EnterOTPScreen',
+        params: {
+          isLogin: true,
+          mobileNumber: mobileNo,
+          forUpdateContact: true,
+        },
+      });
+    } else {
+      Snackbar.show({
+        text: 'Something went wrong',
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      });
+    }
     RootNavigation.navigate('EnterOTPScreen', {
       isLogin: true,
       mobileNumber: mobileNo,
+      fromNewContact: forUpdateContact,
     });
   };
 
@@ -30,7 +64,11 @@ const LoginScreen = () => {
 
   return (
     <AuthBaseScreen
-      title={AppLocalizedStrings.auth.loginWithMobile}
+      title={
+        forUpdateContact
+          ? 'Please enter the new mobile number'
+          : AppLocalizedStrings.auth.loginWithMobile
+      }
       iconName="mobile_number">
       <AdaptiveTextInput
         value={mobileNo}
@@ -39,33 +77,47 @@ const LoginScreen = () => {
         placeholder={AppLocalizedStrings.auth.mobileNo}
         style={styles.input}
       />
+      {forUpdateContact && (
+        <>
+          <Text style={{color: Colors.grey}}>
+            An otp will be sent to this number for confirmation
+          </Text>
+          <Spacer height={hp('15%')} />
+        </>
+      )}
 
       <AdaptiveButton
         isDisable={!Validator.isValidMobileNumber(mobileNo)}
         title={
-          AppLocalizedStrings.auth.login +
-          ' / ' +
-          AppLocalizedStrings.auth.register
+          forUpdateContact
+            ? 'SEND OTP TO NEW NUMBER'
+            : AppLocalizedStrings.auth.login +
+              ' / ' +
+              AppLocalizedStrings.auth.register
         }
         onPress={loginHandler}
         buttonStyle={styles.btn}
       />
       <View style={styles.viewBottom}>
-        <AdaptiveButton
-          textStyle={styles.btnCondition}
-          type="text"
-          title={AppLocalizedStrings.auth.termsAndConditions}
-          onPress={termsHandler}
-        />
-        <AdaptiveButton
-          icon="info"
-          iconColor={Colors.black}
-          iconSize={wp(3)}
-          textStyle={styles.btnCondition}
-          type="text"
-          title={AppLocalizedStrings.auth.help}
-          onPress={helpHandler}
-        />
+        {!forUpdateContact && (
+          <AdaptiveButton
+            textStyle={styles.btnCondition}
+            type="text"
+            title={AppLocalizedStrings.auth.termsAndConditions}
+            onPress={termsHandler}
+          />
+        )}
+        {!forUpdateContact && (
+          <AdaptiveButton
+            icon="info"
+            iconColor={Colors.black}
+            iconSize={wp(3)}
+            textStyle={styles.btnCondition}
+            type="text"
+            title={AppLocalizedStrings.auth.help}
+            onPress={helpHandler}
+          />
+        )}
       </View>
     </AuthBaseScreen>
   );

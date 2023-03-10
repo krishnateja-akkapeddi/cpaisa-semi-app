@@ -36,7 +36,7 @@ import ContactSupportScreen from '../../screens/invoice/ContactSupportScreen';
 
 export type HomeStackParamList = {
   TabStack: NavigatorScreenParams<BottomTabParamList>;
-  LocationPermissionScreen: RouteParamList;
+  LocationPermissionScreen: RouteParamList & {fromQrCodeHeader?: boolean};
   ContactRepScreen: RouteParamList;
   NotificationScreen: RouteParamList;
   InvoiceUploadScreen: RouteParamList;

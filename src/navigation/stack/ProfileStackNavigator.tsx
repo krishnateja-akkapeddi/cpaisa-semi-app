@@ -10,7 +10,7 @@ import NotificationScreen from '../../screens/notification/NotificationScreen';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
 
 export type ProfileStackParamList = {
-  ProfileScreen: RouteParamList;
+  ProfileScreen: RouteParamList & {contactUpdated: boolean};
   NotificationScreen: RouteParamList;
 };
 

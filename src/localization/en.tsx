@@ -21,7 +21,7 @@ export default {
   },
   search: {
     search: 'Search',
-    enterDepartmentName: 'Enter Department Name',
+    enterDepartmentName: 'Enter Invoice ID',
     enterProductName: 'Product Name',
   },
   reviewStatus: {
@@ -47,7 +47,7 @@ export default {
   filter: {
     filter: 'Filter',
     reedemSuccessful: 'Redeem Request Successful',
-    reedemSummary: 'Redeem Request Summary',
+    reedemSummary: 'Redeem Summary',
     clearAllFilter: 'Clear All',
     applyFilters: 'Apply',
     organisation: 'Organisation',

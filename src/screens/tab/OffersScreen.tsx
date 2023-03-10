@@ -22,11 +22,12 @@ import {store} from '../../store/Store';
 import {fetchClients, fetchOffersList} from '../../store/thunks/ApiThunks';
 import {FetchOffersListParams} from '../../domain/usages/FetchOffersList';
 import {OffersListEntity} from '../../models/interfaces/OffersListResponse';
-import Colors from '../../theme/Colors';
 import SearchBar from '../../components/app/SearchBar';
 import AppLoader from '../../components/indicator/AppLoader';
 import Spacer from '../../components/layout/Spacer';
 import GaCaughtUp from '../../components/GaCaughtUp';
+import {OfferSkeletonItem} from '../../components/SkeletonCards';
+import Colors from '../../theme/Colors';
 
 interface Offer {
   name: string;
@@ -84,52 +85,51 @@ const OffersScreen = () => {
     }
   };
 
-  const getOffersList = async (
-    page: number,
-    scrolled?: boolean,
-    organizationId?: number,
-  ) => {
-    setOffersListLoading(true);
-    const params = {} as FetchOffersListParams.params;
+  const getOffersList = useCallback(
+    async (page: number, scrolled?: boolean, organizationId?: number) => {
+      setOffersListLoading(true);
+      const params = {} as FetchOffersListParams.params;
 
-    if (selectedOrg) {
-      params.client_id = selectedOrg;
-    }
-    if (query) {
-      params.q = query;
-    }
-
-    if (organizationId) {
-      if (organizationId === -1) {
-        delete params.client_id;
-      } else {
-        params.client_id = organizationId;
+      if (selectedOrg) {
+        params.client_id = selectedOrg;
       }
-    } else if (selectedOrg) {
-      params.client_id = selectedOrg;
-    }
+      if (query) {
+        params.q = query;
+      }
 
-    params.page = page;
-    const result = await store.dispatch(fetchOffersList(params)).unwrap();
-    if (result.success) {
-      setCurrentPage(result.offers.current_page);
-      setNextPage(result.offers.next_page_url);
-      if (scrolled) {
-        setOffersList(prev => {
-          return [...prev, ...result.offers.data];
+      if (organizationId) {
+        if (organizationId === -1) {
+          delete params.client_id;
+        } else {
+          params.client_id = organizationId;
+        }
+      } else if (selectedOrg) {
+        params.client_id = selectedOrg;
+      }
+
+      params.page = page;
+      const result = await store.dispatch(fetchOffersList(params)).unwrap();
+      if (result.success) {
+        setCurrentPage(result.offers.current_page);
+        setNextPage(result.offers.next_page_url);
+        if (scrolled) {
+          setOffersList(prev => {
+            return [...prev, ...result.offers.data];
+          });
+        } else {
+          setOffersList(result.offers.data);
+        }
+      } else {
+        Snackbar.show({
+          text: AppLocalizedStrings.somethingWrong,
+          textColor: Colors.white,
+          backgroundColor: Colors.red,
         });
-      } else {
-        setOffersList(result.offers.data);
       }
-    } else {
-      Snackbar.show({
-        text: AppLocalizedStrings.somethingWrong,
-        textColor: Colors.white,
-        backgroundColor: Colors.red,
-      });
-    }
-    setOffersListLoading(false);
-  };
+      setOffersListLoading(false);
+    },
+    [currentPage, nextPage],
+  );
 
   const renderItem: ListRenderItem<OffersListEntity> = useCallback(
     ({item}) => {
@@ -161,20 +161,45 @@ const OffersScreen = () => {
 
   useEffect(() => {
     getClients();
-    getOffersList(1);
   }, []);
 
   useEffect(() => {
     if (query === '') {
       setOffersList([]);
       getOffersList(1, false);
+    } else {
+      query.length === 0 && getOffersList(1);
     }
   }, [query]);
+
+  // useEffect(() => {
+
+  // }, [query]);
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.searchBarView}></View>
       <FlatList
+        ListFooterComponent={() => {
+          return (
+            <>
+              {!nextPage && offersList.length > 0 && (
+                <GaCaughtUp message="You're all caught up!" />
+              )}
+
+              {offersListLoading && (
+                <>
+                  <View style={{marginBottom: hp('3%'), paddingTop: hp('1%')}}>
+                    <OfferSkeletonItem />
+                  </View>
+                  <View style={{marginBottom: hp('3%')}}>
+                    <OfferSkeletonItem />
+                  </View>
+                </>
+              )}
+            </>
+          );
+        }}
         showsHorizontalScrollIndicator
         alwaysBounceVertical={false}
         data={offersList}
@@ -195,26 +220,6 @@ const OffersScreen = () => {
               />
             </View>
           </View>
-        }
-        ListFooterComponent={
-          <>
-            {offersListLoading ? (
-              <View
-                style={{
-                  marginVertical: 10,
-                  marginBottom: hp('5%'),
-                  marginTop: hp('4%'),
-                }}>
-                <AppLoader type="none" loading={true} />
-              </View>
-            ) : !nextPage ? (
-              ''
-            ) : (
-              offersList.length !== 0 && (
-                <GaCaughtUp message="You're all caught up!" />
-              )
-            )}
-          </>
         }
         ItemSeparatorComponent={itemSeprator}
         showsVerticalScrollIndicator={false}

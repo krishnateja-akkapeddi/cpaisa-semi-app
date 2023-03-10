@@ -6,7 +6,6 @@ import {
   FlatList,
   ListRenderItemInfo,
   Text,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import SearchBar from '../../components/app/SearchBar';
@@ -34,14 +33,16 @@ import {FetchInvoiceListParams} from '../../domain/usages/FetchInvoiceList';
 import {InvoiceListEntity} from '../../models/interfaces/InvoiceListResponse';
 import GaScrollView from '../../components/GaScrollView';
 import GaCaughtUp from '../../components/GaCaughtUp';
-import AppLoader from '../../components/indicator/AppLoader';
 import {debounce} from '../../utility/debounce';
+import {InvoiceSkeletonItem} from '../../components/SkeletonCards';
+import Spacer from '../../components/layout/Spacer';
 
 export type getInvoiceListArgs = {
   fromFilter?: boolean;
   fromResetFilter?: boolean;
   page?: number;
   length?: number;
+  query?: string;
 };
 
 const InvoiceScreen = () => {
@@ -58,6 +59,8 @@ const InvoiceScreen = () => {
   const [resetFilterLoading, setResetFilterLoading] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [dates, setDates] = React.useState<string[]>([]);
+  const [query, setQuery] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
   const [selectedDates, setSelectedDates] =
     React.useState<FetchInvoiceSummaryParams.params | null>();
   const [num, setNum] = useState<number>(0);
@@ -76,6 +79,22 @@ const InvoiceScreen = () => {
   const setSelectedDatesHandler = (params: FetchInvoiceSummaryParams.params) =>
     setSelectedDates(params);
 
+  const debounceSearch = () => {
+    setInvoiceList([]);
+    getInvoiceList({}, 1, false);
+  };
+  useEffect(() => {
+    // debounce the search function
+    const debounceArch = setTimeout(() => {
+      debounceSearch();
+    }, 1500);
+
+    // clear the timeout on unmount
+    return () => {
+      clearTimeout(debounceArch);
+    };
+  }, [query]);
+
   const listHeaderComponent = useCallback(() => {
     return (
       <>
@@ -92,6 +111,20 @@ const InvoiceScreen = () => {
           monthlyInvoices={monthlyInvoices}
           onFilterHandler={onFilterHandler}
         />
+        <View style={styles.topView}>
+          <SearchBar
+            keyboardType="decimal-pad"
+            onChange={setQuery}
+            value={query}
+            hideButton={true}
+            shadow={false}
+            // onPress={() => {
+            //   setInvoiceList([]);
+            //   getInvoiceList({}, 1, false);
+            // }}
+            placeholder={AppLocalizedStrings.search.enterDepartmentName}
+          />
+        </View>
       </>
     );
   }, [
@@ -102,6 +135,7 @@ const InvoiceScreen = () => {
     monthlyInvoices,
     invoiceList,
     invoiceSummaryLoading,
+    query,
   ]);
 
   const onApplyHandler = async () => {
@@ -126,6 +160,7 @@ const InvoiceScreen = () => {
           'YYYY-MM-DD',
           start,
         );
+
         const convertedEndDate = Convert.dateFormatter(null, 'YYYY-MM-DD', end);
         invParams.from_date = convertedStartDate;
         invParams.to_date = convertedEndDate;
@@ -147,6 +182,9 @@ const InvoiceScreen = () => {
           setCurrentPage(prev => prev + 1);
         }
       }
+      if (query) {
+        invParams.q = query;
+      }
       const result = await store
         .dispatch(fetchInvoiceList({page: page ? page : 1, params: invParams}))
         .unwrap();
@@ -164,7 +202,7 @@ const InvoiceScreen = () => {
         : setInvoiceListLoading(false);
     },
 
-    [invoiceListParams, currentPage],
+    [invoiceListParams, currentPage, query],
   );
 
   const onClearHandler = async () => {
@@ -191,7 +229,7 @@ const InvoiceScreen = () => {
         setMonthlyInvoices(data.invoice_overview.monthly_invoice_status);
       setInvoiceSummaryLoading(false);
     },
-    [],
+    [invoiceSummaryLoading],
   );
 
   const renderItem = useCallback(
@@ -248,11 +286,6 @@ const InvoiceScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.topView}>
-        <SearchBar
-          placeholder={AppLocalizedStrings.search.enterDepartmentName}
-        />
-      </View>
       <View style={styles.keyboard}>
         <View style={styles.listContainer}>
           <GaScrollView
@@ -270,9 +303,6 @@ const InvoiceScreen = () => {
                   contentContainerStyle={styles.contentContainerStyle}
                   data={[]}
                   extraData={invoiceList}
-                  ItemSeparatorComponent={() => (
-                    <View style={{height: hp('2%')}} />
-                  )}
                   ListHeaderComponent={
                     <>
                       <View>
@@ -290,6 +320,7 @@ const InvoiceScreen = () => {
                           dates={dates}
                         />
                       </View>
+
                       {listHeaderComponent()}
                     </>
                   }
@@ -304,9 +335,22 @@ const InvoiceScreen = () => {
                     renderItem={renderItem}
                     data={invoiceList}
                   />
-                  {lastPage && currentPage !== lastPage + 1 && (
-                    <View style={{marginVertical: 40, marginBottom: hp(10)}}>
-                      <AppLoader type="none" loading={true} />
+                  {invoiceList.length === 0 && !invoiceListLoading && (
+                    <>
+                      <Image
+                        style={styles.noInvoicesImage}
+                        source={require('../../assets/images/no_invoices_art.png')}
+                      />
+                      <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                        No Invoices Found
+                      </Text>
+                    </>
+                  )}
+                  {invoiceListLoading && (
+                    <View style={{marginVertical: 10, marginBottom: hp(7)}}>
+                      <InvoiceSkeletonItem />
+                      <Spacer height={hp('2%')} />
+                      <InvoiceSkeletonItem />
                     </View>
                   )}
 
@@ -317,13 +361,6 @@ const InvoiceScreen = () => {
               </View>
             }
           />
-
-          {invoiceList.length === 0 && !invoiceListLoading && (
-            <Image
-              style={styles.noInvoicesImage}
-              source={require('../../assets/images/no_invoices_art.png')}
-            />
-          )}
         </View>
       </View>
 
@@ -358,8 +395,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   topView: {
-    marginHorizontal: wp('4%'),
-    marginTop: hp('2%'),
+    marginHorizontal: wp('0.5%'),
+    marginTop: hp('1%'),
+    marginBottom: hp('1%'),
   },
   keyboard: {
     flex: 1,
@@ -391,9 +429,12 @@ const styles = StyleSheet.create({
   noInvoicesImage: {
     width: hp('25%'),
     resizeMode: 'contain',
-    position: 'absolute',
-    zIndex: 100,
-    bottom: -140,
-    left: 90,
+    height: hp('24%'),
+    marginLeft: wp('20%'),
+    // position: 'absolute',
+
+    // zIndex: 100,
+    // bottom: -140,
+    // left: 90,
   },
 });

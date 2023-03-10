@@ -20,15 +20,27 @@ class SharedPreference {
   }
 
   getItem = async (key: string) => {
-    return await RNSInfo.getItem(key, options);
+    return RNSInfo.getItem(key, options);
   };
 
   setItem = async (key: string, value: string) => {
-    return await RNSInfo.setItem(key, value, options);
+    return RNSInfo.setItem(key, value, options);
   };
 
   removeItem = async (key: string) => {
-    await RNSInfo.deleteItem(key, options);
+    RNSInfo.deleteItem(key, options);
+  };
+
+  getUser = async () => {
+    return RNSInfo.getItem(kSharedKeys.userDetails, options);
+  };
+
+  setUser = async (value: string) => {
+    await RNSInfo.setItem(kSharedKeys.userDetails, value, options);
+  };
+
+  setToken = async (value: string) => {
+    await RNSInfo.setItem(kSharedKeys.authToken, value, options);
   };
 }
 

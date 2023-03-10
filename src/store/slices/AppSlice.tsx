@@ -3,6 +3,16 @@ import {QrCodeExpiryStatus} from '../../constants/QrCodeExpiryStatus';
 import {Slices} from '../../constants/Slices';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
 
+export type initialPopupState = {
+  visible?: boolean;
+  title: string;
+  message: string;
+  description?: string;
+  onDismiss?: Function;
+  onSubmit?: Function;
+  type: 'success' | 'error' | 'danger|plain';
+};
+
 export interface AppSliceState {
   route: number;
   isFirstTime: boolean;
@@ -11,6 +21,9 @@ export interface AppSliceState {
   qrExpiry: number;
   openQrCode: boolean;
   organisations?: ClientEntity[];
+  trigger: boolean;
+  popup: initialPopupState;
+  refresh: boolean;
 }
 
 const initialState: AppSliceState = {
@@ -21,6 +34,9 @@ const initialState: AppSliceState = {
   openQrCode: false,
   organisations: [],
   qrExpiry: 0,
+  trigger: false,
+  popup: {} as initialPopupState,
+  refresh: false,
 };
 
 export const appSlice = createSlice({
@@ -52,6 +68,19 @@ export const appSlice = createSlice({
 
     setQrExpiryDate: (state, action: PayloadAction<number>) => {
       state.qrExpiry = action.payload;
+    },
+
+    triggerQrCode: (state, action: PayloadAction<boolean>) => {
+      state.trigger = action.payload;
+    },
+    openPopup: (state, action: PayloadAction<initialPopupState>) => {
+      state.popup = {...state.popup, ...action.payload, visible: true};
+    },
+    closePoup: state => {
+      state.popup = {} as initialPopupState;
+    },
+    refresh: state => {
+      state.refresh = !state.refresh;
     },
   },
 });

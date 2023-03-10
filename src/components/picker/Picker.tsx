@@ -82,7 +82,7 @@ const Picker: React.FC<PickerProps> = props => {
         placeholder={placeholder}
         isNullable={false}
         itemColor={
-          Appearance.getColorScheme() === 'dark' ? Colors.white : Colors.black
+          Appearance.getColorScheme() === 'dark' ? Colors.black : Colors.white
         }
         itemFontFamily={Fonts.getFontFamily(itemFontFamily)}
         DoneBarComponent={() => <DoneBarComponent onDonePress={onDonePress} />}

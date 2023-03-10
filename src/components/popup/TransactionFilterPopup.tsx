@@ -11,7 +11,6 @@ import {Generator} from '../../utility/Generator';
 import {Convert} from '../../utility/converter/Convert';
 import {PickerItem} from 'react-native-woodpicker';
 import RangeSliderView from '../app/filters/RangeSliderView';
-import moment from 'moment';
 import Colors from '../../theme/Colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 

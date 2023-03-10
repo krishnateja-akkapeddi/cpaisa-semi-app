@@ -16,12 +16,17 @@ import {
   WalletSummaryResponse,
 } from '../../models/interfaces/WalletSummary';
 import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
-import {store} from '../../store/Store';
+import {RootState, store} from '../../store/Store';
 import {
   fetchSliderImages,
   fetchWalletSummary,
 } from '../../store/thunks/ApiThunks';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import Animated from 'react-native-reanimated';
+import GaRefresh from '../../components/GaRefresh';
+import {useSelector} from 'react-redux';
+import {AppSliceState} from '../../store/slices/AppSlice';
 
 const DashboardScreen: React.FC<
   BottomTabScreenProps<'DashboardScreen'>
@@ -32,6 +37,9 @@ const DashboardScreen: React.FC<
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>(
     {} as WalletSummary,
   );
+  const {refresh} = useSelector<RootState, AppSliceState>(state => {
+    return state.app;
+  });
 
   const fetchImages = async () => {
     setLoading(true);
@@ -75,58 +83,62 @@ const DashboardScreen: React.FC<
   React.useEffect(() => {
     fetchImages();
     getWalletSummary();
-  }, []);
+  }, [refresh]);
 
   React.useEffect(() => {}, [images, walletSummary]);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.screen}>
-      {loading ? (
-        <View style={{marginTop: hp('10%'), marginBottom: hp('10%')}}>
-          <AppLoader type="none" loading={true} />
-        </View>
-      ) : images?.length === 0 ? (
-        <View
-          style={{
-            borderRadius: Style.kBorderRadius,
-            borderWidth: 1,
-            borderColor: 'orange',
-            padding: 20,
-          }}>
-          <Image
-            style={{bottom: hp('1%')}}
-            source={require('../../assets/images/NoOffersArt.png')}
-          />
-          <Text
+    <GaRefresh>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.screen}>
+        {loading ? (
+          <Animated.View>
+            <SkeletonPlaceholder speed={500} borderRadius={4}>
+              <SkeletonPlaceholder.Item width={wp('90%')} height={hp('30%')} />
+            </SkeletonPlaceholder>
+          </Animated.View>
+        ) : images?.length === 0 ? (
+          <View
             style={{
-              fontSize: 16,
-              marginTop: hp('3%'),
-              textAlign: 'center',
-              color: 'gray',
-              fontWeight: '500',
+              borderRadius: Style.kBorderRadius,
+              borderWidth: 1,
+              borderColor: 'orange',
+              padding: 20,
             }}>
-            No Offers Found
-          </Text>
-        </View>
-      ) : (
-        <Carousel
-          autoplay={true}
-          autoplayLoop={true}
-          autoplayDelay={4}
-          items={images && images}
-          noImages={images?.length === 0}
-          renderItem={renderItem}
-        />
-      )}
+            <Image
+              style={{bottom: hp('1%')}}
+              source={require('../../assets/images/NoOffersArt.png')}
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                marginTop: hp('3%'),
+                textAlign: 'center',
+                color: 'gray',
+                fontWeight: '500',
+              }}>
+              No Offers Found
+            </Text>
+          </View>
+        ) : (
+          <Carousel
+            autoplay={true}
+            autoplayLoop={true}
+            autoplayDelay={4}
+            items={images && images}
+            noImages={images?.length === 0}
+            renderItem={renderItem}
+          />
+        )}
 
-      <PriorityNotificationList items={notificatios} />
-      <OfferOverView />
-      <WalletOverView
-        loading={walletSummaryLoading}
-        walletSummary={walletSummary}
-      />
-      <SuggestionList items={suggestionData} />
-    </ScrollView>
+        <PriorityNotificationList items={notificatios} />
+        <OfferOverView />
+        <WalletOverView
+          loading={walletSummaryLoading}
+          walletSummary={walletSummary}
+        />
+        <SuggestionList items={suggestionData} />
+      </ScrollView>
+    </GaRefresh>
   );
 };
 

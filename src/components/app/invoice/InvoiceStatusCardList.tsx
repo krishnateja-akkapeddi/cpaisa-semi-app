@@ -7,6 +7,8 @@ import {
   OverallInvoiceStatus,
 } from '../../../models/interfaces/InvoiceSummaryResponse';
 import {AppLocalizedStrings} from '../../../localization/Localization';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import Animated from 'react-native-reanimated';
 
 type Props = {
   loading?: boolean;
@@ -47,13 +49,33 @@ const InvoiceStatusCardList: React.FC<Props> = ({
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.pending}
                     totalInvoice={
-                      loading
-                        ? 'Loading...'
-                        : val.pending_invoice_count.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.pending_invoice_count.toString()
+                      )
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
                     rupees={
-                      loading ? 'Loading...' : val.pending_amount.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.pending_amount.toString()
+                      )
                     }
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#F7DFC4'}}
@@ -61,13 +83,33 @@ const InvoiceStatusCardList: React.FC<Props> = ({
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.approved}
                     totalInvoice={
-                      loading
-                        ? 'Loading...'
-                        : val.approved_invoice_count.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.approved_invoice_count.toString()
+                      )
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
                     rupees={
-                      loading ? 'Loading...' : val.approved_amount.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.approved_amount.toString()
+                      )
                     }
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#B5EAD7'}}
@@ -75,13 +117,33 @@ const InvoiceStatusCardList: React.FC<Props> = ({
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.rejected}
                     totalInvoice={
-                      loading
-                        ? 'Loading...'
-                        : val.rejected_invoice_count.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.rejected_invoice_count.toString()
+                      )
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
                     rupees={
-                      loading ? 'Loading...' : val.rejected_amount.toString()
+                      loading ? (
+                        <Animated.View>
+                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
+                            <SkeletonPlaceholder.Item
+                              width={wp('15%')}
+                              height={hp('3%')}
+                            />
+                          </SkeletonPlaceholder>
+                        </Animated.View>
+                      ) : (
+                        val.rejected_amount.toString()
+                      )
                     }
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#FFD7DA'}}

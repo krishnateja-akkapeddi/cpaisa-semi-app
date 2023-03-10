@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import PopupContainer from './PopupContainer';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import {AppLocalizedStrings} from '../../localization/Localization';
@@ -25,13 +25,9 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
     app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData},
   } = useSelector<RootState, RootState>(state => state);
   const dispatch = useDispatch();
-  const [loading, setLoading] = React.useState(false);
-
   const [minutes, seconds] = useMinutesAndSecondsFromUnixTime({
     unixTime: qrExpiry ? qrExpiry : 10,
   });
-
-  console.log('QR_REDOR', isQrCodeExpired);
 
   // React.useEffect(() => {
   //   console.log('QR_EXPDATE', qrExpiry);
@@ -41,10 +37,11 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
   // }, [props]);
 
   React.useEffect(() => {
-    if (minutes < 0) {
+    if (seconds < 0) {
       dispatch(appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.EXPIRED));
     }
-  }, [minutes, seconds, openQrCode, isQrCodeExpired]);
+  }, [minutes, seconds, openQrCode, qrCodeData]);
+  useEffect(() => {}, [qrExpiry]);
   return (
     <PopupContainer showHeader={false}>
       <View style={styles.main}>

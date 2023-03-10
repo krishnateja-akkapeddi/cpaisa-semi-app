@@ -13,27 +13,25 @@ import SegmentBar from '../../components/app/SegmentBar';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, store} from '../../store/Store';
-import {Data} from '../../models/interfaces/AuthResponse';
+import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 import {appSlice, AppSliceState} from '../../store/slices/AppSlice';
-import QRCodePopup from '../../components/popup/QRCodePopup';
-import {QrCodeExpiryStatus} from '../../constants/QrCodeExpiryStatus';
-import RootNavigation from '../../navigation/RootNavigation';
-import {generateQrCode} from '../../store/thunks/ApiThunks';
-import {Convert} from '../../utility/converter/Convert';
-import getLocation from '../../utility/custom-hooks/GetLocation';
-import {PermissionManager} from '../../utility/permissions/PermissionManager';
+
+import {ProfileStackScreenProps} from '../../navigation/stack/ProfileStackNavigator';
 
 enum ProfileMode {
   Personal,
   Business,
 }
 
-const ProfileScreen = () => {
+const ProfileScreen: React.FC<
+  ProfileStackScreenProps<'ProfileScreen'>
+> = props => {
   const dispatch = useDispatch();
-  const [qrLoading, setQrLoading] = useState(false);
-  const selected = useSelector<RootState, Data>(state => state?.auth?.userInfo);
-  const channel_partner = selected?.channel_partner;
-  const user = selected?.user;
+  const selected = useSelector<RootState, AuthResult>(
+    state => state.auth.authResult,
+  );
+  const channel_partner = selected?.data?.channel_partner;
+  const user = selected?.data?.user;
   const {isQrCodeExpired, openQrCode, qrExpiry, qrCodeData} = useSelector<
     RootState,
     AppSliceState
@@ -45,42 +43,6 @@ const ProfileScreen = () => {
   const [mode, setMode] = useState(ProfileMode.Personal);
   const onValueChange = (index: number) => {
     setMode(index);
-  };
-  const [qrMessage, setQrMessage] = useState('');
-
-  const onQRCodeHandler = async (fromRegenerate?: boolean) => {
-    setQrLoading(true);
-    // if (fromRegenerate) {
-    //   dispatch(appSlice.actions.setOpenQrCode(true));
-    // }
-
-    if (fromRegenerate && isQrCodeExpired !== QrCodeExpiryStatus.ACTIVE) {
-      const locationInfo = await getLocation();
-      const locationPermission = await PermissionManager?.checkPermission(
-        'location',
-      );
-      if (!locationPermission) {
-        RootNavigation.navigate('LocationPermissionScreen');
-      }
-
-      const params = {
-        lat: locationInfo?.latitude,
-        long: locationInfo?.longitude,
-      };
-      const data = await store.dispatch(generateQrCode(params)).unwrap();
-      dispatch(
-        appSlice.actions.setQrCodeData(
-          Convert.base64ToFileConverter(data.qr_code.image),
-        ),
-      );
-      setQrMessage(data.qr_code.message);
-      dispatch(appSlice.actions.setQrExpiryDate(parseInt(data.qr_code.expiry)));
-      dispatch(appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.ACTIVE));
-      dispatch(appSlice.actions.setOpenQrCode(true));
-    } else {
-      dispatch(appSlice.actions.setOpenQrCode(true));
-    }
-    setQrLoading(false);
   };
 
   useEffect(() => {}, [channel_partner, user, isQrCodeExpired, openQrCode]);
@@ -94,7 +56,7 @@ const ProfileScreen = () => {
               style={styles.profilePic}
               source={'https://picsum.photos/seed/picsum/200/300'}
             />
-            <Text style={styles.name}>{user?.full_name}</Text>
+            <Text style={styles.name}>{user?.full_name ?? ''}</Text>
             <Text style={styles.company}>
               {channel_partner?.address?.line
                 ? channel_partner?.address?.line
@@ -109,14 +71,6 @@ const ProfileScreen = () => {
               size={wp(25)}
               color={Colors.black}
             />
-
-            {openQrCode && (
-              <QRCodePopup
-                loadingQr={qrLoading}
-                onQRCodeHandler={onQRCodeHandler}
-                qrMessage={qrMessage}
-              />
-            )}
           </View>
           <SegmentBar
             containerStyle={styles.bar}
@@ -169,7 +123,7 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: hp(2.3),
-    ...Style.getTextStyle(Fonts.getFontSize('headline2'), 'Bold', Colors.black),
+    ...Style.getTextStyle(Fonts.getFontSize('headline3'), 'Bold', Colors.black),
   },
   company: {
     marginTop: hp(0.2),

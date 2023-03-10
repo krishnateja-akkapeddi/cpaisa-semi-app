@@ -31,7 +31,7 @@ const StockistScreen = () => {
     channel_partner: {
       address: {state},
     },
-  } = useSelector<RootState, Data>(state => state.auth.userInfo);
+  } = useSelector<RootState, Data>(state => state.auth.authResult.data);
   const [data, setData] = useState(StockistData);
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
@@ -56,8 +56,9 @@ const StockistScreen = () => {
 
   const getClients = async () => {
     let params = {} as ClientListParams.params;
-    params.state = state.name;
+    // params.state = state.name;
     const data = await store.dispatch(fetchClients(params)).unwrap();
+
     if (data.success) {
       data.clients.data.unshift({} as ClientEntity);
       setOrganizations(data.clients.data);
@@ -76,7 +77,9 @@ const StockistScreen = () => {
     getClients();
   }, [state]);
 
-  useEffect(() => {}, [organizations, state]);
+  useEffect(() => {
+    console.log('OLG_DI', organizations);
+  }, [organizations, state]);
 
   return (
     <SafeAreaView style={{flex: 1}}>

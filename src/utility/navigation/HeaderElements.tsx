@@ -37,6 +37,15 @@ const getHeaderRight = (
     case 'CompleteKYCScreen':
     case 'NotificationScreen':
       return undefined;
+    case 'CouponScreen':
+      return (
+        <HeaderRightView
+          showOffers={false}
+          showHelp={false}
+          showQRCode={false}
+          showBell={false}
+        />
+      );
     case 'DashboardScreen':
       return (
         <HeaderRightView showOffers={false} showHelp={true} showQRCode={true} />

@@ -26,30 +26,35 @@ const BusinessDetailsView: React.FC<BusinessDetailsViewProps> = ({
   return (
     <View style={styleContainer}>
       <ProfileTextInput
+        isEditable={false}
         title={AppLocalizedStrings.profile.businessName}
         value={channelPartner?.firm_name}
         onChangeText={setBusinessName}
       />
       <Spacer height={kSpacing} />
       <ProfileTextInput
+        isEditable={false}
         title={AppLocalizedStrings.profile.mobileNo}
         value={channelPartner?.firm_contact}
         onChangeText={setMobileNo}
       />
       <Spacer height={kSpacing} />
       <ProfileTextInput
+        isEditable={false}
         title={AppLocalizedStrings?.profile?.dlNo}
         value={channelPartner?.dl_no}
         onChangeText={setDLNo}
       />
       <Spacer height={kSpacing} />
       <ProfileTextInput
+        isEditable={false}
         title={AppLocalizedStrings.profile.panNo}
         value={channelPartner?.pan_no}
         onChangeText={setPAN}
       />
       <Spacer height={kSpacing} />
       <ProfileTextInput
+        isEditable={false}
         title={AppLocalizedStrings.profile.gstNo}
         value={channelPartner?.gst_no}
         onChangeText={setGST}

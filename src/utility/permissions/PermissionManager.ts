@@ -7,8 +7,9 @@ import {
 } from 'react-native-permissions';
 import {Platform} from 'react-native';
 
-type LOCATION_PERMISSION = {
+type PERMISSION_TYPE = {
   location: any;
+  files: any;
 };
 
 const PLATFORM_LOCATION_PERMISSIONS = {
@@ -16,21 +17,27 @@ const PLATFORM_LOCATION_PERMISSIONS = {
   android: PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
 };
 
-const REQUEST_PERMISSION_TYPE: LOCATION_PERMISSION = {
-  location: PLATFORM_LOCATION_PERMISSIONS,
-};
-export const PERMISSION_TYPE = {
-  location: 'location',
+const PLATFORM_FILE_PERMISSIONS = {
+  ios: PERMISSIONS.IOS.MEDIA_LIBRARY,
+  android: PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
 };
 
-export function perm(type: keyof LOCATION_PERMISSION): Permission {
+const REQUEST_PERMISSION_TYPE: PERMISSION_TYPE = {
+  location: PLATFORM_LOCATION_PERMISSIONS,
+  files: PLATFORM_FILE_PERMISSIONS,
+};
+
+export const PERMISSION_TYPE = {
+  location: 'location',
+  files: 'files',
+};
+
+export function perm(type: keyof PERMISSION_TYPE): Permission {
   const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
   return permissions;
 }
 class AppPermission {
-  checkPermission = async (
-    type: keyof LOCATION_PERMISSION,
-  ): Promise<boolean> => {
+  checkPermission = async (type: keyof PERMISSION_TYPE): Promise<boolean> => {
     const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
     if (!permissions) {
       return true;

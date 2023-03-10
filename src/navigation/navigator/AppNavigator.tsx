@@ -14,7 +14,10 @@ import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {useDispatch} from 'react-redux';
 import {authSlice} from '../../store/slices/AuthSlice';
 import {setClientHeaders} from '../../store/workers/ApiWorkers';
-import {AuthResult} from '../../models/interfaces/AuthResponse';
+import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
+import {Convert} from '../../utility/converter/Convert';
+import GaNotification from '../../components/GaNotification';
+import GaRefresh from '../../components/GaRefresh';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -27,38 +30,23 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
   StackScreenProps<RootStackParamList, T>;
 
 const AppNavigator = () => {
-  const [data, setData] = useState<AuthResult>();
-
-  const dispatch = useDispatch();
-
-  const dispatchUserInfo = async () => {
-    const rawData: any = await SharedPreference.shared.getItem(
-      kSharedKeys.userDetails,
-    );
-    const data = await JSON.parse(rawData);
-    await setClientHeaders();
-    setData(data);
-    data && dispatch(authSlice.actions.storeAuthResult(data));
-  };
-
-  useEffect(() => {
-    dispatchUserInfo();
-  }, []);
-
-  useEffect(() => {}, [data]);
-
   return (
-    <NavigationContainer theme={ExtendedTheme} ref={RootNavigation.navigation}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          animationEnabled: false,
-          // animation: 'none',
-        }}>
-        <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
-        <Stack.Screen name="Drawer" component={DrawerNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <GaNotification />
+      <NavigationContainer
+        theme={ExtendedTheme}
+        ref={RootNavigation.navigation}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animationEnabled: false,
+            // animation: 'none',
+          }}>
+          <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
+          <Stack.Screen name="Drawer" component={DrawerNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 

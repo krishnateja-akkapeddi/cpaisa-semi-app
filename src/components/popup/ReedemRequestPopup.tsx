@@ -12,6 +12,9 @@ import AdaptiveButton from '../button/AdaptiveButton';
 interface ReedemRequestPopupProps {
   goToDashboard: () => void;
   onDismiss: () => void;
+  company: string;
+  couponType: string;
+  points: string;
 }
 const ITEMS = [
   'Company/Department:',
@@ -20,7 +23,7 @@ const ITEMS = [
 ];
 
 const ReedemRequestPopup: React.FC<ReedemRequestPopupProps> = props => {
-  const {onDismiss, goToDashboard} = props;
+  const {onDismiss, goToDashboard, company, couponType, points} = props;
 
   return (
     <PopupContainer
@@ -37,7 +40,15 @@ const ReedemRequestPopup: React.FC<ReedemRequestPopupProps> = props => {
             <View key={index} style={styles.lblContainer}>
               <Text style={styles.lblKey}>{item}</Text>
               <Spacer width={wp(2)} />
-              <Text style={styles.lblValue}>Pfizer</Text>
+              <Text style={styles.lblValue}>
+                {item.startsWith('Com')
+                  ? company
+                  : item.startsWith('P')
+                  ? points
+                  : item.startsWith('Cou')
+                  ? couponType
+                  : ''}
+              </Text>
             </View>
           );
         })}
