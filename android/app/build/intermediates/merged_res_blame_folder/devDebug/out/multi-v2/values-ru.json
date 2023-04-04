@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-31:/values-ru/values-ru.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-ru/values-ru.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/18a01427a649fc2ed4df1a0cedf4d5e4/transformed/core-1.7.0/res/values-ru/values-ru.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "41",
-                        "startColumns": "4",
-                        "startOffsets": "4259",
-                        "endColumns": "100",
-                        "endOffsets": "4355"
-                    }
-                },
-                {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/e809d7136e0763ae1354e0c1cea39af1/transformed/biometric-1.0.1/res/values-ru/values-ru.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/res/values-ru/values-ru.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
@@ -38,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/72770b154a9816e6fdc35d6ef87d96de/transformed/appcompat-1.4.1/res/values-ru/values-ru.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/4c0f13976d02ef43c57c3cf0ee71b681/transformed/core-1.7.0/res/values-ru/values-ru.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "41",
+                        "startColumns": "4",
+                        "startOffsets": "4259",
+                        "endColumns": "100",
+                        "endOffsets": "4355"
+                    }
+                },
+                {
+                    "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-ru/values-ru.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

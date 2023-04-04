@@ -1,29 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-31:/values-sw600dp-v13/values-sw600dp-v13.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/packaged_res/debug/values-sw600dp-v13/values-sw600dp-v13.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,123,191",
-                        "endLines": "2,3,8",
-                        "endColumns": "67,67,12",
-                        "endOffsets": "118,186,431"
-                    },
-                    "to": {
-                        "startLines": "19,22,28",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "1173,1356,1659",
-                        "endLines": "19,22,32",
-                        "endColumns": "67,67,12",
-                        "endOffsets": "1236,1419,1899"
-                    }
-                },
-                {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/b382acc706c36059c36b4976fd1032d0/transformed/material-1.1.0/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/2501ae2de24b58a2629b101359eada6f/transformed/material-1.1.0/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -42,13 +23,32 @@
                     }
                 },
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/72770b154a9816e6fdc35d6ef87d96de/transformed/appcompat-1.4.1/res/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-sw600dp-v13/values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
                         "startOffsets": "55,124,193,263,337,413,472,543",
                         "endColumns": "68,68,69,73,75,58,70,67",
                         "endOffsets": "119,188,258,332,408,467,538,606"
+                    }
+                },
+                {
+                    "source": "/Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/packaged_res/debug/values-sw600dp-v13/values-sw600dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,123,191",
+                        "endLines": "2,3,8",
+                        "endColumns": "67,67,12",
+                        "endOffsets": "118,186,431"
+                    },
+                    "to": {
+                        "startLines": "19,22,28",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "1173,1356,1659",
+                        "endLines": "19,22,32",
+                        "endColumns": "67,67,12",
+                        "endOffsets": "1236,1419,1899"
                     }
                 }
             ]

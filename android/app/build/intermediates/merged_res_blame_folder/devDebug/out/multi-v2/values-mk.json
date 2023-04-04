@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-31:/values-mk/values-mk.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-mk/values-mk.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/e809d7136e0763ae1354e0c1cea39af1/transformed/biometric-1.0.1/res/values-mk/values-mk.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,180,297,390,511,641,765,894,1012,1147,1241",
-                        "endColumns": "124,116,92,120,129,123,128,117,134,93,122",
-                        "endOffsets": "175,292,385,506,636,760,889,1007,1142,1236,1359"
-                    },
-                    "to": {
-                        "startLines": "29,30,31,32,33,34,35,36,37,38,39",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "2820,2945,3062,3155,3276,3406,3530,3659,3777,3912,4006",
-                        "endColumns": "124,116,92,120,129,123,128,117,134,93,122",
-                        "endOffsets": "2940,3057,3150,3271,3401,3525,3654,3772,3907,4001,4124"
-                    }
-                },
-                {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/18a01427a649fc2ed4df1a0cedf4d5e4/transformed/core-1.7.0/res/values-mk/values-mk.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/4c0f13976d02ef43c57c3cf0ee71b681/transformed/core-1.7.0/res/values-mk/values-mk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -38,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/72770b154a9816e6fdc35d6ef87d96de/transformed/appcompat-1.4.1/res/values-mk/values-mk.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/res/values-mk/values-mk.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,180,297,390,511,641,765,894,1012,1147,1241",
+                        "endColumns": "124,116,92,120,129,123,128,117,134,93,122",
+                        "endOffsets": "175,292,385,506,636,760,889,1007,1142,1236,1359"
+                    },
+                    "to": {
+                        "startLines": "29,30,31,32,33,34,35,36,37,38,39",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "2820,2945,3062,3155,3276,3406,3530,3659,3777,3912,4006",
+                        "endColumns": "124,116,92,120,129,123,128,117,134,93,122",
+                        "endOffsets": "2940,3057,3150,3271,3401,3525,3654,3772,3907,4001,4124"
+                    }
+                },
+                {
+                    "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-mk/values-mk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-31:/values-hdpi-v4/values-hdpi-v4.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-hdpi-v4/values-hdpi-v4.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-hdpi-v4/values-hdpi-v4.xml",
