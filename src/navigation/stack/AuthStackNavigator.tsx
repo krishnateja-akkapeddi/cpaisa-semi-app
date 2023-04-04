@@ -17,25 +17,36 @@ import CompleteKYCScreen from '../../screens/auth/CompleteKYCScreen';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
 import LoginScreen from '../../screens/auth/LoginScreen';
 import TermsConditionsScreen from '../../screens/drawer/TermsConditionsScreen';
+import EnterUpdateContactOtpScreen from '../../screens/auth/EnterUpdateContactOtpScreen';
+import LoginHelpScreen from '../../screens/auth/LoginHelpScreen';
 
 export type AuthStackParamList = {
   SplashScreen: RouteParamList;
   LoginScreen: RouteParamList & {
     mobileNumber: string;
     forUpdateContact?: boolean;
+    contactType: 'whatsapp' | 'mobile';
   };
   MobileScreen: RouteParamList;
   EnterOTPScreen: RouteParamList & {
     mobileNumber: string;
     forUpdateContact?: boolean;
     fromNewContact?: boolean;
+    contactType: 'whatsapp' | 'mobile';
   };
   EnterGSTScreen: RouteParamList;
   EnterDetailsScreen: RouteParamList;
   DocumentUploadScreen: RouteParamList;
   ChooseOrganisationScreen: RouteParamList;
   CompleteKYCScreen: RouteParamList;
+  LoginHelpScreen: RouteParamList;
   TermsConditionsScreen: RouteParamList;
+  EnterUpdateContactOtpScreen: RouteParamList & {
+    mobileNumber: string;
+    forUpdateContact?: boolean;
+    fromNewContact?: boolean;
+    contactType: 'whatsapp' | 'mobile';
+  };
 };
 
 export type AuthStackScreenProps<T extends keyof AuthStackParamList> =
@@ -80,6 +91,11 @@ const AuthStackNavigator = () => {
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="MobileScreen" component={MobileScreen} />
       <Stack.Screen name="EnterOTPScreen" component={EnterOTPScreen} />
+      <Stack.Screen
+        name="EnterUpdateContactOtpScreen"
+        component={EnterUpdateContactOtpScreen}
+      />
+
       <Stack.Screen name="EnterGSTScreen" component={EnterGSTScreen} />
       <Stack.Screen name="EnterDetailsScreen" component={EnterDetailsScreen} />
       <Stack.Screen
@@ -90,6 +106,7 @@ const AuthStackNavigator = () => {
         name="ChooseOrganisationScreen"
         component={ChooseOrganisationScreen}
       />
+      <Stack.Screen name="LoginHelpScreen" component={LoginHelpScreen} />
       <Stack.Screen name="CompleteKYCScreen" component={CompleteKYCScreen} />
       <Stack.Screen
         name="TermsConditionsScreen"

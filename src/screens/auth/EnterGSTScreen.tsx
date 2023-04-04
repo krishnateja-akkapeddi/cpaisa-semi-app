@@ -101,5 +101,6 @@ const styles = StyleSheet.create({
   viewBottom: {
     flex: 1,
     justifyContent: 'flex-end',
+    marginBottom: hp('5%'),
   },
 });

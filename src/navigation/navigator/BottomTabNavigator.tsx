@@ -15,11 +15,12 @@ import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps as BTSP} from '@react-navigation/bottom-tabs';
 import {HomeStackParamList} from '../stack/HomeStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
+import Animated from 'react-native-reanimated';
 
 export type BottomTabParamList = {
   DashboardScreen: RouteParamList;
   OffersScreen: RouteParamList;
-  InvoiceScreen: RouteParamList;
+  InvoiceScreen: RouteParamList & {fromInvoiceUpload: Function};
   UploadScreen: RouteParamList;
   WalletScreen: RouteParamList;
 };

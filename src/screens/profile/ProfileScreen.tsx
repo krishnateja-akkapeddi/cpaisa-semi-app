@@ -17,6 +17,8 @@ import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 import {appSlice, AppSliceState} from '../../store/slices/AppSlice';
 
 import {ProfileStackScreenProps} from '../../navigation/stack/ProfileStackNavigator';
+import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
+import {Convert} from '../../utility/converter/Convert';
 
 enum ProfileMode {
   Personal,
@@ -60,7 +62,7 @@ const ProfileScreen: React.FC<
             <Text style={styles.company}>
               {channel_partner?.address?.line
                 ? channel_partner?.address?.line
-                : '' + ', ' + channel_partner?.address?.state?.name}
+                : '' + ', ' + (channel_partner?.address?.state?.name ?? '')}
             </Text>
 
             <SVGIcon

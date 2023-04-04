@@ -14,6 +14,10 @@ const ApiEndpoints = {
   UPLOAD_INVOICE: '/invoices',
   OFFERS_LIST: '/products/offers',
   GENERATE_OTP: '/otp/generate',
+  REDEEM_REQUEST: '/reward-requests',
+  COUPON_PARTNERS: '/rewards/forOrganization/:id',
+  AUTHORIZED_STOCKISTS: '/channel-partners/stockist?page=:pageNumber',
+  NOTIFICATIONS: '/notifications',
 };
 
 export default ApiEndpoints;

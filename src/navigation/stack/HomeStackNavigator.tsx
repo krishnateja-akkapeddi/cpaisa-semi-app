@@ -44,8 +44,8 @@ export type HomeStackParamList = {
   TermsConditionsScreen: RouteParamList;
   AboutChannelPaisaScreen: RouteParamList;
   CouponScreen: RouteParamList & {goRupiLink: string};
-  HelpScreen: RouteParamList;
-  ContactSupportScreen: RouteParamList;
+  Help: RouteParamList;
+  ContactSupport: RouteParamList;
 };
 
 export type HomeStackScreenProps<T extends keyof HomeStackParamList> =
@@ -127,11 +127,8 @@ const HomeStackNavigator = () => {
         component={AboutChannelPaisaScreen}
       />
       <Stack.Screen name="CouponScreen" component={CouponScreen} />
-      <Stack.Screen name="HelpScreen" component={HelpScreen} />
-      <Stack.Screen
-        name="ContactSupportScreen"
-        component={ContactSupportScreen}
-      />
+      <Stack.Screen name="Help" component={HelpScreen} />
+      <Stack.Screen name="ContactSupport" component={ContactSupportScreen} />
     </Stack.Navigator>
   );
 };

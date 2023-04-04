@@ -3,24 +3,19 @@ import {SafeAreaView, StyleSheet, View, FlatList, Text} from 'react-native';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';
-import OrganisationJson from '../../mock/Organisation.json';
 import Fonts from '../../theme/Fonts';
 import Colors from '../../theme/Colors';
 import Style from '../../constants/Style';
-import Picker, {DropDownItem} from '../../components/picker/Picker';
 import WalletPointsView from '../../components/app/wallet/WalletPointsView';
 import RedeemPoint from '../../components/app/wallet/RedeemPoint';
 import RedeemPointDetail from '../../components/app/wallet/RedeemPointDetail';
 import Spacer from '../../components/layout/Spacer';
 import SegmentBar from '../../components/app/SegmentBar';
 import Transactions from '../../mock/Transactions.json';
-import Coupons from '../../mock/Coupons.json';
 import Transaction from '../../models/interfaces/Transaction';
-import Coupon from '../../models/interfaces/Coupon';
 import CouponCard from '../../components/app/wallet/CouponCard';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import TransactionFilterPopup from '../../components/popup/TransactionFilterPopup';
-import ReedemRequestPopup from '../../components/popup/ReedemRequestPopup';
 import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
 import {
   WalletSummaryEntity,
@@ -30,6 +25,7 @@ import {PickerItem} from 'react-native-woodpicker';
 import {store} from '../../store/Store';
 import {
   fetchClients,
+  fetchCouponPartners,
   fetchRewardRequestList,
   fetchWalletSummary,
 } from '../../store/thunks/ApiThunks';
@@ -43,17 +39,24 @@ import {Convert} from '../../utility/converter/Convert';
 import GaScrollView from '../../components/GaScrollView';
 import GaCaughtUp from '../../components/GaCaughtUp';
 import AppLoader from '../../components/indicator/AppLoader';
-// import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import Animated from 'react-native-reanimated';
+import {CouponPartnerEntity} from '../../models/interfaces/ReemPartnersResponse';
+import {Filter} from '../../models/enum/Filter';
+import {
+  DivisionPickerSkeleton,
+  OrganisationSkeletonItem,
+} from '../../components/SkeletonCards';
+import WalletDivisionPicker, {
+  WalletDivisionPickerProps,
+} from '../../components/app/wallet/WalletDivisionPicker';
 
-enum WalletMode {
+export enum WalletMode {
   Transaction,
   Redeem,
   RedeemDetails,
 }
 
 enum TransactionMode {
-  AllTransaction,
+  AllTransaction = 1,
   CouponCode,
 }
 
@@ -62,30 +65,19 @@ export type getRewardRequestListArgs = {
   fromResetFilter?: boolean;
   paramsPage?: number;
   fromScroll?: boolean;
-  organizationId?: number;
+  client_id?: number;
   deleteOrg?: boolean;
   deleteAllParams?: boolean;
   fromDate?: string;
   toDate?: string;
+  organization_id?: number;
 };
-
-const kOrganisations = [
-  {name: AppLocalizedStrings.viewAll, url: ''},
-  ...OrganisationJson,
-];
-
-const pickerData: DropDownItem[] = [
-  {label: 'Value 1', value: 1},
-  {label: 'Value 2', value: 2},
-  {label: 'Value 3', value: 3},
-  {label: 'Value 4', value: 4},
-  {label: 'Value 5', value: 5},
-  {label: 'Value 6', value: 6},
-];
 
 const kScreenPadding = wp(5);
 const segmentBarItems = [
-  AppLocalizedStrings.wallet.allTransactions,
+  // Todo: will be added in next release
+  // AppLocalizedStrings.wallet.allTransactions,
+
   AppLocalizedStrings.wallet.couponsCode,
 ];
 
@@ -93,26 +85,27 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   const [transactions, setTransactions] = useState(
     Transactions as Transaction[],
   );
-  const [points, setPoints] = useState('100');
-  const [coupons, setCoupons] = useState(Coupons as Coupon[]);
-  const [organizations, setOrganizations] = useState<ClientEntity[]>();
+  const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const [mode, setMode] = useState(WalletMode.Transaction);
-  const [redeemSelectTitle, setRedeemTitle] = useState('');
-  const [couponType, setCouponType] = useState('');
-  const [walletSummaryLoading, setWalletSummaryLoading] = useState(false);
+  const [couponPartners, setCouponPartners] = useState<CouponPartnerEntity[]>(
+    [],
+  );
+  const [loadingOrganisations, setLoadingOrganisations] = useState(false);
+  const [walletSummaryLoading, setWalletSummaryLoading] = useState(true);
   const [sectedReedemOrg, setSectionedReedemOrg] = useState('');
-  //wallet summary states
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>();
-  const [walletSummaries, setWalletSummaries] = React.useState<PickerItem[]>();
+  const [walletSummaries, setWalletSummaries] = React.useState<PickerItem[]>(
+    [],
+  );
+  const [startDate, setStartDate] = useState<null | Date>();
+  const [endDate, setEndDate] = useState<null | Date>();
+
   const [selectedWallet, setSelectedWallet] = useState<WalletSummaryEntity>();
   const [transactionMode, setTransactionMode] = useState(
-    TransactionMode.AllTransaction,
+    TransactionMode.CouponCode,
   );
   const [showFilter, setShowFilter] = useState(false);
-  const [showRedeem, setShowRedeem] = useState(false);
-
-  //Reward request list states
   const [rewardRequestList, setRewardRequestList] = useState<
     RewardTransactionEntity[]
   >([] as RewardTransactionEntity[]);
@@ -131,23 +124,54 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   >({} as FetchRewardRequestListParams.params);
   const [selectedOrg, setSelectedOrg] = useState<null | number>();
 
-  const getWalletSummary = React.useCallback(async () => {
+  const getWalletSummary = React.useCallback(async (clientId?: number) => {
     setWalletSummaryLoading(true);
 
-    const data = await store.dispatch(fetchWalletSummary()).unwrap();
-    setWalletSummary(data.wallet_summary);
+    const data = await store
+      .dispatch(fetchWalletSummary(clientId ? {client_id: clientId} : {}))
+      .unwrap();
 
+    setWalletSummary(data.wallet_summary);
     data.wallet_summary.wallet_summaries &&
-      setSelectedWallet(data?.wallet_summary.wallet_summaries[0]);
-    const summaries: PickerItem[] | undefined =
-      data.wallet_summary.wallet_summaries?.map(
-        (val: {division_code: string; division_name: string}, ind: any) => {
-          return {value: val.division_code, label: val.division_name};
+      setSelectedWallet({
+        display_name: Filter.SELECT_ALL,
+        division_name: Filter.SELECT_ALL,
+        division_code: Filter.SELECT_ALL,
+        team_id: -1,
+        organization_code: Filter.SELECT_ALL,
+        organization_id: -1,
+        organization_name: Filter.SELECT_ALL,
+        redeemable_points:
+          data.wallet_summary.total_redeemable_points.toString(),
+        pending_points: data.wallet_summary.total_pending_points.toString(),
+        redeemed_points: data.wallet_summary.total_redeemed_points,
+        total_redeemed_points:
+          walletSummary?.total_redeemed_points ?? AppLocalizedStrings.noData,
+      });
+
+    if (data.wallet_summary.wallet_summaries) {
+      const summaries: PickerItem[] = data.wallet_summary.wallet_summaries?.map(
+        (val: {division_code: string; display_name: string}, ind: any) => {
+          return {
+            value: val.division_code,
+            label: val.display_name,
+          };
         },
       );
-    setWalletSummaries(summaries);
-    setWalletSummaryLoading(false);
+
+      summaries.unshift({value: Filter.SELECT_ALL, label: Filter.SELECT_ALL});
+
+      summaries && setWalletSummaries(summaries);
+      setWalletSummaryLoading(false);
+    }
   }, []);
+
+  const getCouponPartners = async (id: number) => {
+    try {
+      const data = await store.dispatch(fetchCouponPartners({id})).unwrap();
+      setCouponPartners(data.rewards);
+    } catch (err) {}
+  };
 
   const getRewardRequestList = useCallback(
     async (
@@ -155,37 +179,59 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
       page?: number,
       scrolled?: boolean,
     ) => {
-      const {fromResetFilter, organizationId} = params;
+      const {fromResetFilter, client_id} = params;
 
       fromResetFilter
         ? setResetFilterLoading(true)
         : setRewardRequestListLoading(true);
       var rewardParams = {length: 10} as FetchRewardRequestListParams.params;
 
-      if (quarter && year) {
-        const {end, start} = Generator.getQuarterDates(quarter, year);
+      // if (quarter && year) {
+      //   const {end, start} = Generator.getQuarterDates(quarter, year);
+      //   const convertedStartDate = Convert.dateFormatter(
+      //     null,
+      //     'YYYY-MM-DD',
+      //     start,
+      //   );
+
+      //   const convertedEndDate = Convert.dateFormatter(null, 'YYYY-MM-DD', end);
+      //   rewardParams.from_date = convertedStartDate;
+      //   rewardParams.to_date = convertedEndDate;
+      // }
+
+      if (startDate) {
         const convertedStartDate = Convert.dateFormatter(
           null,
           'YYYY-MM-DD',
-          start,
+          startDate,
         );
-        const convertedEndDate = Convert.dateFormatter(null, 'YYYY-MM-DD', end);
+
         rewardParams.from_date = convertedStartDate;
+      }
+
+      if (endDate) {
+        const convertedEndDate = Convert.dateFormatter(
+          null,
+          'YYYY-MM-DD',
+          endDate,
+        );
         rewardParams.to_date = convertedEndDate;
       }
-      if (organizationId) {
-        if (organizationId === -1) {
-          delete rewardParams.organization_id;
+
+      if (client_id) {
+        if (client_id === -1) {
+          delete rewardParams.client_id;
         } else {
-          rewardParams.organization_id = organizationId;
+          rewardParams.client_id = client_id;
         }
       } else if (selectedOrg) {
-        rewardParams.organization_id = selectedOrg;
+        rewardParams.client_id = selectedOrg;
       }
 
       if (rewardRequestListParams.status) {
         rewardParams.status = rewardRequestListParams.status;
       }
+
       rewardParams.start_point = rewardRequestListParams.start_point;
       rewardParams.end_point = rewardRequestListParams.end_point;
 
@@ -199,7 +245,18 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
         delete rewardParams.from_date;
         delete rewardParams.to_date;
       }
-      console.log('PARAMS_RAJ', rewardParams, 'page', page);
+      if (rewardRequestListParams.organization_id) {
+        rewardParams.organization_id = rewardRequestListParams.organization_id;
+      }
+
+      if (params.organization_id) {
+        if (params.organization_id === -1) {
+          delete rewardParams.organization_id;
+        } else {
+          rewardParams.organization_id = params.organization_id;
+        }
+      }
+
       const result = await store
         .dispatch(
           fetchRewardRequestList({page: page ? page : 1, params: rewardParams}),
@@ -223,7 +280,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
         : setRewardRequestListLoading(false);
     },
 
-    [rewardRequestListParams, selectedOrg],
+    [rewardRequestListParams, selectedOrg, startDate, endDate],
   );
 
   const onFilterHandler = useCallback(() => {
@@ -239,27 +296,20 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   }, []);
 
   const onRedeemHandler = useCallback(() => {
-    changeMode(WalletMode.Redeem);
+    changeMode(WalletMode.RedeemDetails);
   }, [changeMode]);
-  rewardRequestListParams.status;
-
-  const onRedeemSuccessHandler = useCallback(() => {
-    setShowRedeem(true);
-  }, []);
 
   const onGoToDashboardHandler = useCallback(
     (toDashboard = false) => {
-      setShowRedeem(false);
       setMode(WalletMode.Transaction);
       if (toDashboard === true) {
-        props.navigation.jumpTo('DashboardScreen');
+        props.navigation.jumpTo('WalletScreen');
       }
     },
     [props],
   );
 
   const onCompanySelect = (title: string) => {
-    setRedeemTitle(title);
     setSectionedReedemOrg(title);
     changeMode(WalletMode.RedeemDetails);
   };
@@ -271,14 +321,23 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     setShowFilter(false);
   };
 
+  const resetFilterState = () => {
+    setYear(null);
+    setQuarter(null);
+    setRewardRequestListParams({} as FetchRewardRequestListParams.params);
+  };
+
   const onClearHandler = async () => {
+    console.log('DUMCHIK_AJFHJDE');
+
     setYear(null);
     setQuarter(null);
     setRewardRequestListParams({} as FetchRewardRequestListParams.params);
     setResetFilterLoading(true);
+    setStartDate(null);
+    setEndDate(null);
     await getRewardRequestList({fromResetFilter: true, paramsPage: 1});
     setResetFilterLoading(false);
-    setShowFilter(false);
     setShowFilter(false);
   };
 
@@ -287,7 +346,10 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   };
 
   const getClients = useCallback(async () => {
-    let params = {mapped_organization: 1} as ClientListParams.params;
+    setLoadingOrganisations(true);
+    let params = {
+      active_wallet_clients: 1,
+    } as ClientListParams.params;
     const data = await store.dispatch(fetchClients(params)).unwrap();
     if (data.success) {
       data.clients.data.unshift({} as ClientEntity);
@@ -301,104 +363,103 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
         textColor: Colors.white,
       });
     }
+    setLoadingOrganisations(false);
   }, []);
 
-  const OrganisationListComponet = () => {
-    return (
-      <View style={styles.topContainer}>
-        <OrganisationList
-          style={styles.flatList}
-          contentContainerStyle={styles.flatListContent}
-          selectedIds={selectedIds}
-          horizontal={true}
-          showAll={true}
-          data={organizations}
-          onSelect={ids => {
-            setSelectedIds(ids);
-            const orgId = organizations && organizations[ids[0]]?.id;
-            if (orgId) {
-              setSelectedOrg(orgId);
-              getRewardRequestList({organizationId: orgId, paramsPage: 1});
-            } else {
-              setSelectedOrg(null);
-              getRewardRequestList({organizationId: -1, paramsPage: 1});
-            }
-          }}
-        />
-      </View>
-    );
-  };
-
-  const PickerView = () => {
+  const PickerView = useCallback(() => {
     return (
       <>
         <Text style={styles.selectDivision}>
           {AppLocalizedStrings.wallet.selectDivision}
         </Text>
+        <View>
+          {walletSummaryLoading ? (
+            <>
+              <DivisionPickerSkeleton />
+              <Spacer height={hp(2)} />
+            </>
+          ) : (
+            <View>
+              {walletSummaries && selectedWallet && walletSummary ? (
+                <WalletDivisionPicker
+                  organizations={organizations}
+                  walletSummaries={walletSummaries}
+                  selectedWallet={selectedWallet}
+                  setSelectedWallet={setSelectedWallet}
+                  walletSummary={walletSummary}
+                  resetFilterState={resetFilterState}
+                  getRewardRequestList={getRewardRequestList}
+                  setCouponPartners={setCouponPartners}
+                  selectedIds={selectedIds}
+                  setRewardRequestListParams={setRewardRequestListParams}
+                />
+              ) : (
+                <View></View>
+              )}
+            </View>
+          )}
+        </View>
         {walletSummaries && (
-          <Picker
-            item={walletSummaries.find(val => {
-              return val.value === selectedWallet?.division_code;
-            })}
-            onItemChange={val => {
-              const findItem = walletSummary?.wallet_summaries?.find(
-                (item, ind) => {
-                  return item.division_code === val.value;
-                },
-              );
-              setSelectedWallet(findItem);
-            }}
-            textStyle={styles.pickerText}
-            style={styles.picker}
-            items={walletSummaries}
+          <WalletPointsView
+            walletSummaryLoading={loadingOrganisations || walletSummaryLoading}
+            selectedWallet={selectedWallet}
+            onPress={onRedeemHandler}
           />
         )}
-        <WalletPointsView
-          selectedWallet={selectedWallet}
-          onPress={onRedeemHandler}
-        />
         <Spacer height={hp(2)} />
       </>
     );
-  };
+  }, [
+    selectedWallet,
+    walletSummaries,
+    walletSummary,
+    walletSummaryLoading,
+    loadingOrganisations,
+  ]);
 
   const segmentContainer = useMemo(() => {
     return (
       <View style={styles.segmentContainer}>
         <SegmentBar
           containerStyle={styles.bar}
-          selectedIndex={transactionMode}
+          selectedIndex={0}
           items={segmentBarItems}
           onValueChange={onTransactionModeChange}
         />
       </View>
     );
   }, [transactionMode, onTransactionModeChange, onFilterHandler]);
+  const handleRefreshApi = () => {
+    setRewardRequestList([]);
+    onClearHandler();
+    getWalletSummary();
+  };
 
   const listHeaderComponent = useCallback(() => {
     return (
       <>
-        <OrganisationListComponet />
         <View style={styles.bottomContainer}>
           <>
-            <PickerView />
+            {walletSummaries && <PickerView />}
             {mode === WalletMode.Transaction && segmentContainer}
             {mode === WalletMode.Redeem && (
               <RedeemPoint
-                orgainisations={organizations}
+                organisations={organizations}
+                selectedOrgID={selectedIds}
                 onCompanySelect={onCompanySelect}
                 onDismiss={changeMode.bind(this, WalletMode.Transaction)}
               />
             )}
             {mode === WalletMode.RedeemDetails && (
               <RedeemPointDetail
-                couponType={couponType}
-                setCouponType={setCouponType}
-                points={points}
-                setPoints={setPoints}
-                onRedeem={onRedeemSuccessHandler}
-                onDismiss={changeMode.bind(this, WalletMode.Redeem)}
-                title={redeemSelectTitle}
+                refreshApi={handleRefreshApi}
+                getRewardRequestList={getRewardRequestList}
+                setMode={setMode}
+                couponPartners={couponPartners}
+                onGoToDashboardHandler={onGoToDashboardHandler}
+                selectedWallet={selectedWallet}
+                onDismiss={changeMode.bind(this, WalletMode.Transaction)}
+                title={selectedWallet?.organization_code ?? ''}
               />
             )}
           </>
@@ -407,12 +468,18 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     );
   }, [
     mode,
-    onRedeemSuccessHandler,
     rewardRequestList,
     organizations,
     sectedReedemOrg,
+    walletSummaries,
+    selectedWallet,
+    selectedIds,
+    selectedWallet,
+    couponPartners,
+    handleRefreshApi,
   ]);
 
+  // Todo: Will be implemented for transactions in the next release
   // const getDataSource = () => {
   //   return mode == WalletMode.Transaction
   //     ? transactionMode == TransactionMode.AllTransaction
@@ -452,12 +519,18 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     selectedWallet,
     organizations,
     rewardRequestList,
+    couponPartners,
   ]);
+
+  React.useEffect(() => {
+    if (selectedWallet?.organization_id) {
+      getCouponPartners(selectedWallet?.organization_id);
+    }
+  }, [selectedWallet]);
 
   return (
     <SafeAreaView>
       <GaScrollView
-        endMessage={<Text>This is the end!</Text>}
         hasMore={currentPage < (lastPage ? lastPage : 1)}
         onEndReached={async () => {
           await getRewardRequestList({}, currentPage + 1, true);
@@ -470,7 +543,54 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
               windowSize={21}
               initialNumToRender={10}
               maxToRenderPerBatch={rewardRequestList.length}
-              ListHeaderComponent={listHeaderComponent}
+              ListHeaderComponent={
+                <>
+                  <View style={styles.topContainer}>
+                    {loadingOrganisations ? (
+                      <View style={styles.flatList}>
+                        <Spacer height={hp('1%')} />
+                        <View style={{paddingLeft: wp('5%')}}>
+                          <OrganisationSkeletonItem />
+                        </View>
+                        <Spacer height={hp('3%')} />
+                      </View>
+                    ) : (
+                      <OrganisationList
+                        loading={!organizations}
+                        style={styles.flatList}
+                        contentContainerStyle={styles.flatListContent}
+                        selectedIds={selectedIds}
+                        horizontal={true}
+                        showAll={true}
+                        data={organizations}
+                        onSelect={ids => {
+                          setSelectedIds(ids);
+                          const orgId =
+                            organizations && organizations[ids[0]]?.id;
+                          if (orgId) {
+                            setSelectedOrg(orgId);
+                            getRewardRequestList({
+                              client_id: orgId,
+                              paramsPage: 1,
+                              organization_id: -1,
+                            });
+                            getWalletSummary(orgId);
+                          } else {
+                            setSelectedOrg(null);
+                            getRewardRequestList({
+                              client_id: -1,
+                              paramsPage: 1,
+                              organization_id: -1,
+                            });
+                            getWalletSummary();
+                          }
+                        }}
+                      />
+                    )}
+                  </View>
+                  {listHeaderComponent()}
+                </>
+              }
               data={[]}
               ItemSeparatorComponent={itemSeparatorComponent}
               renderItem={renderItem}
@@ -489,21 +609,14 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
             />
             <View>
               <FlatList renderItem={renderItem} data={rewardRequestList} />
-              {/* <SkeletonPlaceholder borderRadius={4}>
-                  <SkeletonPlaceholder.Item
-                    width={wp('90%')}
-                    height={hp('30%')}
-                  />
-                </SkeletonPlaceholder> */}
-
-              {lastPage && currentPage !== lastPage && (
+              {rewardRequestListLoading && (
                 <View style={{marginVertical: 40, marginBottom: hp(10)}}>
                   <AppLoader type="none" loading={true} />
                 </View>
               )}
 
-              {currentPage === lastPage && (
-                <GaCaughtUp message="You're all caught up!" />
+              {currentPage === lastPage && rewardRequestList.length > 0 && (
+                <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
               )}
             </View>
           </View>
@@ -511,6 +624,11 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
       />
       {showFilter && (
         <TransactionFilterPopup
+          enablePoints={false}
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          startDate={startDate}
           setQuarter={setQuarter}
           applyLoading={rewardRequestListLoading}
           resetFilterLoading={resetFilterLoading}
@@ -540,19 +658,9 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
               ...styles.noDataText,
               color: Colors.primary,
             }}>
-            No Coupons
+            No Coupons Found
           </Text>
         </View>
-      )}
-
-      {showRedeem && (
-        <ReedemRequestPopup
-          points={points}
-          company={sectedReedemOrg}
-          couponType={couponType}
-          onDismiss={onGoToDashboardHandler.bind(this, false)}
-          goToDashboard={onGoToDashboardHandler.bind(this, true)}
-        />
       )}
     </SafeAreaView>
   );
@@ -598,23 +706,6 @@ const styles = StyleSheet.create({
   searchBarView: {
     marginBottom: hp(2),
   },
-
-  pickerText: {
-    ...Style.getTextStyle(
-      Fonts.getFontSize('headline3'),
-      'Regular',
-      Colors.darkBlack,
-    ),
-  },
-  picker: {
-    height: hp(5),
-    width: '100%',
-    justifyContent: 'space-between',
-    backgroundColor: Colors.lightGrey,
-    paddingHorizontal: wp(3),
-    borderRadius: Style.kBorderRadius,
-    marginBottom: hp(2),
-  },
   details: {
     marginVertical: hp(2),
   },
@@ -629,6 +720,8 @@ const styles = StyleSheet.create({
   },
   segmentContainer: {
     flexDirection: 'row',
+
+    // todo: Will be using this once the transactions are also implemented
     // justifyContent: 'space-between',
   },
   skelLoadingContainer: {
@@ -639,7 +732,7 @@ const styles = StyleSheet.create({
     padding: 90,
     alignItems: 'center',
   },
-  noDataText: {marginTop: 4, fontSize: 20},
+  noDataText: {marginTop: 0, fontSize: 20},
   skelLoadingText: {
     marginTop: 8,
     fontSize: 14,

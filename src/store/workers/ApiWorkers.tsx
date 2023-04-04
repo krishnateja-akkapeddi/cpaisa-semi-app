@@ -1,16 +1,20 @@
 import {AuthHeader} from '../../constants/Auth';
 import {RemoteVerifyOtp} from '../../data/usecases/auth/RemoteVerifyOtp';
 import {RemoteFetchClientsList} from '../../data/usecases/RemoteFetchClientsList';
+import {RemoteFetchCouponPartners} from '../../data/usecases/RemoteFetchCouponPartners';
+import {RemoteFetchFetchAuthorizedStockists} from '../../data/usecases/RemoteFetchFetchAuthorizedStockists';
 import {RemoteFetchImages} from '../../data/usecases/RemoteFetchImages';
 import {RemoteFetchInvoiceDetail} from '../../data/usecases/RemoteFetchInvoiceDetail';
 import {RemoteFetchInvoiceList} from '../../data/usecases/RemoteFetchInvoiceList';
 import {RemoteFetchInvoiceSumary} from '../../data/usecases/RemoteFetchInvoiceSumary';
+import {RemoteFetchNotifications} from '../../data/usecases/RemoteFetchNotifications';
 import {RemoteFetchOffers} from '../../data/usecases/RemoteFetchOffers';
 import {RemoteFetchOffersList} from '../../data/usecases/RemoteFetchOffersList';
 import {RemoteFetchRewardRequestList} from '../../data/usecases/RemoteFetchRewardRequestList';
 import {RemoteFetchWalletSumary} from '../../data/usecases/RemoteFetchWalletSummary';
 import {RemoteGenerateOtp} from '../../data/usecases/RemoteGenerateOtp';
 import {RemoteGenerateQrCode} from '../../data/usecases/RemoteGenerateQr';
+import {RemoteReedemReward} from '../../data/usecases/RemoteReedemReward';
 import {RemoteUpdateContact} from '../../data/usecases/RemoteUpdateContact';
 import {RemoteUploadInvoice} from '../../data/usecases/RemoteUploadInvoice';
 import ApiEndpoints from '../../domain/ApiEndpoints';
@@ -19,6 +23,25 @@ import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 
 const authClient = AxiosHttpClient.getInstance();
 export const apiClient = AxiosHttpClient.getInstance();
+
+export class ApiWorkers {
+  token: string;
+  instance: ApiWorkers | null = null;
+
+  constructor(token: string) {
+    if (this.instance) {
+      throw new Error('Only one instance allowed');
+    }
+    this.token = token;
+    this.instance = this;
+    if (!this.instance) {
+      this.instance = this;
+    }
+  }
+  getInstance() {
+    return this.instance;
+  }
+}
 
 export async function setClientHeaders() {
   const rawAuthToken: any = await SharedPreference.shared.getItem(
@@ -98,6 +121,26 @@ const generateOtpWorker = new RemoteGenerateOtp(
   apiClient,
 );
 
+const reedemRewardWorker = new RemoteReedemReward(
+  ApiEndpoints.REDEEM_REQUEST,
+  apiClient,
+);
+
+const fetchCouponPartnersWorker = new RemoteFetchCouponPartners(
+  ApiEndpoints.COUPON_PARTNERS,
+  apiClient,
+);
+
+const fetchAuthorizedStockistsWorker = new RemoteFetchFetchAuthorizedStockists(
+  ApiEndpoints.AUTHORIZED_STOCKISTS,
+  apiClient,
+);
+
+const fetchNotificationsWorker = new RemoteFetchNotifications(
+  ApiEndpoints.NOTIFICATIONS,
+  apiClient,
+);
+
 export {
   fetchInvoiceSummaryWorker,
   fetchOffersWorker,
@@ -112,5 +155,9 @@ export {
   FetchRewardRequestListWorker,
   uploadInvoiceWorker,
   fetchOffersListWorker,
+  fetchAuthorizedStockistsWorker,
   generateOtpWorker,
+  reedemRewardWorker,
+  fetchCouponPartnersWorker,
+  fetchNotificationsWorker,
 };

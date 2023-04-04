@@ -20,10 +20,13 @@ export interface AppSliceState {
   qrCodeData?: string;
   qrExpiry: number;
   openQrCode: boolean;
+  qrLoading: boolean;
   organisations?: ClientEntity[];
   trigger: boolean;
   popup: initialPopupState;
   refresh: boolean;
+  qrMessage: string;
+  generateQrCode: boolean;
 }
 
 const initialState: AppSliceState = {
@@ -37,6 +40,9 @@ const initialState: AppSliceState = {
   trigger: false,
   popup: {} as initialPopupState,
   refresh: false,
+  qrLoading: false,
+  qrMessage: '',
+  generateQrCode: false,
 };
 
 export const appSlice = createSlice({
@@ -82,9 +88,33 @@ export const appSlice = createSlice({
     refresh: state => {
       state.refresh = !state.refresh;
     },
+    setQrLoading: (state, action) => {
+      state.qrLoading = action.payload;
+    },
+    setQrMessage: (state, action) => {
+      state.qrMessage = action.payload;
+    },
+    setGenerateQrCode: (state, action) => {
+      state.generateQrCode = action.payload;
+    },
   },
 });
 
-export const {changeNavigatorRoute, clearAppSlice, setIsQrCodeExpired} =
-  appSlice.actions;
+export const {
+  changeNavigatorRoute,
+  clearAppSlice,
+  setIsQrCodeExpired,
+  closePoup,
+  openPopup,
+  refresh,
+  setGenerateQrCode,
+  setOpenQrCode,
+  setOrganisations,
+  setQrCodeData,
+  setQrExpiryDate,
+  setQrLoading,
+  setQrMessage,
+  triggerQrCode,
+} = appSlice.actions;
+
 export default appSlice.reducer;

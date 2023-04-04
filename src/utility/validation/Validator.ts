@@ -6,7 +6,7 @@ class Validator {
   private constructor() {}
 
   static isValidMobileNumber = (mobileNumber?: string): boolean => {
-    const regex = new RegExp('^[0-9]{10}$');
+    const regex = new RegExp('^[6-9][0-9]{9}$');
     return regex.test(mobileNumber ?? '');
   };
 

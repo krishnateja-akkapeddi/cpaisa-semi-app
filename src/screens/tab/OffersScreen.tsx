@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   Image,
   Text,
+  RefreshControl,
 } from 'react-native';
 import {hp} from '../../utility/responsive/ScreenResponsive';
-import OfferJson from '../../mock/Offers.json';
 import OfferListComponent from '../../components/app/offers/OfferListComponent';
 import OfferHeaderComponent from '../../components/app/offers/OfferHeaderComponent';
 import OfferCalculatorPopup from '../../components/popup/OfferCalculatorPopup';
@@ -23,10 +23,12 @@ import {fetchClients, fetchOffersList} from '../../store/thunks/ApiThunks';
 import {FetchOffersListParams} from '../../domain/usages/FetchOffersList';
 import {OffersListEntity} from '../../models/interfaces/OffersListResponse';
 import SearchBar from '../../components/app/SearchBar';
-import AppLoader from '../../components/indicator/AppLoader';
 import Spacer from '../../components/layout/Spacer';
 import GaCaughtUp from '../../components/GaCaughtUp';
-import {OfferSkeletonItem} from '../../components/SkeletonCards';
+import {
+  OfferSkeletonItem,
+  OrganisationSkeletonItem,
+} from '../../components/SkeletonCards';
 import Colors from '../../theme/Colors';
 
 interface Offer {
@@ -42,38 +44,51 @@ const OffersScreen = () => {
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [offersListLoading, setOffersListLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedOffer, setSelectedOffer] = useState<OffersListEntity>();
   const [nextPage, setNextPage] = useState<null | string>(null);
   const [query, setQuery] = useState('');
+  const [loadingOrganisations, setLoadingOrganisations] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState<null | number>();
   const [offersList, setOffersList] = useState<OffersListEntity[]>(
     [] as OffersListEntity[],
   );
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshOffers, setRefreshOffers] = useState<boolean>();
 
   const Header = useCallback(() => {
+    function wp(arg0: string): string | number | undefined {
+      throw new Error('Function not implemented.');
+    }
+
     return (
-      <OfferHeaderComponent
-        onSelect={ids => {
-          setOffersList([]);
-          const orgId = organizations && organizations[ids[0]]?.id;
-          if (orgId) {
-            setSelectedOrg(orgId);
-            getOffersList(1, false, orgId);
-          } else {
-            setSelectedOrg(null);
-            getOffersList(1, false, -1);
-          }
-        }}
-        organizations={organizations}
-      />
+      <View>
+        <OfferHeaderComponent
+          loading={loadingOrganisations}
+          onSelect={ids => {
+            setOffersList([]);
+            const orgId = organizations && organizations[ids[0]]?.id;
+            if (orgId) {
+              setSelectedOrg(orgId);
+              getOffersList(1, false, orgId);
+            } else {
+              setSelectedOrg(null);
+              getOffersList(1, false, -1);
+            }
+          }}
+          organizations={organizations}
+        />
+      </View>
     );
-  }, [organizations]);
+  }, [organizations, loadingOrganisations]);
 
   const getClients = async () => {
+    setLoadingOrganisations(true);
     let params = {} as ClientListParams.params;
     const data = await store.dispatch(fetchClients(params)).unwrap();
     if (data.success) {
       data.clients.data.unshift({} as ClientEntity);
       setOrganizations(data.clients.data);
+      setLoadingOrganisations(false);
     } else {
       Snackbar.show({
         text: data?.errors
@@ -128,12 +143,13 @@ const OffersScreen = () => {
       }
       setOffersListLoading(false);
     },
-    [currentPage, nextPage],
+    [currentPage, nextPage, query],
   );
 
   const renderItem: ListRenderItem<OffersListEntity> = useCallback(
     ({item}) => {
       const onItemPress = () => {
+        setSelectedOffer(item);
         setShowCalculator(val => !val);
       };
       return (
@@ -156,30 +172,38 @@ const OffersScreen = () => {
   );
 
   const onDismissCalculator = useCallback(() => {
-    setShowCalculator(val => !val);
+    setShowCalculator(false);
   }, []);
 
   useEffect(() => {
     getClients();
-  }, []);
+  }, [refreshOffers]);
 
   useEffect(() => {
     if (query === '') {
       setOffersList([]);
       getOffersList(1, false);
-    } else {
-      query.length === 0 && getOffersList(1);
     }
-  }, [query]);
+  }, [query, refreshOffers]);
 
-  // useEffect(() => {
-
-  // }, [query]);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setOffersList([]);
+    setLoadingOrganisations(true);
+    setOffersListLoading(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setRefreshOffers(prev => !prev);
+    }, 2000);
+  }, []);
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.searchBarView}></View>
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         ListFooterComponent={() => {
           return (
             <>
@@ -248,13 +272,16 @@ const OffersScreen = () => {
               color: Colors.black,
               fontWeight: '500',
             }}>
-            No Offers Found
+            {AppLocalizedStrings.offer.noOffersFound}
           </Text>
         </>
       )}
       <Spacer height={hp('2%')}></Spacer>
       {showCalculator && (
-        <OfferCalculatorPopup onDismiss={onDismissCalculator} />
+        <OfferCalculatorPopup
+          selectedOffer={selectedOffer}
+          onDismiss={onDismissCalculator}
+        />
       )}
     </SafeAreaView>
   );

@@ -18,6 +18,7 @@ export interface User {
   full_name: string;
   username: string;
   mobile: string;
+  email_id: string;
   whats_app_number: string;
   status: string;
   terms_is_agreed: number;

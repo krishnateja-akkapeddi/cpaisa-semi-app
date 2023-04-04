@@ -1,5 +1,5 @@
 import {SafeAreaView, StyleSheet, View, FlatList, AppState} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import OrganisationJson from '../../mock/Organisation.json';
@@ -10,7 +10,6 @@ import Fonts from '../../theme/Fonts';
 import Colors from '../../theme/Colors';
 import StockistList from '../../components/app/StockistList';
 import Spacer from '../../components/layout/Spacer';
-import AdaptiveButton from '../../components/button/AdaptiveButton';
 import OrganisationFilterPopup from '../../components/popup/OrganisationFilterPopup';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/Store';
@@ -18,8 +17,25 @@ import {Data} from '../../models/interfaces/AuthResponse';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
 import Snackbar from 'react-native-snackbar';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
-import {fetchClients} from '../../store/thunks/ApiThunks';
+import {
+  fetchAuthorizedStockists,
+  fetchClients,
+} from '../../store/thunks/ApiThunks';
 import {store} from '../../store/Store';
+import {StockistEntity} from '../../models/interfaces/AuthorizedStockistsResponse';
+import {FetchAuthorizedStockistsParams} from '../../domain/usages/FetchAuthorizedStockists';
+import {debounce} from '../../utility/debounce';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import GaCaughtUp from '../../components/GaCaughtUp';
+import {OrganisationSkeletonItem} from '../../components/SkeletonCards';
+
+export type getStockistsListParams = {
+  fromFilter?: boolean;
+  fromResetFilter?: boolean;
+  length?: number;
+  query?: string;
+  client_code?: string;
+};
 
 const kOrganisations = [
   {name: AppLocalizedStrings.viewAll, url: ''},
@@ -27,17 +43,23 @@ const kOrganisations = [
 ];
 
 const StockistScreen = () => {
-  const {
-    channel_partner: {
-      address: {state},
-    },
-  } = useSelector<RootState, Data>(state => state.auth.authResult.data);
+  const userInfo = useSelector<RootState, Data>(
+    state => state?.auth?.authResult?.data,
+  );
   const [data, setData] = useState(StockistData);
+  const [isNextPageThere, setIsNextPageThere] = useState(true);
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
+  const [selectedOrganization, setSelectedOrganization] =
+    useState<ClientEntity | null>();
+  const [stockists, setStockists] = useState<StockistEntity[]>([]);
+  const [loadingOrganisations, setLoadingOrganisations] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const [expandIndex, setExpandIndex] = useState(-1);
   const [showFilter, setShowFilter] = useState(false);
-
+  const [query, setQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadingStockists, setLoadingStockists] = useState(false);
+  const [resetFilterLoading, setResetFilterLoading] = useState(false);
   const dropDownHandler = (index: number) => {
     setExpandIndex(index == expandIndex ? -1 : index);
   };
@@ -54,8 +76,70 @@ const StockistScreen = () => {
     toggleFilter();
   };
 
+  const getStockistsList = useCallback(
+    async (
+      params: getStockistsListParams,
+      page?: number,
+      scrolled?: boolean,
+    ) => {
+      const {fromResetFilter} = params;
+
+      fromResetFilter ? setResetFilterLoading(true) : setLoadingStockists(true);
+      var stockistParams = {
+        length: 10,
+      } as FetchAuthorizedStockistsParams.params;
+
+      if (params.client_code) {
+        params.client_code !== '-1'
+          ? (stockistParams.client_code = params.client_code)
+          : delete stockistParams.client_code;
+      } else if (selectedOrganization) {
+        stockistParams.client_code = selectedOrganization.short_code;
+      }
+      if (scrolled) {
+        if (page === 1) {
+          page = 2;
+          setCurrentPage(prev => prev + 1);
+        }
+      }
+      if (query) {
+        stockistParams.q = query;
+      }
+
+      if (fromResetFilter) {
+        delete stockistParams.client_code;
+        delete stockistParams.q;
+      }
+      const result = await store
+        .dispatch(
+          fetchAuthorizedStockists({
+            page: page ? page : 1,
+            params: stockistParams,
+          }),
+        )
+        .unwrap();
+      console.log('STOCSIID', result);
+
+      if (result.success) {
+        // await debounce(2000);
+        if (scrolled) {
+          setStockists(oldData => [...oldData, ...result.stockists.data]);
+          setIsNextPageThere(result.stockists.has_next_page);
+        } else {
+          setStockists(result.stockists.data);
+        }
+      }
+      fromResetFilter
+        ? setResetFilterLoading(false)
+        : setLoadingStockists(false);
+    },
+
+    [currentPage, query, selectedOrganization, selectedIds],
+  );
+
   const getClients = async () => {
-    let params = {} as ClientListParams.params;
+    setLoadingOrganisations(true);
+    let params = {mapped_organization: 1} as ClientListParams.params;
     // params.state = state.name;
     const data = await store.dispatch(fetchClients(params)).unwrap();
 
@@ -71,38 +155,93 @@ const StockistScreen = () => {
         textColor: Colors.white,
       });
     }
+    setLoadingOrganisations(false);
+  };
+
+  const handleSearch = () => {
+    setStockists([]);
+    setCurrentPage(1);
+    getStockistsList({}, 1, false);
   };
 
   useEffect(() => {
-    getClients();
-  }, [state]);
+    const debounceSearch = setTimeout(() => {
+      handleSearch();
+    }, 1500);
+
+    return () => {
+      clearTimeout(debounceSearch);
+    };
+  }, [query]);
 
   useEffect(() => {
-    console.log('OLG_DI', organizations);
-  }, [organizations, state]);
+    getClients();
+  }, [userInfo?.channel_partner?.address?.state]);
+
+  useEffect(() => {
+    getStockistsList({}, 1, false);
+  }, []);
+
+  useEffect(() => {}, [
+    organizations,
+    userInfo?.channel_partner?.address?.state,
+    stockists,
+  ]);
+
+  console.log('ISN_EST', isNextPageThere);
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.topContainer}>
         <View style={styles.flatlistContainer}>
-          <OrganisationList
-            selectedIds={selectedIds}
-            horizontal={true}
-            showAll={true}
-            data={organizations}
-            onSelect={ids => setSelectedIds(ids)}
-          />
+          {loadingOrganisations ? (
+            <View>
+              <Spacer height={hp('1%')} />
+              <View style={{paddingLeft: wp('5%')}}>
+                <OrganisationSkeletonItem />
+              </View>
+              <Spacer height={hp('3%')} />
+            </View>
+          ) : (
+            <OrganisationList
+              selectedIds={selectedIds}
+              horizontal={true}
+              showAll={true}
+              data={organizations}
+              onSelect={ids => {
+                setSelectedIds(ids);
+                const orgId = organizations && organizations[ids[0]]?.id;
+                if (orgId) {
+                  setStockists([]);
+                  setCurrentPage(1);
+                  setSelectedOrganization(organizations[ids[0]]);
+                  getStockistsList({
+                    client_code: organizations[ids[0]].short_code,
+                  });
+                } else {
+                  setSelectedOrganization(null);
+                  setStockists([]);
+                  setCurrentPage(1);
+                  getStockistsList({client_code: '-1'}, 1, false);
+                }
+              }}
+            />
+          )}
         </View>
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.searchContainer}>
           <View style={{flex: 1}}>
             <SearchBar
+              onChange={setQuery}
+              value={query}
               type="small"
-              placeholder={AppLocalizedStrings.search.enterDepartmentName}
+              placeholder={AppLocalizedStrings.search.enterName}
             />
           </View>
-          <AdaptiveButton
+          {
+            // Todo: Under review
+            /* <AdaptiveButton
             isReverse
             type="text"
             icon="filter"
@@ -111,25 +250,59 @@ const StockistScreen = () => {
             textStyle={styles.filterText}
             title={AppLocalizedStrings.filter.filter}
             onPress={toggleFilter}
-          />
+          /> */
+          }
         </View>
         <View style={styles.bottomFlatListContainer}>
           <FlatList
-            data={data}
+            onEndReached={() => {
+              setCurrentPage(prev => prev + 1);
+              isNextPageThere &&
+                getStockistsList({}, currentPage, true).then(() => {});
+            }}
+            ListFooterComponent={
+              <View>
+                {loadingStockists ? (
+                  [1, 2, 3, 4, 5, 6].map((val, ind) => {
+                    return (
+                      <View key={ind.toString()}>
+                        <Spacer height={hp('3%')} />
+                        <SkeletonPlaceholder borderRadius={10}>
+                          <SkeletonPlaceholder.Item
+                            width={wp('90%')}
+                            height={hp('6.5%')}
+                          />
+                        </SkeletonPlaceholder>
+                      </View>
+                    );
+                  })
+                ) : !isNextPageThere ? (
+                  <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
+                ) : (
+                  <View />
+                )}
+              </View>
+            }
+            data={stockists}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
             renderItem={({item, index}) => (
-              <StockistList
-                name={item.name}
-                image={item.image}
-                isVisible={expandIndex == index}
-                onPress={() => dropDownHandler(index)}
-              />
+              <>
+                <StockistList
+                  organisations={item.organizations}
+                  name={item.firm_name}
+                  //Todo: Update it
+                  // image={item}
+                  isVisible={expandIndex == index}
+                  onPress={() => dropDownHandler(index)}
+                />
+              </>
             )}
           />
           <Spacer height={hp('2%')} />
         </View>
       </View>
+
       {showFilter && (
         <OrganisationFilterPopup
           onApply={onApplyFilter}

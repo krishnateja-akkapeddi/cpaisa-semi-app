@@ -5,6 +5,7 @@ import appSlice from './slices/AppSlice';
 import logger from 'redux-logger';
 import {Actions} from '../constants/Actions';
 import apiSlice from './slices/ApiSlice';
+import {fetchWalletSummary} from './thunks/ApiThunks';
 
 const combinedReducer = combineReducers({
   auth: authSlice,
@@ -30,3 +31,10 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export const GaPopup = store.dispatch;
+export class ApiStore {
+  async getWalletSummary() {
+    return store.dispatch(fetchWalletSummary());
+  }
+}

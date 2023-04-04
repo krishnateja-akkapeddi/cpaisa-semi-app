@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 import {useDispatch} from 'react-redux';
 import OTPView from '../../components/app/auth/OTPView';
@@ -22,19 +22,31 @@ import {setClientHeaders} from '../../store/workers/ApiWorkers';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {fromPairs} from 'lodash';
 import AppLoader from '../../components/indicator/AppLoader';
+import {openPopup} from '../../store/slices/AppSlice';
+import {Timer, TimerType} from '../../utility/timer/TimerClass';
 
 const EnterOTPScreen: React.FC<
   AuthStackScreenProps<'EnterOTPScreen'>
 > = props => {
   const [otp, setOtp] = useState('');
+  const [newContactOtp, setNewContactOtp] = useState('');
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
-  const [timeLimit, setTimeLimit] = useState(0.5);
-  const [seconds, minutes] = useTimer(timeLimit);
+  // const [timer, setTimer] = useState(0.1);
+  // const {seconds, minutes, setMaxTime} = useTimer(timer);
+  const [timer, setTimer] = useState({minutes: 0, seconds: 0});
   const dispatch = useDispatch();
   const onRequestHandler = () => {};
   const mobile = props.route.params?.mobileNumber;
-  const fromNewContact = props.route.params?.fromNewContact;
-  const forUpdateContact = props.route.params.forUpdateContact;
+  const fromNewContact = props.route?.params?.fromNewContact;
+  const forUpdateContact = props.route?.params?.forUpdateContact;
+  const contactType = props.route?.params?.contactType;
+
+  function resetTimer() {
+    const timer = new Timer();
+    timer.startTimer(0.5, (time: TimerType) => {
+      setTimer({minutes: time.minutes, seconds: time.seconds});
+    });
+  }
 
   const onSubmitHandler = async () => {
     setVerifyOtpLoading(true);
@@ -46,50 +58,67 @@ const EnterOTPScreen: React.FC<
 
       if (forUpdateContact) {
         const data = await store.dispatch(verifyOtp(params)).unwrap();
-        if (data.success) {
+        if (data?.success) {
+          setOtp('');
           RootNavigation.navigate('LoginScreen', {
             forUpdateContact: true,
             isLogin: true,
+            contactType: contactType,
           });
         } else {
           Snackbar.show({text: 'Something went wrong'});
         }
         setVerifyOtpLoading(false);
+
         return;
       } else if (fromNewContact) {
         const updatedContact = await store
           .dispatch(
             updateContactInfo({
               mode: 'mobile',
-              otp: parseInt(params.otp),
+              otp: parseInt(newContactOtp),
               mobile_value: parseInt(mobile),
             }),
           )
           .unwrap();
         if (updatedContact.success) {
+          setOtp('');
           RootNavigation.navigate('LoginScreen');
         } else {
           Snackbar.show({text: 'Something went wrong'});
         }
+        setOtp('');
         setVerifyOtpLoading(false);
         return;
-      } else if (!fromNewContact && !forUpdateContact) {
+      } else if (!fromNewContact || !forUpdateContact) {
         const data = await store.dispatch(verifyOtp(params)).unwrap();
-        if (data.success) {
+        if (data?.success) {
           const stringData = JSON.stringify(data);
-          await setClientHeaders();
           dispatch(authSlice.actions.storeAuthResult(data));
           await SharedPreference.shared.setUser(stringData);
-          await SharedPreference.shared.setToken(data.data.user.auth_token);
+          await SharedPreference.shared
+            .setToken(data?.data?.user.auth_token)
+            .then(async () => {
+              await setClientHeaders();
+            });
+          setOtp('');
           RootNavigation.replace('Drawer');
+          dispatch(
+            openPopup({
+              title: 'OTP',
+              type: 'success',
+              message: data?.data?.message,
+            }),
+          );
         } else {
-          Snackbar.show({
-            text: data?.errors
-              ? data?.errors?.message
-              : AppLocalizedStrings.somethingWrong,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-          });
+          dispatch(
+            openPopup({
+              title: 'OTP',
+              type: 'error',
+              message:
+                data?.errors?.message ?? AppLocalizedStrings.somethingWrong,
+            }),
+          );
         }
       } else {
         setVerifyOtpLoading(false);
@@ -98,8 +127,19 @@ const EnterOTPScreen: React.FC<
       setVerifyOtpLoading(false);
     } catch (error) {
       console.error('ERROR_FROM_OTP_SCREEN', error);
+      setVerifyOtpLoading(false);
     }
   };
+  useEffect(() => {
+    const timer = new Timer();
+    timer.startTimer(0.5, (time: TimerType) => {
+      setTimer({minutes: time.minutes, seconds: time.seconds});
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(timer);
+  }, [timer]);
 
   return (
     <AuthBaseScreen
@@ -121,20 +161,23 @@ const EnterOTPScreen: React.FC<
         </View>
       )}
       {forUpdateContact && <Spacer height={hp('5%')} />}
-      <OTPView onSelect={setOtp} />
+      {fromNewContact ? (
+        <OTPView code={newContactOtp} onSelect={setNewContactOtp} />
+      ) : (
+        <OTPView code={otp} onSelect={setOtp} />
+      )}
       <Spacer height={hp('3')} />
-      {seconds > 0 ? (
+      {timer.seconds > 0 ? (
         <Text style={styles.resendOTP}>
           {AppLocalizedStrings.auth.requestOTPIn}
           <Text style={styles.timer}>
-            {minutes < 10 ? '0' + minutes : minutes} :
-            {seconds < 10 ? '0' + seconds : seconds}
+            {timer.minutes < 10 ? '0' + timer.minutes : timer.minutes} :
+            {timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
           </Text>
         </Text>
       ) : (
         ''
       )}
-
       <Text style={styles.or}>{AppLocalizedStrings.auth.or}</Text>
       <View style={styles.resendOTPContainer}>
         <Text style={styles.resendOTP}>
@@ -150,9 +193,10 @@ const EnterOTPScreen: React.FC<
       </View>
       <Spacer height={hp('3%')} />
       <ResendOTPMode
-        setTimeLimit={setTimeLimit}
-        minutes={minutes}
-        seconds={seconds}
+        mobile={mobile}
+        minutes={timer.minutes}
+        seconds={timer.seconds}
+        resetTimer={resetTimer}
       />
       <AdaptiveButton
         isDisable={otp.length < 4 || verifyOtpLoading}

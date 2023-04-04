@@ -30,12 +30,16 @@ import StockistStackNavigator, {
   StockistStackParamList,
 } from '../stack/StockistStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
+import OrganisationStackNavigator, {
+  OrganisationStackParamList,
+} from '../stack/OrganisationStackNavigator';
 
 export type DrawerParamList = {
   HomeStack: NavigatorScreenParams<HomeStackParamList>;
   ProfileStack: NavigatorScreenParams<ProfileStackParamList>;
   SubscriptionStack: NavigatorScreenParams<SubscriptionStackParamList>;
   StockistStack: NavigatorScreenParams<StockistStackParamList>;
+  OrganisationsStack: NavigatorScreenParams<OrganisationStackParamList>;
 };
 
 export type DrawerStackScreenProps<T extends keyof DrawerParamList> =
@@ -93,6 +97,20 @@ const DrawerNavigator = () => {
         }
       />
       <Drawer.Screen
+        name="OrganisationsStack"
+        component={OrganisationStackNavigator}
+        options={props =>
+          DrawerOptions({
+            label: AppLocalizedStrings.Organisations.name,
+            icon: 'subscription',
+            props: props,
+          })
+        }
+      />
+      {
+        //Todo: Will be implemented in the next release
+      }
+      {/* <Drawer.Screen
         name="SubscriptionStack"
         component={SubscriptionStackNavigator}
         options={props =>
@@ -102,7 +120,7 @@ const DrawerNavigator = () => {
             props: props,
           })
         }
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };

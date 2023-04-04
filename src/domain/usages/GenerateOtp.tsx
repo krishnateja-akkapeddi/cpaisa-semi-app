@@ -4,7 +4,7 @@ export interface GenerateOtp {
   generate(params: GenerateOtpParams.params): Promise<GenerateOtpResponse>;
 }
 
-export type GenerateOtpMode = 'sms';
+export type GenerateOtpMode = 'sms' | 'whatsapp';
 
 export namespace GenerateOtpParams {
   export type params = {

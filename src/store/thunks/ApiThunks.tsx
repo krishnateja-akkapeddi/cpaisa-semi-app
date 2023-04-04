@@ -1,15 +1,19 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {FetchAuthorizedStockistsParams} from '../../domain/usages/FetchAuthorizedStockists';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
 import {FetchInvoiceListParams} from '../../domain/usages/FetchInvoiceList';
 import {FetchInvoiceSummaryParams} from '../../domain/usages/FetchInvoiceSummary';
 import {FetchOffersParams} from '../../domain/usages/FetchOffers';
 import {FetchOffersListParams} from '../../domain/usages/FetchOffersList';
+import {FetchCouponPartnersParams} from '../../domain/usages/FetchReedemPartners';
 import {FetchRewardRequestListParams} from '../../domain/usages/FetchRewardRequestList';
+import {FetchWalletSummaryParams} from '../../domain/usages/FetchWalletSummary';
 import {GenerateOtpParams} from '../../domain/usages/GenerateOtp';
 import {GenerateQrCodeParams} from '../../domain/usages/GenerateQrCode';
+import {ReedemRewardParams} from '../../domain/usages/ReedemReward';
 import {UpdateContactParams} from '../../domain/usages/UpdateContact';
-import {UploadInvoiceParams} from '../../domain/usages/UploadInvoice';
 import {VerifyOtpParams} from '../../domain/usages/VerifyOtp';
+import {AuthorizedStockistsResponse} from '../../models/interfaces/AuthorizedStockistsResponse';
 import {AuthResult} from '../../models/interfaces/AuthResponse';
 import {ClientListResponse} from '../../models/interfaces/ClientsListResponse';
 import {GenerateOtpResponse} from '../../models/interfaces/GenerateOtpResponse';
@@ -17,12 +21,16 @@ import {InvoiceDetailResponse} from '../../models/interfaces/InvoiceDetailRespon
 import {InvoiceListResponse} from '../../models/interfaces/InvoiceListResponse';
 import {InvoiceSummaryResponse} from '../../models/interfaces/InvoiceSummaryResponse';
 import {InvoiceUploadResponse} from '../../models/interfaces/InvoiceUploadResponse';
+import {NotificationsResponse} from '../../models/interfaces/NotificationsResponse';
 import {OfferListResponse} from '../../models/interfaces/OffersListResponse';
 import {QrCodeResponse} from '../../models/interfaces/QrCodeResponse';
+import {ReedemRewardResponse} from '../../models/interfaces/ReedemReward';
+import {CouponPartnersResponse} from '../../models/interfaces/ReemPartnersResponse';
 import {RewardRequestReponse} from '../../models/interfaces/RewardRequestResponse';
 import {UpdatedContactResponse} from '../../models/interfaces/UpdateContactResponse';
 import {WalletSummaryResponse} from '../../models/interfaces/WalletSummary';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
+
 import {
   fetchClientsListWorker,
   fetchInvoiceDetailWorker,
@@ -38,18 +46,16 @@ import {
   verifyOtpWorker,
   fetchOffersListWorker,
   generateOtpWorker,
+  reedemRewardWorker,
+  fetchCouponPartnersWorker,
+  fetchAuthorizedStockistsWorker,
+  fetchNotificationsWorker,
 } from '../workers/ApiWorkers';
-
-const storage = SharedPreference.shared;
 
 const verifyOtp = createAsyncThunk(
   'verifiying otp...',
   async (params: VerifyOtpParams.params): Promise<AuthResult> => {
     const data = await verifyOtpWorker.verify(params);
-    if (data.success) {
-      storage.setItem(kSharedKeys.userDetails, JSON.stringify(data.data));
-      storage.setItem(kSharedKeys.authToken, data?.data.user.auth_token);
-    }
     return data;
   },
 );
@@ -90,8 +96,10 @@ const generateQrCode = createAsyncThunk(
 
 const fetchWalletSummary = createAsyncThunk(
   'fetching wallet-summarys...',
-  async (): Promise<WalletSummaryResponse> => {
-    const data = await fetchWalletSummaryWorker.fetch();
+  async (
+    params?: FetchWalletSummaryParams.params,
+  ): Promise<WalletSummaryResponse> => {
+    const data = await fetchWalletSummaryWorker.fetch(params);
     return data;
   },
 );
@@ -171,6 +179,46 @@ const generateOtp = createAsyncThunk(
   },
 );
 
+const reedemReward = createAsyncThunk(
+  'reedeming reward...',
+  async (params: ReedemRewardParams.params): Promise<ReedemRewardResponse> => {
+    const data = await reedemRewardWorker.reedem(params);
+    return data;
+  },
+);
+
+const fetchCouponPartners = createAsyncThunk(
+  'fetching coupon partners...',
+  async (
+    params: FetchCouponPartnersParams.params,
+  ): Promise<CouponPartnersResponse> => {
+    const data = await fetchCouponPartnersWorker.fetch(params);
+    return data;
+  },
+);
+
+const fetchAuthorizedStockists = createAsyncThunk(
+  'fetching authorized stockists...',
+  async (params: {
+    page: number;
+    params: FetchAuthorizedStockistsParams.params;
+  }): Promise<AuthorizedStockistsResponse> => {
+    const data = await fetchAuthorizedStockistsWorker.fetch(
+      params.page,
+      params.params,
+    );
+    return data;
+  },
+);
+
+const fetchNotifications = createAsyncThunk(
+  'fetching notifications...',
+  async (params: {page: number}): Promise<NotificationsResponse> => {
+    const data = await fetchNotificationsWorker.fetch(params.page);
+    return data;
+  },
+);
+
 export {
   fetchInvoiceSummary,
   fetchWalletSummary,
@@ -186,4 +234,8 @@ export {
   uploadInvoice,
   fetchOffersList,
   generateOtp,
+  reedemReward,
+  fetchCouponPartners,
+  fetchAuthorizedStockists,
+  fetchNotifications,
 };

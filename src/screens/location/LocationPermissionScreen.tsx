@@ -12,6 +12,7 @@ import {PermissionManager} from '../../utility/permissions/PermissionManager';
 import {HomeStackScreenProps} from '../../navigation/stack/HomeStackNavigator';
 import {useDispatch} from 'react-redux';
 import {appSlice} from '../../store/slices/AppSlice';
+import {PermissionType} from '../../utility/permissions/PermissionsList';
 
 const LocationPermissionScreen: React.FC<
   HomeStackScreenProps<'LocationPermissionScreen'>
@@ -19,20 +20,24 @@ const LocationPermissionScreen: React.FC<
   const dispatch = useDispatch();
   const fromQrCodeHeader = props.route.params.fromQrCodeHeader;
   const onLocationHandler = async () => {
-    const isLocationPermissionThere = await PermissionManager.requestPermission(
-      'android.permission.ACCESS_FINE_LOCATION',
+    const isLocationPermissionThere = await PermissionManager.getPermission(
+      PermissionType.LOCATION,
     );
     if (isLocationPermissionThere) {
       if (fromQrCodeHeader) {
         dispatch(appSlice.actions.triggerQrCode(true));
         RootNavigation.navigation.goBack();
       } else {
-        RootNavigation.navigation.goBack();
+        // RootNavigation.navigation.goBack();
       }
       return;
     }
     if (!isLocationPermissionThere) {
-      RootNavigation.navigation.goBack();
+      // RootNavigation.navigation.goBack();
+      const checkPermission = await PermissionManager.checkPermissions(
+        PermissionType.LOCATION,
+      );
+      console.log('IS_LOFEE', checkPermission);
       return;
     }
 

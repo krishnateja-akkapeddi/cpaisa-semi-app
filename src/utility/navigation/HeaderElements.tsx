@@ -56,10 +56,30 @@ const getHeaderRight = (
           showOffers={false}
           showHelp={true}
           showQRCode={false}
+          showBell={false}
         />
       );
     case 'ProfileScreen':
       return <HeaderRightView showQRCode={false} showOffers={true} />;
+    case 'LoginHelpScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'AboutChannelPaisaScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+
     default:
       return <HeaderRightView showQRCode={true} />;
   }

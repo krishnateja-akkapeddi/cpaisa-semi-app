@@ -1,4 +1,6 @@
 export default {
+  caughtUp: "You're all caught up!",
+  validMobile: 'Number must be 10 digit and starts from 6-9.',
   enterMobile: 'New Mobile Number',
   enterValidNumber: 'Please enter a valid number',
   yes: 'Yes',
@@ -19,10 +21,16 @@ export default {
   alert: {
     logout: 'Do you want to logout?',
   },
+  Organisations: {
+    name: 'Organisations',
+    brands: 'Brands',
+    stockists: 'Stockists',
+  },
   search: {
     search: 'Search',
     enterDepartmentName: 'Enter Invoice ID',
     enterProductName: 'Product Name',
+    enterName: 'Search By Name',
   },
   reviewStatus: {
     approved: 'Approved',
@@ -43,6 +51,10 @@ export default {
     emailId: 'Email Id:',
     whatsAppNo: 'WhatsApp No.:',
     address: 'Address',
+    updated: {
+      mobile: 'Mobile number successfully updated',
+      whatsapp: 'WhatsApp successfully updated',
+    },
   },
   filter: {
     filter: 'Filter',
@@ -187,6 +199,7 @@ export default {
     total: 'Total',
     points: 'Points',
     calculatePoints: 'Calculate Points',
+    noOffersFound: 'No offers found',
   },
   dashboard: {
     prioritynoti: 'Priority notifications',
@@ -209,7 +222,7 @@ export default {
     selectDivision: 'Select Division',
     selectCompany: 'Select company to redeem points',
     redeemPoints: 'Redeem Points',
-    pointRecive: 'Total Points Received',
+    pointRecive: 'Total Points Redeemed',
     pendingPoint: 'Pending Points',
     redeemablePoints: 'Redeemable Points',
     redeemNow: 'Redeem Now',

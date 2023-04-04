@@ -1,14 +1,17 @@
-import React from 'react';
-const useTimer = (maxTime?: number) => {
-  const [days, setDays] = React.useState(0);
-  const [hours, setHours] = React.useState(0);
-  const [minutes, setMinutes] = React.useState(0);
-  const [seconds, setSeconds] = React.useState(0);
+import React, {useState} from 'react';
+
+const useTimer = (initialMaxTime = 0) => {
+  const [maxTime, setMaxTime] = useState(initialMaxTime);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   function addMinutes(date: Date, min?: number) {
     if (min) return new Date(date.getTime() + min * 60000);
   }
-  const deadline: any = addMinutes(new Date(), maxTime);
+
+  const getDeadline = () => addMinutes(new Date(), maxTime);
 
   const getTime = (deadline: any) => {
     const time = Date.parse(deadline) - Date.now();
@@ -20,13 +23,13 @@ const useTimer = (maxTime?: number) => {
   };
 
   React.useEffect(() => {
+    const deadline = getDeadline();
     const interval = setInterval(() => getTime(deadline), 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [maxTime]);
 
-  React.useEffect(() => {}, [seconds]);
-  return [seconds, minutes, hours, days];
+  return {seconds, minutes, hours, days, setMaxTime, maxTime};
 };
 
 export default useTimer;

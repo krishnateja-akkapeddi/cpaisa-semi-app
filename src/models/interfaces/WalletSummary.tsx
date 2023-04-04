@@ -10,8 +10,10 @@ export interface WalletSummary {
   total_redeemable_points: number;
   current_month_earning: string;
   last_month_earning: string;
-  wallet_summaries?: WalletSummaryEntity[];
+  wallet_summaries: WalletSummaryEntity[];
+  total_redeemed_points: string;
 }
+
 export interface WalletSummaryEntity {
   organization_name: string;
   organization_code: string;
@@ -19,4 +21,9 @@ export interface WalletSummaryEntity {
   division_code: string;
   redeemable_points: string;
   redeemed_points: string;
+  pending_points: string;
+  organization_id: number;
+  team_id: number;
+  display_name: string;
+  total_redeemed_points: string;
 }

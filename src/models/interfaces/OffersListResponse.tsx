@@ -22,7 +22,7 @@ export interface OffersListEntity {
   name: string;
   qty: number;
   offer_for: string;
-  value: string;
+  product_value: string;
   value_type: string;
   from_date: string;
   to_date: string;

@@ -7,8 +7,8 @@ import {
   ListRenderItemInfo,
   Text,
   Image,
+  RefreshControl,
 } from 'react-native';
-import SearchBar from '../../components/app/SearchBar';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Fonts from '../../theme/Fonts';
 import Colors from '../../theme/Colors';
@@ -36,6 +36,8 @@ import GaCaughtUp from '../../components/GaCaughtUp';
 import {debounce} from '../../utility/debounce';
 import {InvoiceSkeletonItem} from '../../components/SkeletonCards';
 import Spacer from '../../components/layout/Spacer';
+import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
+import SearchBar from '../../components/app/SearchBar';
 
 export type getInvoiceListArgs = {
   fromFilter?: boolean;
@@ -45,11 +47,18 @@ export type getInvoiceListArgs = {
   query?: string;
 };
 
-const InvoiceScreen = () => {
+const InvoiceScreen: React.FC<
+  BottomTabScreenProps<'InvoiceScreen'>
+> = props => {
+  const fromInvoiceUpload = props?.route?.params?.fromInvoiceUpload;
   const [invoices, setInvoices] = useState<InvoiceOverview>();
+  const [refreshInvoices, setRefreshInvoices] = useState<boolean>();
   const [selectedOverallSummary, setSelectedOverallSummary] = useState(true);
   const [monthlyInvoices, setMonthlyInvoices] =
     useState<MonthlyInvoiceStatusEntity[]>();
+  const [startDate, setStartDate] = useState<null | Date>();
+  const [endDate, setEndDate] = useState<null | Date>();
+  const [refreshing, setRefreshing] = React.useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [quarter, setQuarter] = useState<number | null>(null);
   const [year, setYear] = useState<number | null>(null);
@@ -60,7 +69,6 @@ const InvoiceScreen = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [dates, setDates] = React.useState<string[]>([]);
   const [query, setQuery] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
   const [selectedDates, setSelectedDates] =
     React.useState<FetchInvoiceSummaryParams.params | null>();
   const [num, setNum] = useState<number>(0);
@@ -81,6 +89,7 @@ const InvoiceScreen = () => {
 
   const debounceSearch = () => {
     setInvoiceList([]);
+    setCurrentPage(1);
     getInvoiceList({}, 1, false);
   };
   useEffect(() => {
@@ -95,10 +104,17 @@ const InvoiceScreen = () => {
     };
   }, [query]);
 
+  useEffect(() => {
+    if (fromInvoiceUpload !== undefined) {
+      onRefresh();
+    }
+  }, [fromInvoiceUpload]);
+
   const listHeaderComponent = useCallback(() => {
     return (
       <>
         <InvoiceCombineCmpt
+          filterChecked={true}
           setSelectedDatesHandler={setSelectedDatesHandler}
           selectedDates={selectedDates}
           num={num}
@@ -118,24 +134,23 @@ const InvoiceScreen = () => {
             value={query}
             hideButton={true}
             shadow={false}
-            // onPress={() => {
-            //   setInvoiceList([]);
-            //   getInvoiceList({}, 1, false);
-            // }}
             placeholder={AppLocalizedStrings.search.enterDepartmentName}
           />
         </View>
       </>
     );
   }, [
-    invoices,
-    dates,
+    selectedDates,
     num,
     selectedOverallSummary,
-    monthlyInvoices,
-    invoiceList,
     invoiceSummaryLoading,
+    dates,
+    invoices?.overall_invoice_status,
+    monthlyInvoices,
+    onFilterHandler,
     query,
+    startDate,
+    endDate,
   ]);
 
   const onApplyHandler = async () => {
@@ -153,16 +168,35 @@ const InvoiceScreen = () => {
         : setInvoiceListLoading(true);
       var invParams = {length: 10} as FetchInvoiceListParams.params;
 
-      if (quarter && year) {
-        const {end, start} = Generator.getQuarterDates(quarter, year);
+      // if (quarter && year) {
+      //   const {end, start} = Generator.getQuarterDates(quarter, year);
+      //   const convertedStartDate = Convert.dateFormatter(
+      //     null,
+      //     'YYYY-MM-DD',
+      //     start,
+      //   );
+
+      //   const convertedEndDate = Convert.dateFormatter(null, 'YYYY-MM-DD', end);
+      //   invParams.from_date = convertedStartDate;
+      //   invParams.to_date = convertedEndDate;
+      // }
+
+      if (startDate) {
         const convertedStartDate = Convert.dateFormatter(
           null,
           'YYYY-MM-DD',
-          start,
+          startDate,
         );
 
-        const convertedEndDate = Convert.dateFormatter(null, 'YYYY-MM-DD', end);
         invParams.from_date = convertedStartDate;
+      }
+
+      if (endDate) {
+        const convertedEndDate = Convert.dateFormatter(
+          null,
+          'YYYY-MM-DD',
+          endDate,
+        );
         invParams.to_date = convertedEndDate;
       }
 
@@ -202,7 +236,7 @@ const InvoiceScreen = () => {
         : setInvoiceListLoading(false);
     },
 
-    [invoiceListParams, currentPage, query],
+    [invoiceListParams, currentPage, query, startDate, endDate],
   );
 
   const onClearHandler = async () => {
@@ -211,6 +245,8 @@ const InvoiceScreen = () => {
     setInvoiceListParams({} as FetchInvoiceListParams.params);
     setResetFilterLoading(true);
     setCurrentPage(1);
+    setStartDate(null);
+    setEndDate(null);
     await getInvoiceList({fromResetFilter: true}, 1);
     setResetFilterLoading(false);
     setShowFilter(false);
@@ -247,7 +283,9 @@ const InvoiceScreen = () => {
 
   useEffect(() => {
     getInvoiceList({}, 1, false);
-  }, []);
+  }, [refreshInvoices]);
+
+  console.log('FROM_INVL_UPL', fromInvoiceUpload);
 
   useEffect(() => {
     const yearMonthsList = Generator.generateYearMonth(11);
@@ -284,12 +322,25 @@ const InvoiceScreen = () => {
   ]);
   console.log('LOG_RAJ', currentPage);
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    onClearHandler();
+    setInvoiceList([]);
+    setInvoiceListLoading(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setRefreshInvoices(prev => !prev);
+    }, 2000);
+  }, []);
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.keyboard}>
         <View style={styles.listContainer}>
           <GaScrollView
-            endMessage={<Text>This is the end!</Text>}
+            onRefresh={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
             hasMore={
               !invoiceListLoading && currentPage < (lastPage ? lastPage + 1 : 1)
             }
@@ -366,6 +417,10 @@ const InvoiceScreen = () => {
 
       {showFilter && (
         <TransactionFilterPopup
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          startDate={startDate}
           setQuarter={setQuarter}
           applyLoading={invoiceListLoading}
           resetFilterLoading={resetFilterLoading}

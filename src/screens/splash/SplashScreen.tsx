@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {useDispatch} from 'react-redux';
-import AppLoader from '../../components/indicator/AppLoader';
 import RootNavigation from '../../navigation/RootNavigation';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {authSlice} from '../../store/slices/AuthSlice';
+import FastImage from 'react-native-fast-image';
+import ImageView from '../../components/image/ImageView';
+import AppLoader from '../../components/indicator/AppLoader';
+import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 
 const WelcomeScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -17,22 +20,35 @@ const WelcomeScreen = () => {
       const rawUserDetails: any = await SharedPreference.shared.getItem(
         kSharedKeys.userDetails,
       );
+      if (rawUserDetails) {
+        const userDetails = await JSON.parse(rawUserDetails);
 
-      const userDetails = await JSON.parse(rawUserDetails);
-      if (!userDetails) {
-        RootNavigation.replace('LoginScreen');
-        return;
+        if (!userDetails) {
+          RootNavigation.replace('LoginScreen');
+          return;
+        } else {
+          console.log('CODE_USER', userDetails);
+          dispatch(authSlice.actions.storeAuthResult(userDetails));
+          RootNavigation.replace('Drawer');
+        }
       } else {
-        console.log('CODE_USER', userDetails);
-        dispatch(authSlice.actions.storeAuthResult(userDetails));
-        RootNavigation.replace('Drawer');
+        RootNavigation.replace('LoginScreen');
       }
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (
     <View style={styles.screen}>
-      <AppLoader loading={loading} />
+      {/* <AppLoader loading={loading} /> */}
+      <Image
+        style={{width: wp('100%'), height: hp('100%')}}
+        source={require('../../assets/videos/Channel_Paisa_Splash_Screen.gif')}
+      />
+      {/* <ImageView
+        source={
+          'https://i0.wp.com/www.galvanizeaction.org/wp-content/uploads/2022/06/Wow-gif.gif?fit=450%2C250&ssl=1'
+        }
+      /> */}
     </View>
   );
 };

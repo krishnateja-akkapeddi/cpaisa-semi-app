@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   NavigationContainer,
   NavigatorScreenParams,
@@ -10,14 +10,7 @@ import AuthStackNavigator, {
 import DrawerNavigator, {DrawerParamList} from '../navigator/DrawerNavigator';
 import {ExtendedTheme} from '../../theme/NavigationTheme';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
-import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
-import {useDispatch} from 'react-redux';
-import {authSlice} from '../../store/slices/AuthSlice';
-import {setClientHeaders} from '../../store/workers/ApiWorkers';
-import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
-import {Convert} from '../../utility/converter/Convert';
 import GaNotification from '../../components/GaNotification';
-import GaRefresh from '../../components/GaRefresh';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

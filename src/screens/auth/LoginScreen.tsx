@@ -14,43 +14,72 @@ import Snackbar from 'react-native-snackbar';
 import {store} from '../../store/Store';
 import {generateOtp} from '../../store/thunks/ApiThunks';
 import Spacer from '../../components/layout/Spacer';
+import {useDispatch} from 'react-redux';
+import {openPopup} from '../../store/slices/AppSlice';
+import {Convert} from '../../utility/converter/Convert';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
   const forUpdateContact = props.route?.params?.forUpdateContact;
+  const contactType = props.route?.params?.contactType;
+  const dispatch = useDispatch();
   const [mobileNo, setMobileNo] = useState(
-    forUpdateContact ? '' : '8976733351',
+    forUpdateContact ? '' : '7396730681',
   );
 
   const loginHandler = async () => {
-    const data = await store
-      .dispatch(generateOtp({mobile_value: mobileNo, mode: 'sms'}))
-      .unwrap();
-    if (data.success) {
-      Snackbar.show({
-        text: 'Otp Sent',
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      });
-      RootNavigation.navigate('AuthStack', {
-        screen: 'EnterOTPScreen',
-        params: {
+    try {
+      const data = await store
+        .dispatch(
+          generateOtp({
+            mobile_value: mobileNo,
+            mode: forUpdateContact
+              ? contactType === 'mobile'
+                ? 'sms'
+                : 'whatsapp'
+              : 'sms',
+          }),
+        )
+        .unwrap();
+
+      if (data?.success) {
+        dispatch(
+          openPopup({
+            title: 'Otp',
+            type: 'success',
+            message:
+              Convert.capitalize(data?.otp) ?? AppLocalizedStrings.otpSent,
+          }),
+        );
+      } else {
+        dispatch(
+          openPopup({
+            title: 'Otp',
+            type: 'error',
+            message:
+              data?.errors?.mobile ??
+              data?.errors?.mode ??
+              AppLocalizedStrings.somethingWrong,
+          }),
+        );
+      }
+      if (forUpdateContact) {
+        RootNavigation.navigate('EnterUpdateContactOtpScreen', {
           isLogin: true,
           mobileNumber: mobileNo,
-          forUpdateContact: true,
-        },
-      });
-    } else {
-      Snackbar.show({
-        text: 'Something went wrong',
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      });
+          fromNewContact: forUpdateContact,
+          contactType: contactType,
+        });
+      } else {
+        RootNavigation.navigate('EnterOTPScreen', {
+          isLogin: false,
+          mobileNumber: mobileNo,
+        });
+      }
+    } catch (error) {
+      console.log('FROM_LOGOM', error);
     }
-    RootNavigation.navigate('EnterOTPScreen', {
-      isLogin: true,
-      mobileNumber: mobileNo,
-      fromNewContact: forUpdateContact,
-    });
+    // RootNavigation.navigate('EnterOTPScreen');
   };
 
   const termsHandler = () => {
@@ -60,8 +89,9 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
     });
   };
 
-  const helpHandler = () => {};
-
+  const helpHandler = () => {
+    RootNavigation.navigate('LoginHelpScreen');
+  };
   return (
     <AuthBaseScreen
       title={
@@ -70,12 +100,36 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
           : AppLocalizedStrings.auth.loginWithMobile
       }
       iconName="mobile_number">
+      {mobileNo.length >= 10 && !Validator.isValidMobileNumber(mobileNo) && (
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Icon color={Colors.red} name="infocirlceo" />
+          <Spacer width={wp(1)} />
+          <View>
+            <Text style={{textAlign: 'left', color: Colors.red}}>
+              {AppLocalizedStrings.validMobile}
+            </Text>
+          </View>
+          <Spacer height={hp(4)} />
+        </View>
+      )}
+
       <AdaptiveTextInput
         value={mobileNo}
         keyboardType="number-pad"
         onChangeText={setMobileNo}
         placeholder={AppLocalizedStrings.auth.mobileNo}
-        style={styles.input}
+        style={{
+          ...styles.input,
+          borderColor:
+            mobileNo.length >= 10 && !Validator.isValidMobileNumber(mobileNo)
+              ? Colors.red
+              : Colors.primary,
+        }}
       />
       {forUpdateContact && (
         <>

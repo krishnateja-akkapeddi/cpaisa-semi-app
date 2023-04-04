@@ -1,12 +1,15 @@
 import {PermissionManager} from '../permissions/PermissionManager';
 import GetLocation from 'react-native-get-location';
+import {PermissionType} from '../permissions/PermissionsList';
 
 const locationOptions = {
   enableHighAccuracy: true,
   timeout: 15000,
 };
 const getLocation = async () => {
-  const checkPermissions = await PermissionManager.checkPermission('location');
+  const checkPermissions = await PermissionManager.checkPermissions(
+    PermissionType.LOCATION,
+  );
   if (checkPermissions === false) {
   } else {
     const location = await GetLocation.getCurrentPosition(locationOptions);
