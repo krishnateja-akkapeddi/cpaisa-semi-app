@@ -9,14 +9,17 @@ import Colors from '../../../theme/Colors';
 import Style from '../../../constants/Style';
 import Fonts from '../../../theme/Fonts';
 import {WalletSummaryEntity} from '../../../models/interfaces/WalletSummary';
+import {PriceChipSkeleton} from '../../SkeletonCards';
+import {Filter} from '../../../models/enum/Filter';
 
 interface WalletPointsViewProps {
   onPress: () => void;
   selectedWallet: WalletSummaryEntity | undefined;
+  walletSummaryLoading?: boolean;
 }
 
 const WalletPointsView: React.FC<WalletPointsViewProps> = props => {
-  const {onPress, selectedWallet} = props;
+  const {onPress, selectedWallet, walletSummaryLoading} = props;
 
   useEffect(() => {
     console.log('FROM_WALLET_POINTS', selectedWallet);
@@ -24,49 +27,67 @@ const WalletPointsView: React.FC<WalletPointsViewProps> = props => {
 
   return (
     <View style={styles.mainCardStyle}>
-      <Text style={styles.textSelectTitel}>
-        {selectedWallet?.division_name}
-      </Text>
-      <Spacer height={hp(2)} />
       <View style={styles.viewStyle}>
-        <PriceChipView
-          title={AppLocalizedStrings.wallet.pointRecive}
-          titleNumberLine={2}
-          price={selectedWallet?.redeemable_points}
-          backGroundColor={Colors.lightGreen}
-          onPress={() => {
-            console.log('SuccesFull');
-          }}
-        />
+        {walletSummaryLoading ? (
+          <PriceChipSkeleton />
+        ) : (
+          <PriceChipView
+            title={AppLocalizedStrings.wallet.pointRecive}
+            titleNumberLine={2}
+            price={selectedWallet?.redeemed_points}
+            backGroundColor={Colors.lightGreen}
+            onPress={() => {
+              console.log('SuccesFull');
+            }}
+          />
+        )}
         <Spacer width={wp(2.5)} />
-        <PriceChipView
-          title={AppLocalizedStrings.wallet.pendingPoint}
-          titleNumberLine={2}
-          price={selectedWallet?.redeemed_points}
-          backGroundColor={Colors.lightPink}
-          onPress={() => {
-            console.log('SuccesFull');
-          }}
-        />
+        {walletSummaryLoading ? (
+          <PriceChipSkeleton />
+        ) : (
+          <PriceChipView
+            title={AppLocalizedStrings.wallet.pendingPoint}
+            titleNumberLine={2}
+            price={selectedWallet?.pending_points}
+            backGroundColor={Colors.lightPink}
+            onPress={() => {
+              console.log('SuccesFull');
+            }}
+          />
+        )}
       </View>
       <Spacer height={hp(1)} />
       <View style={[styles.viewStyle]}>
-        <PriceChipView
-          title={AppLocalizedStrings.wallet.redeemablePoints}
-          titleNumberLine={2}
-          price={selectedWallet?.redeemable_points}
-          backGroundColor={Colors.lightYellow}
-          onPress={() => {
-            console.log('SuccesFull');
-          }}
-        />
+        {walletSummaryLoading ? (
+          <PriceChipSkeleton />
+        ) : (
+          <PriceChipView
+            title={AppLocalizedStrings.wallet.redeemablePoints}
+            titleNumberLine={2}
+            price={parseFloat(selectedWallet?.redeemable_points ?? '').toFixed(
+              2,
+            )}
+            backGroundColor={Colors.lightYellow}
+            onPress={() => {
+              console.log('SuccesFull');
+            }}
+          />
+        )}
         <Spacer width={wp(2.5)} />
-        <AdaptiveButton
-          buttonStyle={styles.btn}
-          type="light"
-          title={AppLocalizedStrings.wallet.redeemNow}
-          onPress={onPress}
-        />
+        {walletSummaryLoading ? (
+          <PriceChipSkeleton />
+        ) : (
+          <AdaptiveButton
+            isDisable={
+              parseFloat(selectedWallet?.redeemable_points ?? '0.0') === 0.0 ||
+              selectedWallet?.display_name === Filter.SELECT_ALL
+            }
+            buttonStyle={styles.btn}
+            type="light"
+            title={AppLocalizedStrings.wallet.redeemNow}
+            onPress={onPress}
+          />
+        )}
       </View>
     </View>
   );

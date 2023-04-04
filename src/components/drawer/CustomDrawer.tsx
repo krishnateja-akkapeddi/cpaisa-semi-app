@@ -47,7 +47,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
     const data = await SharedPreference.shared.getUser();
     const objectData: AuthResult = await Convert.toObject(data);
 
-    setUserData(objectData.data);
+    setUserData(objectData?.data);
   };
 
   const insets = useSafeAreaInsets();
@@ -104,6 +104,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
         onPress: async () => {
           props.navigation.closeDrawer();
           await SharedPreference.shared.removeItem(kSharedKeys.userDetails);
+          await SharedPreference.shared.removeItem(kSharedKeys.authToken);
           props.navigation.reset({
             index: 0,
             routes: [{name: 'AuthStack', params: {screen: 'LoginScreen'}}],
@@ -117,9 +118,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
     getUserData();
   }, []);
 
-  React.useEffect(() => {
-    console.log('WEGRSDG', userData);
-  }, [userData]);
+  React.useEffect(() => {}, [userData]);
   return (
     <View style={styles.screen}>
       <DrawerContentScrollView
@@ -141,9 +140,9 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
             <Text style={styles.userName}>{userData?.user?.full_name}</Text>
             <Spacer height={5} />
             <Text style={styles.userInfo}>
-              {userData?.channel_partner?.address.line +
-                ', ' +
-                userData?.channel_partner?.address.state.name}
+              {userData?.channel_partner?.address?.line ??
+                '' + ', ' + userData?.channel_partner?.address?.state?.name ??
+                ''}
             </Text>
           </View>
           {/* <TouchableOpacity onPress={onQRCodeHandler}>

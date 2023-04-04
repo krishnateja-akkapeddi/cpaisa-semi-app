@@ -7,6 +7,7 @@ import {hp, wp} from '../utility/responsive/ScreenResponsive';
 import Spacer from './layout/Spacer';
 import SubscriptionSuccessPopup from './popup/SubscriptionSuccessPopup';
 import RootNavigation from './/../navigation/RootNavigation';
+import {AppLocalizedStrings} from '../localization/Localization';
 
 interface ListProps {
   name: string;
@@ -37,7 +38,9 @@ const SubscriptionList: React.FC<ListProps> = props => {
         <TouchableOpacity
           onPress={onSubscribeHandler}
           style={styles.buttonView}>
-          <Text style={styles.buttonText}>Subscribe</Text>
+          <Text style={styles.buttonText}>
+            {AppLocalizedStrings.subscription.subscribe}
+          </Text>
         </TouchableOpacity>
         <Spacer width={wp('4%')} />
         <TouchableOpacity

@@ -9,12 +9,14 @@ import Fonts from '../../theme/Fonts';
 import Colors from '../../theme/Colors';
 import Spacer from '../layout/Spacer';
 import AdaptiveButton from '../button/AdaptiveButton';
+import {Convert} from '../../utility/converter/Convert';
 interface ReedemRequestPopupProps {
   goToDashboard: () => void;
   onDismiss: () => void;
   company: string;
-  couponType: string;
+  coupType: string;
   points: string;
+  onDone: Function;
 }
 const ITEMS = [
   'Company/Department:',
@@ -23,7 +25,8 @@ const ITEMS = [
 ];
 
 const ReedemRequestPopup: React.FC<ReedemRequestPopupProps> = props => {
-  const {onDismiss, goToDashboard, company, couponType, points} = props;
+  const {onDismiss, goToDashboard, company, coupType, points, onDone} = props;
+  console.log('FROM_PIO', props);
 
   return (
     <PopupContainer
@@ -45,20 +48,23 @@ const ReedemRequestPopup: React.FC<ReedemRequestPopupProps> = props => {
                   ? company
                   : item.startsWith('P')
                   ? points
-                  : item.startsWith('Cou')
-                  ? couponType
-                  : ''}
+                  : coupType}
               </Text>
             </View>
           );
         })}
         <Spacer height={hp(1)} />
-        <Text style={styles.time}>15 May 2022, 12:50 PM</Text>
+        <Text style={styles.time}>
+          {Convert.dateFormatter(null, 'DD MMM yyyy, HH:mm', new Date())}
+        </Text>
         <AdaptiveButton
           buttonStyle={styles.button}
           type="light"
-          title={AppLocalizedStrings.goToDashboard}
-          onPress={goToDashboard}
+          title={AppLocalizedStrings.done}
+          onPress={() => {
+            goToDashboard();
+            onDone();
+          }}
         />
       </View>
     </PopupContainer>

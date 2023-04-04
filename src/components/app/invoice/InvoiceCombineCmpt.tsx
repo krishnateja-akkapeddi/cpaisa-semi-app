@@ -22,6 +22,7 @@ interface InvoiceCombineCmptProps {
   setSelectedDatesHandler: (params: FetchInvoiceSummaryParams.params) => void;
   selectedOverallSummary: boolean;
   loading?: boolean;
+  filterChecked?: boolean;
 }
 const InvoiceCombineCmpt = (props: InvoiceCombineCmptProps) => {
   const {
@@ -34,6 +35,7 @@ const InvoiceCombineCmpt = (props: InvoiceCombineCmptProps) => {
     setNum,
     setSelectedOverallSummary,
     selectedOverallSummary,
+    filterChecked,
     monthlyInvoices,
     loading,
   } = props;
@@ -47,7 +49,10 @@ const InvoiceCombineCmpt = (props: InvoiceCombineCmptProps) => {
         monthlyInvoices={monthlyInvoices}
         invoiceSummary={invoiceSummary}
       />
-      <InvoiceFilterView onFilterHandler={onFilterHandler} />
+      <InvoiceFilterView
+        filterChecked={filterChecked}
+        onFilterHandler={onFilterHandler}
+      />
     </>
   );
 };

@@ -3,11 +3,15 @@ import React, {useState} from 'react';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Spacer from '../layout/Spacer';
 import OrganiastionList from './OrganiastionList';
-import OrganisationList from '../../mock/OrganisationList.json';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/Store';
 
 const StockistView = () => {
-  const [data] = useState(OrganisationList);
   const [ind, setInd] = useState();
+  const {
+    app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData},
+  } = useSelector<RootState, RootState>(state => state);
+  console.log('STOCK_VIEW', qrExpiry);
 
   return (
     <View>

@@ -10,6 +10,7 @@ import Spacer from '../layout/Spacer';
 import {wp} from '../../utility/responsive/ScreenResponsive';
 import DoneBarComponent from './DoneBarComponent';
 import {Appearance} from 'react-native';
+import {colors} from 'react-native-swiper-flatlist/src/themes';
 
 export interface DropDownItem {
   value: any;
@@ -81,9 +82,7 @@ const Picker: React.FC<PickerProps> = props => {
         onItemChange={props.onItemChange}
         placeholder={placeholder}
         isNullable={false}
-        itemColor={
-          Appearance.getColorScheme() === 'dark' ? Colors.black : Colors.white
-        }
+        itemColor={Colors.black}
         itemFontFamily={Fonts.getFontFamily(itemFontFamily)}
         DoneBarComponent={() => <DoneBarComponent onDonePress={onDonePress} />}
         // backdropAnimation={{opacity: 0, duration: 0, delay: 0}}

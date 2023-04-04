@@ -1,10 +1,11 @@
-import {FlatList, StyleSheet, ViewStyle} from 'react-native';
+import {FlatList, StyleSheet, View, ViewStyle} from 'react-native';
 import React, {useState, useMemo, useEffect} from 'react';
 import DepartmentItem from './DepartmentItem';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Spacer from '../../layout/Spacer';
 import {ClientEntity} from '../../../models/interfaces/ClientsListResponse';
 import {Convert} from '../../../utility/converter/Convert';
+import {OrganisationSkeletonItem} from '../../SkeletonCards';
 
 export interface Organisation {
   name: string;
@@ -24,6 +25,7 @@ interface OrganisationListProps {
   contentContainerStyle?: ViewStyle;
   onSelect?: (arg0: number[]) => void;
   fromRedeemPoints?: boolean;
+  loading?: boolean;
 }
 
 const OrganisationList: React.FC<OrganisationListProps> = props => {
@@ -79,17 +81,21 @@ const OrganisationList: React.FC<OrganisationListProps> = props => {
       }
       renderItem={({item, index}) => {
         return (
-          <DepartmentItem
-            isRounded={isRounded}
-            style={horizontal ? undefined : itemStyle}
-            isViewAll={props.showAll ? index === 0 : false}
-            name={
-              item.short_code ? Convert.capitalize(item.short_code) : 'View all'
-            }
-            image={item.logo_link}
-            isActive={selectedIds.indexOf(index) != -1}
-            onPress={() => onItemSelect(index)}
-          />
+          <View>
+            <DepartmentItem
+              isRounded={isRounded}
+              style={horizontal ? undefined : itemStyle}
+              isViewAll={props.showAll ? index === 0 : false}
+              name={
+                item.short_code
+                  ? Convert.capitalize(item.short_code)
+                  : 'View all'
+              }
+              image={item.logo_link}
+              isActive={selectedIds.indexOf(index) != -1}
+              onPress={() => onItemSelect(index)}
+            />
+          </View>
         );
       }}
     />

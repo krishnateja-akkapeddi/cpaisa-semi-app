@@ -16,13 +16,15 @@ const InvoiceDetailFooter = (props: {
   return (
     <View>
       {/* {invoice?.invoice_items?.length < 0 && */}
-      <InvColorStatus />
+      {invoice?.invoice_items?.length > 0 && <InvColorStatus />}
       <View style={styles.totalPoint}>
         <Text style={styles.textStyle}>Total Points</Text>
         <Text style={styles.textStyle}>
-          {invoice.total_amount
+          {invoice?.invoice_items?.length > 0
             ? invoice.total_amount
-            : AppLocalizedStrings.noData}
+              ? invoice.total_amount
+              : AppLocalizedStrings.noData
+            : AppLocalizedStrings.notYetProcessed}
         </Text>
       </View>
       <Spacer height={hp('2%')} />

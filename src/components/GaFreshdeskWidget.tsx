@@ -1,23 +1,35 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {WebView} from 'react-native-webview';
-import {hp, wp} from '../utility/responsive/ScreenResponsive';
+import {useSelector} from 'react-redux';
+import {AuthResult} from '../models/interfaces/AuthResponse';
+import {RootState} from '../store/Store';
+import AppLoader from './indicator/AppLoader';
 
 const FreshdeskWidget = () => {
+  const selected = useSelector<RootState, AuthResult>(
+    state => state.auth.authResult,
+  );
+  const [loading, setLoading] = React.useState(true);
+
+  const channel_partner = selected?.data?.channel_partner;
+  const user = selected?.data?.user;
   return (
     <View style={styles.container}>
       <WebView
+        onLoad={() => setLoading(false)}
         scalesPageToFit={true}
         onMessage={event => {
           console.log(event);
         }}
         source={{
-          uri: 'https://channelpaisa.freshdesk.com/widgets/feedback_widget/new?show_subject_input=1',
+          uri: `https://channelpaisa.com/supports?auth-token=${user?.auth_token}&full-name=super&user-id=${user?.id}&role=CHANNEL_PARTNER&email=${user?.email_id}`,
         }}
         style={styles.webView}
         javaScriptEnabled={true}
         onError={(error: any) => console.error(`WebView error: ${error}`)}
       />
+      {loading && <AppLoader loading />}
     </View>
   );
 };
@@ -27,7 +39,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   webView: {
-    width: wp('190%'),
     flex: 1,
   },
 });

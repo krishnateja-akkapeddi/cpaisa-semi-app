@@ -32,6 +32,8 @@ const InvoiceCard: React.FC<CardProps> = props => {
       <Spacer height={10} />
       <Text style={styles.totalInvoiceText}>{props.totalInvoice}</Text>
       <Text style={styles.invoiceText}>{props.invoiceText}</Text>
+      <Spacer height={10} />
+
       <Text style={styles.commonTextStyle}>{props.rupees}</Text>
       <Text style={styles.rewardPoint}>{props.rewardPointText}</Text>
     </View>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
   },
   commonTextStyle: {
     fontFamily: Fonts.medium,
-    fontSize: Fonts.getFontSize('headline5'),
+    fontSize: Fonts.getFontSize('headline4'),
     color: Colors.black,
     lineHeight: 16,
     textAlign: 'center',
@@ -67,14 +69,14 @@ const styles = StyleSheet.create({
   },
   invoiceText: {
     fontFamily: Fonts.bold,
-    fontSize: Fonts.getFontSize('headline7'),
+    fontSize: Fonts.getFontSize('headline5'),
     color: Colors.black,
     textAlign: 'center',
     marginBottom: hp('1'),
   },
   rewardPoint: {
     fontFamily: Fonts.bold,
-    fontSize: Fonts.getFontSize('headline7'),
+    fontSize: Fonts.getFontSize('headline5'),
     color: Colors.black,
     textAlign: 'center',
     marginBottom: hp('1'),

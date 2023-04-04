@@ -19,10 +19,17 @@ type Props = {
   loading: boolean;
 };
 const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
-  const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const goToWalletHandler = () => {
     RootNavigation.navigate('WalletScreen');
   };
+
+  console.log(
+    'POINTS',
+    parseFloat(
+      walletSummary?.total_redeemable_points?.toString() ?? '',
+    ).toFixed(2),
+  );
+
   return (
     <View>
       <DashboardSectionHeader
@@ -36,7 +43,15 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
         <PriceChipView
           title={AppLocalizedStrings.dashboard.redeemablepoints}
           titleNumberLine={2}
-          price={walletSummary?.total_redeemable_points?.toString()}
+          price={
+            !loading ? (
+              parseFloat(
+                walletSummary?.total_redeemable_points?.toString() ?? '',
+              ).toFixed(2)
+            ) : (
+              <AppLoader type="none" loading />
+            )
+          }
           isTitleColorActive={true}
           titleColor={'#FFFFFF'}
           isPriceColorActive={true}
@@ -76,9 +91,9 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
           )
         }
       />
-      <DashboardSectionHeader
+      {/* <DashboardSectionHeader
         headerTitle={AppLocalizedStrings.dashboard.target}
-      />
+      /> */}
       <Spacer height={hp(1)} />
       {/* <OrganisationList
         isRounded={false}
@@ -88,8 +103,8 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
         data={OrganisationJson}
         onSelect={ids => setSelectedIds(ids)}
       /> */}
-      <Spacer height={hp(2)} />
-      <Slider
+      {/* <Spacer height={hp(2)} /> */}
+      {/* <Slider
         showValue={true}
         min={0}
         max={100}
@@ -99,8 +114,8 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
         trackStyle={styles.trackStyle}
         thumbStyle={styles.thumbStyle}
         textStyle={styles.valueText}
-      />
-      <Spacer height={hp(1)} />
+      /> */}
+      {/* <Spacer height={hp(1)} /> */}
     </View>
   );
 };

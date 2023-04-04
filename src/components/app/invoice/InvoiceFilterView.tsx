@@ -6,8 +6,11 @@ import Colors from '../../../theme/Colors';
 import AdaptiveButton from '../../button/AdaptiveButton';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import Style from '../../../constants/Style';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Spacer from '../../layout/Spacer';
 interface InvoiceFilterViewProps {
   onFilterHandler: () => void;
+  filterChecked?: boolean;
 }
 const InvoiceFilterView = (props: InvoiceFilterViewProps) => {
   return (
@@ -19,10 +22,34 @@ const InvoiceFilterView = (props: InvoiceFilterViewProps) => {
         <AdaptiveButton
           type="text"
           isReverse
-          title={AppLocalizedStrings.filter.filter}
-          icon="filter"
-          iconSize={hp('2.3')}
-          iconColor={Colors.primary}
+          title={
+            <View style={styles.container}>
+              <View>
+                <Text style={{fontSize: hp('1.5'), color: Colors.black}}>
+                  Filter
+                </Text>
+              </View>
+              <Spacer width={wp('2')} />
+              <View>
+                {!props.filterChecked ? (
+                  <Icon
+                    size={hp('2.5')}
+                    color={Colors.primary}
+                    name="filter-check"
+                  />
+                ) : (
+                  <Icon
+                    size={hp('2.5')}
+                    color={Colors.primary}
+                    name="filter-outline"
+                  />
+                )}
+              </View>
+            </View>
+          }
+          // icon="filter"
+          // iconSize={hp('2.3')}
+          // iconColor={Colors.primary}
           buttonStyle={styles.btnFilter}
           textStyle={styles.btnFilterText}
           onPress={props.onFilterHandler}
@@ -59,5 +86,10 @@ const styles = StyleSheet.create({
       Colors.black,
     ),
     paddingEnd: wp(4),
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: wp('40%'),
   },
 });

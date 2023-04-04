@@ -117,7 +117,7 @@ export default Carousel;
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    height: 270,
+    height: 290,
   },
   paginationStyle: {
     bottom: -15,

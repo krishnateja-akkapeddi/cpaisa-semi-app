@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   btnDateText: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline6'),
+      Fonts.getFontSize('headline4'),
       'Regular',
       Colors.black,
     ),

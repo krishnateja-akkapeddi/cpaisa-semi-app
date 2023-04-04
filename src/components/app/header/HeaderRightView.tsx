@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {appSlice, AppSliceState} from '../../../store/slices/AppSlice';
 import {QrCodeExpiryStatus} from '../../../constants/QrCodeExpiryStatus';
 import AppLoader from '../../indicator/AppLoader';
+import {PermissionType} from '../../../utility/permissions/PermissionsList';
 
 interface HeaderRightViewProps {
   showQRCode?: boolean;
@@ -31,10 +32,9 @@ interface HeaderRightViewProps {
 const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
   const dispatch = useDispatch();
   const {
-    app: {openQrCode, isQrCodeExpired, qrExpiry},
+    app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData, trigger},
   } = useSelector<RootState, RootState>(state => state);
   const [qrLoading, setQrLoading] = useState(false);
-  const [qrImage, setQrImage] = useState('');
   const [qrMessage, setQrMessage] = useState('');
   const {
     showQRCode = false,
@@ -56,29 +56,39 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
     //   dispatch(appSlice.actions.setOpenQrCode(true));
     // }
     if (isQrCodeExpired !== QrCodeExpiryStatus.ACTIVE) {
-      const locationInfo = await getLocation();
-      const locationPermission = await PermissionManager?.checkPermission(
-        'location',
+      const locationPermission = await PermissionManager?.checkPermissions(
+        PermissionType.LOCATION,
       );
       if (!locationPermission) {
-        RootNavigation.navigate('LocationPermissionScreen');
-      }
+        dispatch(appSlice.actions.setOpenQrCode(false));
+        setQrLoading(false);
+        RootNavigation.navigate('LocationPermissionScreen', {
+          fromQrCodeHeader: true,
+          isLogin: true,
+        });
+      } else {
+        const locationInfo = await getLocation();
 
-      const params = {
-        lat: locationInfo?.latitude,
-        long: locationInfo?.longitude,
-      };
-      const data = await store.dispatch(generateQrCode(params)).unwrap();
-      setQrImage(Convert.base64ToFileConverter(data.qr_code.image));
-      dispatch(
-        appSlice.actions.setQrCodeData(
-          Convert.base64ToFileConverter(data.qr_code.image),
-        ),
-      );
-      dispatch(appSlice.actions.setQrExpiryDate(parseInt(data.qr_code.expiry)));
-      setQrMessage(data.qr_code.message);
-      dispatch(appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.ACTIVE));
-      dispatch(appSlice.actions.setOpenQrCode(true));
+        const params = {
+          lat: locationInfo?.latitude,
+          long: locationInfo?.longitude,
+        };
+        const data = await store.dispatch(generateQrCode(params)).unwrap();
+        dispatch(
+          appSlice.actions.setQrCodeData(
+            Convert.base64ToFileConverter(data.qr_code.image),
+          ),
+        );
+        dispatch(
+          appSlice.actions.setQrExpiryDate(parseInt(data.qr_code.expiry)),
+        );
+        dispatch(appSlice.actions.setQrMessage(data.qr_code.message));
+        setQrMessage(data.qr_code.message);
+        dispatch(
+          appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.ACTIVE),
+        );
+        dispatch(appSlice.actions.setOpenQrCode(true));
+      }
     } else {
       dispatch(appSlice.actions.setOpenQrCode(true));
     }
@@ -90,10 +100,18 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
   };
 
   const onHelpHandler = () => {
-    RootNavigation.navigate('HelpScreen');
+    RootNavigation.navigate('Help');
   };
 
-  React.useEffect(() => {}, [qrImage, qrExpiry, isQrCodeExpired, qrLoading]);
+  React.useEffect(() => {}, [qrCodeData, qrExpiry, isQrCodeExpired, qrLoading]);
+
+  React.useEffect(() => {
+    if (trigger) {
+      onQRCodeHandler();
+      setQrLoading(false);
+      dispatch(appSlice.actions.triggerQrCode(false));
+    }
+  }, [trigger]);
 
   return (
     <View>

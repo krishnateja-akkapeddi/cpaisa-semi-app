@@ -22,7 +22,7 @@ interface QRCodePopupProps {
 
 const QRCodePopup: React.FC<QRCodePopupProps> = props => {
   const {
-    app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData},
+    app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData, qrMessage},
   } = useSelector<RootState, RootState>(state => state);
   const dispatch = useDispatch();
   const [minutes, seconds] = useMinutesAndSecondsFromUnixTime({
@@ -36,11 +36,12 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
   //   }
   // }, [props]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (seconds < 0) {
       dispatch(appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.EXPIRED));
     }
   }, [minutes, seconds, openQrCode, qrCodeData]);
+
   useEffect(() => {}, [qrExpiry]);
   return (
     <PopupContainer showHeader={false}>
@@ -54,9 +55,9 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
                 height: wp('75%'),
                 resizeMode: 'contain',
               }}
-              source={{uri: qrCodeData}}
+              source={{uri: qrCodeData ?? ''}}
             />
-            <Text style={styles.info}>{props.qrMessage}</Text>
+            <Text style={styles.info}>{qrMessage}</Text>
           </>
         )}
         {isQrCodeExpired ===
@@ -85,7 +86,7 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
         {isQrCodeExpired ===
           (QrCodeExpiryStatus.EXPIRED || QrCodeExpiryStatus.DEFAULT) && (
           <AdaptiveButton
-            isDisable={props.loadingQr}
+            isDisable={props?.loadingQr}
             buttonStyle={styles.dismiss}
             title={
               props.loadingQr ? (
@@ -94,7 +95,10 @@ const QRCodePopup: React.FC<QRCodePopupProps> = props => {
                 AppLocalizedStrings.QRCodePopup.regenerate
               )
             }
-            onPress={async () => await props.onQRCodeHandler(true)}
+            onPress={async () => {
+              dispatch(appSlice.actions.setOpenQrCode(false));
+              props?.onQRCodeHandler();
+            }}
           />
         )}
       </View>

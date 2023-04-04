@@ -1,22 +1,23 @@
 import React, {useRef, useState} from 'react';
-import {
-  NativeScrollEvent,
-  NativeSyntheticEvent,
-  ScrollView,
-} from 'react-native';
+import {NativeScrollEvent, RefreshControlProps, ScrollView} from 'react-native';
 
 type Props = {
   onEndReached: () => void;
   data: React.ReactNode;
   hasMore: boolean;
-  endMessage: React.ReactNode;
+  onRefresh?:
+    | React.ReactElement<
+        RefreshControlProps,
+        string | React.JSXElementConstructor<any>
+      >
+    | undefined;
 };
 
 const GaScrollView: React.FC<Props> = ({
   onEndReached,
   data,
   hasMore,
-  endMessage,
+  onRefresh,
 }) => {
   const scrollViewRef = useRef<ScrollView>(null);
   const [scrollingToTop, setScrollingTop] = useState(true);
@@ -25,8 +26,6 @@ const GaScrollView: React.FC<Props> = ({
     contentOffset,
     contentSize,
   }: NativeScrollEvent) {
-    console.log('LAUOUT', layoutMeasurement.height, contentOffset.y);
-
     return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
   }
 
@@ -40,6 +39,7 @@ const GaScrollView: React.FC<Props> = ({
 
   return (
     <ScrollView
+      refreshControl={onRefresh}
       onScrollToTop={() => setScrollingTop(true)}
       ref={scrollViewRef}
       onScroll={({nativeEvent}) => {
@@ -48,8 +48,6 @@ const GaScrollView: React.FC<Props> = ({
         if (isCloseToTop(nativeEvent)) {
         }
         if (isCloseToBottom(nativeEvent)) {
-          hasMore && console.log('SCROLLING TO TOP');
-
           hasMore && onEndReached();
         }
       }}>

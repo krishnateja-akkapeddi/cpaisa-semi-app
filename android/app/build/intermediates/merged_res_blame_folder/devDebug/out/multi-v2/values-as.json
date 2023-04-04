@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-31:/values-as/values-as.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-as/values-as.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/res/values-as/values-as.xml",

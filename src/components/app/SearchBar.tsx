@@ -1,12 +1,14 @@
+import React from 'react';
+
 import {
   GestureResponderEvent,
+  KeyboardTypeOptions,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import Fonts from '../../theme/Fonts';
 import Style from '../../constants/Style';
 import Colors from '../../theme/Colors';
@@ -23,11 +25,12 @@ interface SearchBarPorps {
   onChange?: (e: string) => void;
   value?: string;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
+  keyboardType?: KeyboardTypeOptions;
+  hideButton?: boolean;
 }
 
 const SearchBar: React.FC<SearchBarPorps> = props => {
-  const {placeholder, shadow, type} = props;
-  const [searchText, setSearchText] = useState('');
+  const {placeholder, type} = props;
 
   const onPress = () => {
     // RootNavigation.navigate('InvoiceUploadScreen');
@@ -41,21 +44,24 @@ const SearchBar: React.FC<SearchBarPorps> = props => {
         placeholderTextColor="#CCC"
         style={styles.textInputStyle}
         onChangeText={props.onChange}
-        value={props.value}
+        value={props?.value ?? ''}
+        keyboardType={props.keyboardType ? props.keyboardType : 'default'}
       />
-      <View style={type == 'small' ? null : styles.bottomView}>
-        <TouchableOpacity
-          onPressIn={onPress}
-          style={styles.touchableStyle}
-          onPress={props.onPress}>
-          {type == 'small' ? null : (
-            <Text style={styles.buttonTextStyle}>
-              {AppLocalizedStrings.search.search}
-            </Text>
-          )}
-          <Icon name="arrowright" color="#fff" size={wp('3%')} />
-        </TouchableOpacity>
-      </View>
+      {!props.hideButton && (
+        <View style={type === 'small' ? null : styles.bottomView}>
+          <TouchableOpacity
+            onPressIn={onPress}
+            style={styles.touchableStyle}
+            onPress={props?.onPress}>
+            {type == 'small' ? null : (
+              <Text style={styles.buttonTextStyle}>
+                {AppLocalizedStrings.search.search}
+              </Text>
+            )}
+            <Icon name="arrowright" color="#fff" size={wp('3%')} />
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -86,7 +92,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     height: Style.kTextInputHeight,
     borderRightWidth: 0,
-    elevation: 15,
+    elevation: 2,
   },
   textInputStyle: {
     paddingLeft: 15,

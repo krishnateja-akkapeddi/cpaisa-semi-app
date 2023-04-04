@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import TransactionCard from '../../../components/app/wallet/TransactionCard';
-import WalletTransaction from '../../../mock/WalletTransiction.json';
 
 interface TransactionListProps {}
 

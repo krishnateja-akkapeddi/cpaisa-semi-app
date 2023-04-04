@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
     ),
   },
   thumbAbove: {
-    top: 56,
+    top: 35,
   },
 });

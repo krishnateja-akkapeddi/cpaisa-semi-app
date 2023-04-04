@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   ViewStyle,
+  TouchableNativeFeedback,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, {memo, useMemo} from 'react';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
@@ -20,6 +22,7 @@ import {InvoiceStatus} from '../../../models/enum/InvoiceStatus';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Convert} from '../../../utility/converter/Convert';
 import InvColorStatus from './InvColorStatus';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 interface InvoiceProps {
   item: InvoiceListEntity;
@@ -41,15 +44,15 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
           style={{
             ...styles.minOrangeView,
             backgroundColor:
-              item.invoice_items &&
-              (item.invoice_status === InvoiceStatus.PENDING
+              item?.invoice_items &&
+              (item?.invoice_status === InvoiceStatus.PENDING
                 ? Colors.grey
-                : item.invoice_items[0].status === InvoiceStatus.APPROVED
+                : item?.invoice_status === InvoiceStatus.APPROVED
                 ? Colors.green
                 : Colors.red),
           }}>
           <Text style={styles.minOrderText}>
-            {item.invoice_status && Convert.capitalize(item?.invoice_status)}
+            {item?.invoice_status && Convert.capitalize(item?.invoice_status)}
           </Text>
         </View>
       </View>
@@ -78,10 +81,10 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
               <Spacer style={{width: wp('2%')}} />
 
               <View style={styles.leftSection}>
-                <Text style={{color: Colors.black, fontWeight: 'bold'}}>
+                {/* <Text style={{color: Colors.black, fontWeight: 'bold'}}>
                   {'#' + item.id}
-                </Text>
-                <Spacer style={{width: hp('5%')}} />
+                </Text> */}
+                {/* <Spacer style={{width: hp('5%')}} /> */}
 
                 <Text style={styles.titleStyle}>Invoice Date</Text>
                 <Text style={styles.commonStyle}>
@@ -91,11 +94,11 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
                 </Text>
               </View>
             </View>
-            <Spacer style={{height: hp('2%')}} />
+            <Spacer style={{height: hp('1%')}} />
             <View style={styles.middleContainer}>
               <View style={styles.commonView}>
-                <Text style={styles.titleStyle}>Customer Name</Text>
-                <Text style={styles.commonStyle}>{item.firm_name}</Text>
+                <Text style={styles.titleStyle}>Total Points</Text>
+                <Text style={styles.commonStyle}>{item?.total_points}</Text>
               </View>
               <Spacer style={{width: wp('2%')}} />
               <View style={styles.leftSection}>
@@ -120,17 +123,27 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.informationContainer}
-          onPress={() => RootNavigation.navigate('InvoiceDetailScreen')}>
+          onPress={() =>
+            RootNavigation.navigate('InvoiceDetailScreen', {invoiceItem: item})
+          }>
           <Text style={styles.informationTextStyle}>More Information</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.supportContainer}
-          onPress={() => RootNavigation.navigate('ContactSupportScreen')}>
+          onPress={() =>
+            RootNavigation.navigate('OrganisationsStack', {
+              screen: 'BrandsScreen',
+            })
+          }>
           <Text style={styles.supportTextStyle}>Contact Support</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => {}} style={styles.starMark}>
-        <SVGIcon name="mark" size={hp('3%')} />
+        {/* <SVGIcon name="mark" size={hp('3%')} /> */}
+        <Spacer height={hp('1%')} />
+        <Text style={{color: Colors.grey, fontWeight: '800'}}>
+          {'#' + item.id}
+        </Text>
       </TouchableOpacity>
     </TouchableOpacity>
   );
@@ -171,13 +184,13 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     fontFamily: Fonts.regular,
-    fontSize: Fonts.getFontSize('headline6'),
+    fontSize: Fonts.getFontSize('headline5'),
     color: '#7F7F7F',
     marginVertical: hp('0.5'),
   },
   commonStyle: {
     fontFamily: Fonts.bold,
-    fontSize: Fonts.getFontSize('headline5'),
+    fontSize: Fonts.getFontSize('headline4'),
     color: '#474747',
     backgroundColor: 'white',
   },
@@ -216,7 +229,7 @@ const styles = StyleSheet.create({
   },
   statusText: {
     fontFamily: Fonts.bold,
-    fontSize: Fonts.getFontSize('headline6'),
+    fontSize: Fonts.getFontSize('headline5'),
     color: Colors.white,
     backgroundColor: '#FF5577',
     paddingHorizontal: hp('1.5%'),

@@ -12,7 +12,6 @@ import {AppLocalizedStrings} from '../../../localization/Localization';
 import Style from '../../../constants/Style';
 import Fonts from '../../../theme/Fonts';
 import Colors from '../../../theme/Colors';
-import AdaptiveButton from '../../button/AdaptiveButton';
 import InvoiceUploadListItemProps from './InvoiceUploadListItem';
 import InvoiceUploadJson from '../../../mock/InvoiceUpload.json';
 import InvoiceUploadItem from '../../../models/interfaces/InvoiceUploadItem';

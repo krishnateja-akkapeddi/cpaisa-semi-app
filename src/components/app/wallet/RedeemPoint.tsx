@@ -16,19 +16,24 @@ const kOrganisations = [...CompanyCard];
 interface RedeemProps {
   onDismiss: () => void;
   onCompanySelect: (headTitle: string) => void;
-  orgainisations?: ClientEntity[];
+  organisations: ClientEntity[];
+  selectedOrgID?: number[];
 }
 
 const RedeemPoint: React.FC<RedeemProps> = props => {
   const {onCompanySelect, onDismiss} = props;
-  const [selectedIds, setSelectedIds] = useState<number[]>([0]);
-  const [selectedOrg, setSelectedOrg] = useState<ClientEntity>();
+  const [selectedIds, setSelectedIds] = useState<number[]>([1]);
+  const [selectedOrg, setSelectedOrg] = useState<ClientEntity | undefined>(
+    props.organisations[1],
+  );
 
   const onContinueHandler = () => {
     onCompanySelect(selectedOrg?.short_code ?? '');
   };
 
-  useEffect(() => {}, [selectedOrg]);
+  useEffect(() => {
+    console.log('SELECTed', props.selectedOrgID);
+  }, [selectedOrg, props.selectedOrgID]);
 
   return (
     <View style={[styles.mainCardStyle]}>
@@ -54,13 +59,15 @@ const RedeemPoint: React.FC<RedeemProps> = props => {
       <OrganisationList
         showsHorizontalScrollIndicator={true}
         isRounded={false}
-        selectedIds={selectedIds}
+        selectedIds={
+          props?.selectedOrgID ? [props.selectedOrgID[0] - 1] : selectedIds
+        }
         horizontal={true}
         showAll={false}
         fromRedeemPoints={true}
-        data={props.orgainisations}
+        data={props.organisations}
         onSelect={ids => {
-          const org = props.orgainisations?.find((val, ind) => {
+          const org = props.organisations?.find((val, ind) => {
             return ind === ids[0] + 1;
           });
           setSelectedOrg(org);

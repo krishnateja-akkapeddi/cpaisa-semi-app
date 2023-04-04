@@ -15,6 +15,8 @@ interface PopupContainerProps {
   showHeader?: boolean;
   onDismiss?: () => void;
   animationType?: 'fade' | 'slide';
+  onOutsidePress?: Function;
+  type?: 'error' | 'success';
 }
 
 const PopupContainer: React.FC<PopupContainerProps> = props => {
@@ -26,6 +28,7 @@ const PopupContainer: React.FC<PopupContainerProps> = props => {
     title,
     onDismiss,
     animationType = 'fade',
+    type,
   } = props;
   return (
     <Modal transparent animationType={animationType} onRequestClose={() => {}}>

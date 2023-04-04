@@ -788,6 +788,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="accessibility_fingerprint_dialog_help_area">Help message area</string>
     <string name="alert_description" translatable="false">Alert</string>
+    <string name="ampm_description">Select AM/PM</string>
     <string name="androidx_startup" translatable="false">androidx.startup</string>
     <string name="app_name" translatable="false">"ChannelPaisaDev"</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
@@ -831,6 +832,8 @@
     <string name="clear_text_end_icon_content_description">Clear text</string>
     <string name="combobox_description" translatable="false">Combo Box</string>
     <string name="confirm_device_credential_password">Use password</string>
+    <string name="date_description">Select Date</string>
+    <string name="day_description">Select Day</string>
     <string name="default_error_msg">Unknown error</string>
     <string name="description_fingerprint_icon">Fingerprint icon</string>
     <string name="error_icon_content_description">Error</string>
@@ -851,6 +854,8 @@
     <string name="header">Sign in</string>
     <string name="header_description" translatable="false">Heading</string>
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
+    <string name="hour_description">Select Hour</string>
+    <string name="hour_tag">Hour :</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
     <string name="image_description" translatable="false">Image</string>
     <string name="imagebutton_description" translatable="false">Button, Image</string>
@@ -868,6 +873,9 @@ before proceeding some actions such as purchasing an item.
     <string name="menu_description" translatable="false">Menu</string>
     <string name="menubar_description" translatable="false">Menu Bar</string>
     <string name="menuitem_description" translatable="false">Menu Item</string>
+    <string name="minutes_description">Select Minutes</string>
+    <string name="minutes_tag">Minutes </string>
+    <string name="month_description">Select Month</string>
     <string description="Content description for new notification (no number count) [CHAR_LIMIT=NONE]" name="mtrl_badge_numberless_content_description">New notification</string>
     <string description="Content description for a close icon that lets the user remove content from the screen" name="mtrl_chip_close_icon_content_description">Remove %1$s</string>
     <string name="mtrl_exceed_max_badge_number_suffix" translatable="false"><ns1:g example="999" id="maximum number">%1$d</ns1:g><ns1:g example="+" id="suffix">%2$s</ns1:g></string>
@@ -902,6 +910,7 @@ before proceeding some actions such as purchasing an item.
     <string description="a11y string to indicate this button switches the user to choosing a day [CHAR_LIMIT=NONE]" name="mtrl_picker_toggle_to_day_selection">Tap to switch to selecting a day</string>
     <string description="a11y string to indicate this button changes the input mode to a text field [CHAR_LIMIT=NONE]" name="mtrl_picker_toggle_to_text_input_mode">Switch to text input mode</string>
     <string description="a11y string to indicate this button switches the user to choosing a year [CHAR_LIMIT=NONE]" name="mtrl_picker_toggle_to_year_selection">Tap to switch to selecting a year</string>
+    <string name="overlay">Date Picker Overlay</string>
     <string name="password_toggle_content_description">Show password</string>
     <string name="path_password_eye" translatable="false">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
     <string name="path_password_eye_mask_strike_through" translatable="false">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
@@ -923,6 +932,7 @@ before proceeding some actions such as purchasing an item.
     <string name="status_bar_notification_info_overflow">999+</string>
     <string name="summary_description" translatable="false">Summary</string>
     <string name="tablist_description" translatable="false">Tab List</string>
+    <string name="time_tag">Time is</string>
     <string name="timer_description" translatable="false">Timer</string>
     <string name="toolbar_description" translatable="false">Tool Bar</string>
     <string name="ucrop_crop">Crop</string>
@@ -933,6 +943,7 @@ before proceeding some actions such as purchasing an item.
     <string name="ucrop_mutate_exception_hint" translatable="false">Therefore, override color resource (ucrop_color_toolbar_widget) in your app to make it work on pre-L devices</string>
     <string name="ucrop_rotate">Rotate</string>
     <string name="ucrop_scale">Scale</string>
+    <string name="year_description">Select Year</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
@@ -2798,10 +2809,11 @@ before proceeding some actions such as purchasing an item.
     <item name="shapeAppearanceOverlay">@null</item>
   </style>
     <style name="Base.Widget.MaterialComponents.TextView" parent="Widget.AppCompat.TextView"/>
-    <style name="CalendarDatePickerDialog" ns2:targetApi="lollipop" parent="Theme.AppCompat.Light.Dialog">
+    <style name="CalendarDatePickerDialog" ns2:targetApi="lollipop" parent="android:Theme.Material.Dialog.Alert">
         <item name="android:datePickerStyle">@style/CalendarDatePickerStyle</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
-    <style name="CalendarDatePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.Light.DatePicker">
+    <style name="CalendarDatePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.DatePicker">
         <item name="android:datePickerMode">calendar</item>
     </style>
     <style name="CardView" parent="Base.CardView">
@@ -2812,11 +2824,11 @@ before proceeding some actions such as purchasing an item.
     <style name="CardView.Light">
         <item name="cardBackgroundColor">@color/cardview_light_background</item>
     </style>
-    <style name="ClockTimePickerDialog" ns2:targetApi="lollipop" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:timePickerStyle">@style/ClockTimePickerStyle</item>
+    <style name="DatePickerBaseTheme">
+        <item name="android:textSize" ns2:ignore="SpUsage">17sp</item>
     </style>
-    <style name="ClockTimePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.Light.TimePicker">
-        <item name="android:timePickerMode">clock</item>
+    <style name="DatePickerTheme" parent="DatePickerBaseTheme">
+        
     </style>
     <style name="DeviceCredentialHandlerTheme" parent="Theme.AppCompat">
         <item name="android:windowIsTranslucent">true</item>
@@ -3164,16 +3176,18 @@ before proceeding some actions such as purchasing an item.
     <style name="ShapeAppearanceOverlay.TopRightDifferentCornerSize">
     <item name="cornerSizeTopRight">20px</item>
   </style>
-    <style name="SpinnerDatePickerDialog" ns2:targetApi="lollipop" parent="Theme.AppCompat.Light.Dialog">
+    <style name="SpinnerDatePickerDialog" parent="SpinnerDatePickerDialogBase"/>
+    <style name="SpinnerDatePickerDialogBase" ns2:targetApi="lollipop" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:datePickerStyle">@style/SpinnerDatePickerStyle</item>
     </style>
-    <style name="SpinnerDatePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.Light.DatePicker">
+    <style name="SpinnerDatePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.DatePicker">
         <item name="android:datePickerMode">spinner</item>
     </style>
-    <style name="SpinnerTimePickerDialog" ns2:targetApi="lollipop" parent="Theme.AppCompat.Light.Dialog">
+    <style name="SpinnerTimePickerDialog" parent="SpinnerTimePickerDialogBase"/>
+    <style name="SpinnerTimePickerDialogBase" ns2:targetApi="lollipop" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:timePickerStyle">@style/SpinnerTimePickerStyle</item>
     </style>
-    <style name="SpinnerTimePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.Light.TimePicker">
+    <style name="SpinnerTimePickerStyle" ns2:targetApi="lollipop" parent="android:Widget.Material.TimePicker">
         <item name="android:timePickerMode">spinner</item>
     </style>
     <style name="Test.ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Day" parent="">
@@ -4595,6 +4609,17 @@ before proceeding some actions such as purchasing an item.
     </style>
     <style name="Widget.Support.CoordinatorLayout" parent="android:Widget">
         <item name="statusBarBackground">#000000</item>
+    </style>
+    <style name="android_native">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:descendantFocusability">blocksDescendants</item>
+
+    </style>
+    <style name="android_native_small" parent="android_native">
+        <item name="android:layout_width">40dp</item>
     </style>
     <style name="redboxButton">
     <item name="android:layout_width">0dp</item>
@@ -6607,6 +6632,41 @@ before proceeding some actions such as purchasing an item.
     
     <attr format="color" name="itemShapeFillColor"/>
   </declare-styleable>
+    <declare-styleable name="NumberPickerView">
+        
+        <attr format="reference|integer" name="npv_ShownCount"/>
+        
+        <attr format="reference|boolean" name="npv_ShowDivider"/>
+        <attr format="reference|color" name="npv_DividerColor"/>
+        <attr format="reference|dimension" name="npv_DividerMarginLeft"/>
+        <attr format="reference|dimension" name="npv_DividerMarginRight"/>
+        <attr format="reference|dimension" name="npv_DividerHeight"/>
+        <attr format="reference|color" name="npv_TextColorNormal"/>
+        <attr format="reference|color" name="npv_TextColorSelected"/>
+        <attr format="reference|color" name="npv_TextColorHint"/>
+        <attr format="reference|dimension" name="npv_TextSizeNormal"/>
+        <attr format="reference|dimension" name="npv_TextSizeSelected"/>
+        <attr format="reference|dimension" name="npv_TextSizeHint"/>
+        <attr format="reference" name="npv_TextArray"/>
+        <attr format="reference|integer" name="npv_MinValue"/>
+        <attr format="reference|integer" name="npv_MaxValue"/>
+        <attr format="reference|boolean" name="npv_WrapSelectorWheel"/>
+        <attr format="reference|boolean" name="npv_RespondChangeOnDetached"/>
+        <attr format="reference|string" name="npv_HintText"/>
+        <attr format="reference|string" name="npv_EmptyItemHint"/>
+        <attr format="reference|dimension" name="npv_MarginStartOfHint"/>
+        <attr format="reference|dimension" name="npv_MarginEndOfHint"/>
+        <attr format="reference|dimension" name="npv_ItemPaddingHorizontal"/>
+        <attr format="reference|dimension" name="npv_ItemPaddingVertical"/>
+        <attr format="reference|boolean" name="npv_RespondChangeInMainThread"/>
+        <attr format="reference|string" name="npv_TextEllipsize"/>
+
+        
+        <attr format="reference" name="npv_AlternativeTextArrayWithMeasureHint"/>
+        <attr format="reference" name="npv_AlternativeTextArrayWithoutMeasureHint"/>
+        
+        <attr format="reference|string" name="npv_AlternativeHint"/>
+    </declare-styleable>
     <declare-styleable name="PopupWindow">
         
         <attr format="boolean" name="overlapAnchor"/>

@@ -75,7 +75,7 @@ const InvoiceUploadListItem = (props: InvoiceUploadListItemProps) => {
         {item.docName}
       </Text>
       <Text numberOfLines={1} style={styles.fileName}>
-        {item.fileName}
+        {item.docName}
       </Text>
       <View style={tagViewStyle}>
         <Text style={styles.tagText}>{statusInfo.title}</Text>

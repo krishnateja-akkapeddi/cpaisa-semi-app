@@ -1,38 +1,78 @@
-import React from 'react';
-import {View, Button} from 'react-native';
-import {
-  ALERT_TYPE,
-  Dialog,
-  AlertNotificationRoot,
-  Toast,
-} from 'react-native-alert-notification';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {Alert, Button, Image, StyleSheet, Text, View} from 'react-native';
+import PopupContainer from './popup/PopupContainer';
+import {RootState} from '../store/Store';
+import {appSlice, AppSliceState} from '../store/slices/AppSlice';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Colors from '../theme/Colors';
+import {hp, wp} from '../utility/responsive/ScreenResponsive';
+import AdaptiveButton from './button/AdaptiveButton';
+import Spacer from './layout/Spacer';
 
-export const GaNotification = () => {
+const GaNotification = () => {
+  const {popup} = useSelector<RootState, AppSliceState>(state => state.app);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {}, [popup]);
+
   return (
     <View>
-      <View>
-        <Button
-          title={'dialog box'}
-          onPress={() =>
-            Dialog.show({
-              type: ALERT_TYPE.SUCCESS,
-              title: 'Success',
-              textBody: 'Congrats! this is dialog box success',
-              button: 'close',
-            })
-          }
-        />
-        <Button
-          title={'toast notification'}
-          onPress={() =>
-            Toast.show({
-              type: ALERT_TYPE.SUCCESS,
-              title: 'Success',
-              textBody: 'Congrats! this is toast notification success',
-            })
-          }
-        />
-      </View>
+      {popup.visible && (
+        <PopupContainer
+          animationType="fade"
+          showDismiss={true}
+          onDismiss={() => {
+            dispatch(appSlice.actions.closePoup());
+          }}
+          title={popup.title}>
+          <View style={styles.popupContainer}>
+            {popup.type !== 'error' ? (
+              <Image
+                source={require('../assets/images/SuccessIcon.png')}></Image>
+            ) : (
+              <>
+                <Icon size={wp('20%')} name="closecircle" color={Colors.red} />
+                <Spacer height={20} />
+              </>
+            )}
+            <Text style={styles.contentTitle}>{popup.message}</Text>
+            {popup.description && (
+              <Text style={styles.contentDescription}>{popup.description}</Text>
+            )}
+            <Spacer height={hp('5%')} />
+            <AdaptiveButton
+              onPress={() => {
+                dispatch(appSlice.actions.closePoup());
+                popup.onSubmit && popup.onSubmit();
+              }}
+              type="light"
+              buttonStyle={{width: wp('70%')}}
+              title="Done"></AdaptiveButton>
+          </View>
+        </PopupContainer>
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  popupContainer: {
+    alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  contentTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: 10,
+    color: Colors.black,
+  },
+  contentDescription: {
+    fontSize: 16,
+    marginTop: 20,
+    color: Colors.black,
+  },
+});
+
+export default GaNotification;

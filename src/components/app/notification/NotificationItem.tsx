@@ -5,6 +5,7 @@ import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Fonts from '../../../theme/Fonts';
 import ImageView from '../../image/ImageView';
 import Style from '../../../constants/Style';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 interface NotificationItemProps {
   title: string;
@@ -14,10 +15,11 @@ const NotificationItem: React.FC<NotificationItemProps> = props => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.secondContainer}>
-        <ImageView
+        {/* <ImageView
           source={'https://picsum.photos/seed/picsum/200/300'}
           style={styles.img}
-        />
+        /> */}
+        <Icon size={20} name="notification" />
         <View style={styles.innerView}>
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>{props.title}</Text>

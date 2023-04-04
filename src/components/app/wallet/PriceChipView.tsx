@@ -61,6 +61,7 @@ const stylesWallet = StyleSheet.create({
     backgroundColor: Colors.black,
     justifyContent: 'space-around',
     alignItems: 'center',
+    paddingHorizontal: wp('2%'),
   },
 
   redeemNow: {
@@ -84,12 +85,12 @@ const stylesWallet = StyleSheet.create({
   },
 
   walletRate: {
-    ...Style.getTextStyle(Fonts.getFontSize('headline3'), 'Bold', Colors.black),
+    ...Style.getTextStyle(Fonts.getFontSize('headline4'), 'Bold', Colors.black),
   },
 
   walletRedeem: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline3'),
+      Fonts.getFontSize('headline4'),
       'Bold',
       Colors.primary,
     ),

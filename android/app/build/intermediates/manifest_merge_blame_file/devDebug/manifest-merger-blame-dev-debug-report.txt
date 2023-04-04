@@ -5,183 +5,186 @@
 5    android:versionName="1.0" >
 6
 7    <uses-sdk
-8        android:minSdkVersion="27"
+8        android:minSdkVersion="26"
 9        android:targetSdkVersion="33" />
 10
 11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-11-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:5-77
-11-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:22-75
+11-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:5-77
+11-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:5-67
-12-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:22-64
+12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:5-67
+12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:22-64
 13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-13-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:1-74
-13-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:18-72
+13-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:1-74
+13-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:18-72
 14    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-14-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:6:1-71
-14-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:6:18-69
+14-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:6:1-71
+14-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:6:18-69
 15    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-15-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:7:1-76
-15-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:7:18-74
-16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-16-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
-16-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
-17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-17-->[:react-native-community_netinfo] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
-17-->[:react-native-community_netinfo] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
-18
-19    <queries>
-19-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-13:15
-20        <intent>
-20-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:18
-21            <action android:name="android.media.action.IMAGE_CAPTURE" />
-21-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-73
-21-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:21-70
-22        </intent>
-23    </queries>
-24
-25    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-25-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-81
-25-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-78
-26    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-26-->[:react-native-sensitive-info] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
-26-->[:react-native-sensitive-info] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-69
-27    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-27-->[:react-native-sensitive-info] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-74
-27-->[:react-native-sensitive-info] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-71
-28
-29    <application
-29-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:8:5-27:19
-30        android:name="com.channelpaisa.channelpaisa.MainApplication"
-30-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:9:7-38
-31        android:allowBackup="false"
-31-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:13:7-34
-32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-32-->[androidx.core:core:1.7.0] /Users/kt/.gradle/caches/transforms-3/4c0f13976d02ef43c57c3cf0ee71b681/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
-33        android:debuggable="true"
-34        android:extractNativeLibs="false"
-35        android:icon="@mipmap/ic_launcher"
-35-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:11:7-41
-36        android:label="@string/app_name"
-36-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:10:7-39
-37        android:roundIcon="@mipmap/ic_launcher_round"
-37-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:12:7-52
-38        android:theme="@style/AppTheme"
-38-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:14:7-38
-39        android:usesCleartextTraffic="true" >
-39-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:8:9-44
-40        <activity
-40-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:9-111
-41            android:name="com.facebook.react.devsupport.DevSettingsActivity"
-41-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:19-83
-42            android:exported="false" />
-42-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:84-108
-43        <activity
-43-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:15:7-26:18
-44            android:name="com.channelpaisa.channelpaisa.MainActivity"
-44-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:16:9-37
-45            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-45-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:18:9-118
-46            android:exported="true"
-46-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:21:9-32
-47            android:label="@string/app_name"
-47-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:17:9-41
-48            android:launchMode="singleTask"
-48-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:19:9-40
-49            android:windowSoftInputMode="adjustPan" >
-49-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:20:9-48
-50            <intent-filter>
-50-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:22:9-25:25
-51                <action android:name="android.intent.action.MAIN" />
-51-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:23:13-65
-51-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:23:21-62
-52
-53                <category android:name="android.intent.category.LAUNCHER" />
-53-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:24:13-73
-53-->/Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:24:23-70
-54            </intent-filter>
-55        </activity>
-56
-57        <provider
-57-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-26:20
-58            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
-58-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-94
-59            android:authorities="com.channelpaisa.channelpaisa.dev.provider"
-59-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-60
-60            android:exported="false"
-60-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-37
-61            android:grantUriPermissions="true" >
-61-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-47
-62            <meta-data
-62-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
-63                android:name="android.support.FILE_PROVIDER_PATHS"
-63-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
-64                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
-64-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
-65        </provider>
-66
-67        <activity
-67-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-30:72
-68            android:name="com.yalantis.ucrop.UCropActivity"
-68-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-60
-69            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-69-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-69
-70
-71        <provider
-71-->[:react-native-webview] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
-72            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
-72-->[:react-native-webview] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-83
-73            android:authorities="com.channelpaisa.channelpaisa.dev.fileprovider"
-73-->[:react-native-webview] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-64
-74            android:exported="false"
-74-->[:react-native-webview] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
-75            android:grantUriPermissions="true" >
-75-->[:react-native-webview] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
-76            <meta-data
-76-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
-77                android:name="android.support.FILE_PROVIDER_PATHS"
-77-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
-78                android:resource="@xml/file_provider_paths" />
-78-->[:react-native-image-crop-picker] /Users/kt/Desktop/projects/react-native/channel-paisa-new/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
-79        </provider>
-80
-81        <activity
-81-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:28:9-31:67
-82            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
-82-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:29:13-78
-83            android:exported="true"
-83-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:30:13-36
-84            android:theme="@style/DeviceCredentialHandlerTheme" />
-84-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:31:13-64
-85
-86        <meta-data
-86-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:11:9-13:43
-87            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-87-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:12:13-84
-88            android:value="GlideModule" />
-88-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:13:13-40
-89
-90        <provider
-90-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
-91            android:name="androidx.startup.InitializationProvider"
-91-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
-92            android:authorities="com.channelpaisa.channelpaisa.dev.androidx-startup"
-92-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
-93            android:exported="false" >
-93-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
-94            <meta-data
-94-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
-95                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-95-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
-96                android:value="androidx.startup" />
-96-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
-97            <meta-data
-97-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
-98                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-98-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
-99                android:value="androidx.startup" />
-99-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
-100        </provider>
-101    </application>
-102
-103</manifest>
+15-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:7:1-76
+15-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:7:18-74
+16    <uses-permission android:name="android.permission.CAMERA" />
+16-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:8:1-61
+16-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:8:18-58
+17    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+17-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
+17-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
+18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+18-->[:react-native-community_netinfo] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
+18-->[:react-native-community_netinfo] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
+19
+20    <queries>
+20-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-13:15
+21        <intent>
+21-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:18
+22            <action android:name="android.media.action.IMAGE_CAPTURE" />
+22-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-73
+22-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:21-70
+23        </intent>
+24    </queries>
+25
+26    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+26-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-81
+26-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-78
+27    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+27-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
+27-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-69
+28    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+28-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-74
+28-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-71
+29
+30    <application
+30-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:10:5-29:19
+31        android:name="com.channelpaisa.channelpaisa.MainApplication"
+31-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:11:7-38
+32        android:allowBackup="false"
+32-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:15:7-34
+33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+33-->[androidx.core:core:1.7.0] /Users/kt/.gradle/caches/transforms-3/4c0f13976d02ef43c57c3cf0ee71b681/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+34        android:debuggable="true"
+35        android:extractNativeLibs="false"
+36        android:icon="@mipmap/ic_launcher"
+36-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:13:7-41
+37        android:label="@string/app_name"
+37-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:12:7-39
+38        android:roundIcon="@mipmap/ic_launcher_round"
+38-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:14:7-52
+39        android:theme="@style/AppTheme"
+39-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:16:7-38
+40        android:usesCleartextTraffic="true" >
+40-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:8:9-44
+41        <activity
+41-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:9-111
+42            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+42-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:19-83
+43            android:exported="false" />
+43-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:84-108
+44        <activity
+44-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:17:7-28:18
+45            android:name="com.channelpaisa.channelpaisa.MainActivity"
+45-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:18:9-37
+46            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+46-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:20:9-118
+47            android:exported="true"
+47-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:23:9-32
+48            android:label="@string/app_name"
+48-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:19:9-41
+49            android:launchMode="singleTask"
+49-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:21:9-40
+50            android:windowSoftInputMode="adjustPan" >
+50-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:22:9-48
+51            <intent-filter>
+51-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:24:9-27:25
+52                <action android:name="android.intent.action.MAIN" />
+52-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:25:13-65
+52-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:25:21-62
+53
+54                <category android:name="android.intent.category.LAUNCHER" />
+54-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:26:13-73
+54-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:26:23-70
+55            </intent-filter>
+56        </activity>
+57
+58        <provider
+58-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-26:20
+59            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+59-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-94
+60            android:authorities="com.channelpaisa.channelpaisa.dev.provider"
+60-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-60
+61            android:exported="false"
+61-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-37
+62            android:grantUriPermissions="true" >
+62-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-47
+63            <meta-data
+63-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
+64                android:name="android.support.FILE_PROVIDER_PATHS"
+64-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
+65                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+65-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
+66        </provider>
+67
+68        <activity
+68-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-30:72
+69            android:name="com.yalantis.ucrop.UCropActivity"
+69-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-60
+70            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+70-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-69
+71
+72        <provider
+72-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
+73            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+73-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-83
+74            android:authorities="com.channelpaisa.channelpaisa.dev.fileprovider"
+74-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-64
+75            android:exported="false"
+75-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+76            android:grantUriPermissions="true" >
+76-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
+77            <meta-data
+77-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
+78                android:name="android.support.FILE_PROVIDER_PATHS"
+78-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
+79                android:resource="@xml/file_provider_paths" />
+79-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
+80        </provider>
+81
+82        <activity
+82-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:28:9-31:67
+83            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
+83-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:29:13-78
+84            android:exported="true"
+84-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:30:13-36
+85            android:theme="@style/DeviceCredentialHandlerTheme" />
+85-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:31:13-64
+86
+87        <meta-data
+87-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:11:9-13:43
+88            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+88-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:12:13-84
+89            android:value="GlideModule" />
+89-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:13:13-40
+90
+91        <provider
+91-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+92            android:name="androidx.startup.InitializationProvider"
+92-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+93            android:authorities="com.channelpaisa.channelpaisa.dev.androidx-startup"
+93-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+94            android:exported="false" >
+94-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+95            <meta-data
+95-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+96                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+96-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+97                android:value="androidx.startup" />
+97-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+98            <meta-data
+98-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+99                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+99-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+100                android:value="androidx.startup" />
+100-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+101        </provider>
+102    </application>
+103
+104</manifest>

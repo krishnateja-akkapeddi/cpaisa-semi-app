@@ -14,16 +14,8 @@ import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import {ChannelPartner, User} from '../../../models/interfaces/AuthResponse';
 import {store} from '../../../store/Store';
-import {
-  generateOtp,
-  updateContactInfo,
-  verifyOtp,
-} from '../../../store/thunks/ApiThunks';
-import {
-  contactType,
-  modeType,
-  UpdateContactParams,
-} from '../../../domain/usages/UpdateContact';
+import {generateOtp} from '../../../store/thunks/ApiThunks';
+
 import Snackbar from 'react-native-snackbar';
 import Colors from '../../../theme/Colors';
 import PopupContainer from '../../popup/PopupContainer';
@@ -56,7 +48,7 @@ const PersonalDetailsView: React.FC<PersonalDetailsViewProps> = ({
   user,
 }) => {
   const address = channelPartner?.address;
-  const [emailId, setEmailId] = useState('sandeepsuthar4582@gmail.com');
+  const [emailId, setEmailId] = useState(user.email_id);
   const [mobileNo, setMobileNo] = useState(user?.mobile);
   const [whatsAppNo, setWhatsAppNo] = useState(user?.whats_app_number);
   const [updatedAddress, setUpdatedAddress] = useState('');
@@ -67,7 +59,6 @@ const PersonalDetailsView: React.FC<PersonalDetailsViewProps> = ({
   return (
     <View style={[styleContainer]}>
       <ProfileTextInput
-        isEditable
         onEditPress={() => {
           dispatch(
             appSlice.actions.openPopup({
@@ -88,9 +79,30 @@ const PersonalDetailsView: React.FC<PersonalDetailsViewProps> = ({
         isEditable
         loading={generatingOtp}
         title={AppLocalizedStrings.profile.mobileNo}
-        value={user?.mobile}
+        value={user?.mobile ?? ''}
         onChangeText={setMobileNo}
-        onEditPress={() => {}}
+        onEditPress={async () => {
+          const data = await store
+            .dispatch(generateOtp({mobile_value: mobileNo, mode: 'sms'}))
+            .unwrap();
+
+          if (data.success) {
+            Snackbar.show({
+              text: 'Otp Sent',
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            });
+          }
+          RootNavigation.navigate('AuthStack', {
+            screen: 'EnterOTPScreen',
+            params: {
+              forUpdateContact: true,
+              isLogin: true,
+              mobileNumber: mobileNo,
+              contactType: 'mobile',
+            },
+          });
+        }}
       />
 
       <Spacer height={kSpacing} />
@@ -98,19 +110,43 @@ const PersonalDetailsView: React.FC<PersonalDetailsViewProps> = ({
       <ProfileTextInput
         isEditable
         title={AppLocalizedStrings.profile.whatsAppNo}
-        value={user?.whats_app_number}
+        value={user?.whats_app_number ?? ''}
         onChangeText={setWhatsAppNo}
+        onEditPress={async () => {
+          const data = await store
+            .dispatch(generateOtp({mobile_value: whatsAppNo, mode: 'whatsapp'}))
+            .unwrap();
+
+          if (data.success) {
+            Snackbar.show({
+              text: 'Otp Sent',
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            });
+
+            RootNavigation.navigate('AuthStack', {
+              screen: 'EnterOTPScreen',
+              params: {
+                forUpdateContact: true,
+                isLogin: true,
+                mobileNumber: whatsAppNo,
+                contactType: 'whatsapp',
+              },
+            });
+          } else {
+            Snackbar.show({
+              text: data.errors?.mobile ?? '',
+              backgroundColor: Colors.red,
+            });
+          }
+        }}
       />
 
       <Spacer height={kSpacing} />
 
       <ProfileTextInput
         title={AppLocalizedStrings.profile?.address}
-        value={
-          address?.line &&
-          address?.line + address?.state?.name &&
-          address?.state?.name
-        }
+        value={address?.line ?? '' + address?.state?.name ?? ''}
         onChangeText={setUpdatedAddress}
       />
     </View>

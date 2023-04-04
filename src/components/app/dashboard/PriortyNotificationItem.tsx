@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   innerText: {
     ...Style.getTextStyle(
-      Fonts.getFontSize('headline5'),
+      Fonts.getFontSize('headline4'),
       'Regular',
       Colors.black,
     ),

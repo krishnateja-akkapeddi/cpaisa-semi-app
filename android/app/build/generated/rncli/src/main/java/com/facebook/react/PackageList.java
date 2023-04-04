@@ -24,7 +24,9 @@ import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-config
-import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
+import com.lugg.RNCConfig.RNCConfigPackage;
+// react-native-date-picker
+import com.henninghall.date_picker.DatePickerPackage;
 // react-native-fast-image
 import com.dylanvann.fastimage.FastImageViewPackage;
 // react-native-gesture-handler
@@ -104,7 +106,8 @@ public class PackageList {
       new NetInfoPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
-      new ReactNativeConfigPackage(),
+      new RNCConfigPackage(),
+      new DatePickerPackage(),
       new FastImageViewPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeGetLocationPackage(),

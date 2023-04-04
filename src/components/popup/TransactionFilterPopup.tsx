@@ -13,6 +13,8 @@ import {PickerItem} from 'react-native-woodpicker';
 import RangeSliderView from '../app/filters/RangeSliderView';
 import Colors from '../../theme/Colors';
 import Icon from 'react-native-vector-icons/AntDesign';
+import GaDateRangePicker from '../GaDateRangePicker';
+import PriceChipView from '../app/wallet/PriceChipView';
 
 const INVOICE_STATUS = AppLocalizedStrings.filter.invoiceStatusValues;
 const REEDEM_STATUS = AppLocalizedStrings.filter.reedemStatusValue;
@@ -35,6 +37,10 @@ interface TransactionFilterPopupProps {
   year: number | null;
   setYear: React.Dispatch<React.SetStateAction<number | null>>;
   setQuarter: React.Dispatch<React.SetStateAction<number | null>>;
+  startDate?: Date | null;
+  setStartDate?: Function;
+  endDate?: Date | null;
+  setEndDate?: Function;
   quarter?: number | null;
 }
 const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
@@ -54,6 +60,10 @@ const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
     applyLoading,
     resetFilterLoading,
     enablePoints,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   } = props;
   let quarters = ['empty', 'Q1', 'Q2', 'Q3', 'Q4'];
 
@@ -96,7 +106,7 @@ const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
         /> */}
 
         <Spacer height={hp(2.5)} />
-        <QuarterView
+        {/* <QuarterView
           yearData={yearData}
           selectedIds={[quarter ? quarter : -1]}
           selectedYear={
@@ -132,10 +142,22 @@ const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
               });
             }
           }}
-        />
+        /> */}
+
+        {setEndDate && setStartDate && (
+          <GaDateRangePicker
+            onDatesSelected={(s, e) => {
+              console.log(s, e);
+            }}
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+          />
+        )}
 
         <Spacer height={hp(2.5)} />
-        {showReedem && (
+        {/* {showReedem && (
           <RangeSliderView
             style={styles.rangeView}
             title={pointsRangeTitle}
@@ -153,7 +175,7 @@ const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
               });
             }}
           />
-        )}
+        )} */}
 
         {!showReedem && !showTransaxtion && (
           <RadioView

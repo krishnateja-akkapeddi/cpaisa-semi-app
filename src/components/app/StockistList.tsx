@@ -12,12 +12,15 @@ import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Colors from '../../theme/Colors';
 import Fonts from '../../theme/Fonts';
 import {useMemo} from 'react';
+import VectorIcon from '../button/VectorIcon';
+import {StockistOrganizationEntity} from '../../models/interfaces/AuthorizedStockistsResponse';
 
 interface StockistProps {
-  image: String;
+  // image: String;
   name: String;
   isVisible: Boolean;
   onPress: () => void;
+  organisations: StockistOrganizationEntity[];
 }
 
 const StockistList: React.FC<StockistProps> = props => {
@@ -31,7 +34,13 @@ const StockistList: React.FC<StockistProps> = props => {
     <View style={styles.mainView}>
       <View style={styles.listContainer}>
         <View style={styles.rowContainer}>
-          <ImageView source={`${props.image}`} style={styles.imageStyle} />
+          {/* <ImageView source={`${props.image}`} style={styles.imageStyle} /> */}
+          {/* <VectorIcon
+            name="user"
+            size={20}
+            type={'AntDesign'}
+            color={Colors.primary}
+          /> */}
           <Text style={styles.textStyle}>{props.name}</Text>
         </View>
         <TouchableOpacity style={styles.btnArrow} onPress={props.onPress}>
@@ -46,29 +55,22 @@ const StockistList: React.FC<StockistProps> = props => {
       {props.isVisible && (
         <View>
           <View style={styles.whiteLine} />
-          <TouchableOpacity style={styles.commonStyle}>
-            <ImageView
-              source={`${props.image}`}
-              style={styles.secondaryImageStyle}
-            />
-            <Text style={styles.companyText}>Biocon</Text>
-          </TouchableOpacity>
-          <View style={styles.whiteLine} />
-          <TouchableOpacity style={styles.commonStyle}>
-            <ImageView
-              source={`${props.image}`}
-              style={styles.secondaryImageStyle}
-            />
-            <Text style={styles.companyText}>Cipla</Text>
-          </TouchableOpacity>
-          <View style={styles.whiteLine} />
-          <TouchableOpacity style={styles.commonStyle}>
-            <ImageView
-              source={`${props.image}`}
-              style={styles.secondaryImageStyle}
-            />
-            <Text style={styles.companyText}>Pfizer</Text>
-          </TouchableOpacity>
+          {props.organisations.map((val, index) => {
+            return (
+              <View key={index.toString()}>
+                <TouchableOpacity style={styles.commonStyle}>
+                  {/* <ImageView
+                    source={`${val.name}`}
+                    style={styles.secondaryImageStyle}
+                  /> */}
+                  <Text style={styles.companyText}>{val.name}</Text>
+                </TouchableOpacity>
+                {index !== props.organisations.length - 1 && (
+                  <View style={styles.whiteLine} />
+                )}
+              </View>
+            );
+          })}
         </View>
       )}
     </View>

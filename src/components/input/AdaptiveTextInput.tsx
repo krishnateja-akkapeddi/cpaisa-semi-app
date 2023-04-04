@@ -18,7 +18,9 @@ interface AdaptiveTextInputProps {
   keyboardType?: KeyboardType;
   placeholderTextColor?: string;
   placeholder?: string;
+  isNotEditable?: boolean;
   onChangeText?: (text: string) => void;
+  onPress?: Function;
 }
 
 const AdaptiveTextInput: React.FC<AdaptiveTextInputProps> = props => {
@@ -28,6 +30,10 @@ const AdaptiveTextInput: React.FC<AdaptiveTextInputProps> = props => {
 
   return (
     <TextInput
+      onPressIn={() => {
+        props.onPress && props.onPress();
+      }}
+      editable={!props.isNotEditable}
       autoCapitalize={props.autoCapitalize}
       value={props.value}
       keyboardType={props.keyboardType ?? 'default'}

@@ -21,6 +21,6 @@ export default FilterSectionTitle;
 
 const styles = StyleSheet.create({
   amountRange: {
-    ...Style.getTextStyle(Fonts.getFontSize('headline4'), 'Bold', Colors.black),
+    ...Style.getTextStyle(Fonts.getFontSize('headline5'), 'Bold', Colors.black),
   },
 });

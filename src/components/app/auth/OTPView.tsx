@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Colors from '../../../theme/Colors';
 import Style from '../../../constants/Style';
@@ -8,11 +8,16 @@ import Fonts from '../../../theme/Fonts';
 
 interface OTPViewProps {
   onSelect?: (arg0: string) => void;
+  code: string;
 }
 
 const OTPView: React.FC<OTPViewProps> = props => {
+  useEffect(() => {
+    console.log(props.code);
+  }, [props.code]);
   return (
     <OTPInputView
+      code={props.code}
       style={styles.otpView}
       pinCount={4}
       // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.

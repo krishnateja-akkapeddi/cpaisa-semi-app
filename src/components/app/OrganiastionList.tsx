@@ -8,12 +8,13 @@ import OfferListComponent from './offers/OfferListComponent';
 import Fonts from '../../theme/Fonts';
 import Colors from '../../theme/Colors';
 import OrganiastionArray from '../../models/interfaces/OrganiastionArray';
+import {OffersListEntity} from '../../models/interfaces/OffersListResponse';
 
 interface OrganiastionListProps {
   uri: string;
   name: string;
   text: string;
-  data: OrganiastionArray[];
+  data: OffersListEntity[];
   onPress: () => void;
   isShow: boolean;
 }

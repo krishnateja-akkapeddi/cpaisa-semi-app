@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import SVGIcon from '../../../utility/svg/SVGIcon';
 import Spacer from '../../layout/Spacer';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
@@ -10,6 +10,11 @@ import Carousel from '../../carousel/Carousel';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import {InvoiceDetail} from '../../../models/interfaces/InvoiceDetailResponse';
 import AppLoader from '../../indicator/AppLoader';
+import {
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
+import PopupContainer from '../../popup/PopupContainer';
 
 const InvoiceDetailHeader = (props: {
   invoice: InvoiceDetail;
@@ -17,6 +22,7 @@ const InvoiceDetailHeader = (props: {
 }) => {
   const {invoice} = props;
 
+  const [openFullImage, setOpenFullImage] = useState(false);
   // const barItems: {title: string; date: string}[] = [
   //   {title: 'Upload Date', date: invoice.uploaded_at},
   //   {title: ' Processed Date', date: invoice.uploaded_at},
@@ -49,9 +55,7 @@ const InvoiceDetailHeader = (props: {
         <View>
           <View style={styles.invoiceDetail}>
             <View style={styles.starMark}>
-              <Text>
-                <SVGIcon name="mark" size={hp('3%')} />
-              </Text>
+              <Text>{/* <SVGIcon name="mark" size={hp('3%')} /> */}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <View style={styles.detailView}>
@@ -102,13 +106,40 @@ const InvoiceDetailHeader = (props: {
             <Carousel items={['1']} renderItem={renderItem} /> 
             */}
             <View style={styles.imageView}>
-              <ImageView
-                style={{height: hp('25%')}}
-                source={{
-                  uri: invoice?.image_url,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setOpenFullImage(true);
+                }}>
+                <ImageView
+                  style={{height: hp('25%')}}
+                  source={{
+                    uri: invoice?.image_url,
+                  }}
+                />
+              </TouchableOpacity>
             </View>
+            {openFullImage && (
+              <PopupContainer
+                title={AppLocalizedStrings.invoice.invoiceText}
+                onDismiss={() => {
+                  setOpenFullImage(false);
+                }}
+                showDismiss>
+                <View
+                  style={{
+                    height: 500, // set the fixed height of the container
+                    width: '100%',
+                  }}>
+                  <ImageView
+                    resizeMode="contain"
+                    source={{
+                      uri: invoice?.image_url,
+                    }}
+                    style={{flex: 1}}
+                  />
+                </View>
+              </PopupContainer>
+            )}
             <Spacer height={hp(1.5)} />
             {/* <View>
               <ProgressBar

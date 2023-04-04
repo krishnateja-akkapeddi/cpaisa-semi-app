@@ -16,22 +16,11 @@ interface CouponCardProps {
   item: RewardTransactionEntity;
 }
 
-const barItems: {title: string; date: string}[] = [
-  {title: 'Request Raised', date: '12 Apr'},
-  {title: 'Request Processed', date: '13 Apr'},
-  {title: 'Coupon Generated', date: '15 Apr'},
-  {title: 'Coupon Processed', date: '17 Apr'},
-];
-
 const CouponCard: React.FC<CouponCardProps> = props => {
   const {item} = props;
+  console.log('COUP_ITEM', item);
+
   const [isVisible, setisVisible] = useState(true);
-  const [barItemsState, setBarItemsState] = useState<
-    {
-      title: string;
-      date: string;
-    }[]
-  >([]);
 
   const onViewCouponHandler = () => {
     RootNavigation.navigate('CouponScreen', {
@@ -40,36 +29,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
     });
   };
 
-  useEffect(() => {
-    let newAr = barItems.map((bItem, ind) => {
-      if (ind === 0) {
-        bItem.date = Convert.dateFormatter(
-          null,
-          'DD, MMM yyyy',
-          item.request_raised_on,
-        );
-      } else if (ind === 1) {
-        bItem.date = bItem.date = Convert.dateFormatter(
-          null,
-          'DD, MMM yyyy',
-          item.request_processing,
-        );
-      } else if (ind === 2) {
-        if (item.generated_on)
-          bItem.date = Convert.dateFormatter(
-            null,
-            'DD, MMM yyyy',
-            item?.generated_on,
-          );
-      } else if (ind === 3) {
-        bItem.date = 'N/A';
-      }
-      return bItem;
-    });
-    setBarItemsState(newAr);
-  }, [item]);
-
-  useEffect(() => {}, [barItemsState]);
+  useEffect(() => {}, [item]);
 
   return (
     <View style={styles.mainContainer}>
@@ -83,10 +43,38 @@ const CouponCard: React.FC<CouponCardProps> = props => {
         </View>
         <Spacer height={15} />
         <ProgressBar
-          items={barItemsState}
-          completedSteps={
-            item?.generated_on || item?.generated_on !== '' ? 2 : 1
-          }
+          items={[
+            {
+              title: 'Request Raised',
+              date: item.request_raised_on
+                ? Convert.dateFormatter(
+                    null,
+                    'DD, MMM yyyy',
+                    item.request_raised_on,
+                  )
+                : AppLocalizedStrings.na,
+            },
+            {
+              title: 'Request Processed',
+              date: Convert.dateFormatter(
+                null,
+                'DD, MMM yyyy',
+                item.request_processing,
+              ),
+            },
+            {
+              title: 'Coupon Generated',
+              date: item?.generated_on
+                ? Convert.dateFormatter(
+                    null,
+                    'DD, MMM yyyy',
+                    item?.generated_on,
+                  )
+                : AppLocalizedStrings.na,
+            },
+            // {title: 'Coupon Processed', date: AppLocalizedStrings.na},
+          ]}
+          completedSteps={item?.generated_on ? 2 : 1}
           style={styles.bar}
         />
         <Spacer height={15} />

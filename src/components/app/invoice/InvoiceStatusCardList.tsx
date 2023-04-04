@@ -7,8 +7,6 @@ import {
   OverallInvoiceStatus,
 } from '../../../models/interfaces/InvoiceSummaryResponse';
 import {AppLocalizedStrings} from '../../../localization/Localization';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import Animated from 'react-native-reanimated';
 
 type Props = {
   loading?: boolean;
@@ -49,102 +47,30 @@ const InvoiceStatusCardList: React.FC<Props> = ({
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.pending}
                     totalInvoice={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.pending_invoice_count.toString()
-                      )
+                      loading ? '...' : val.pending_invoice_count.toString()
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
-                    rupees={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.pending_amount.toString()
-                      )
-                    }
+                    rupees={loading ? '...' : val.pending_amount.toString()}
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#F7DFC4'}}
                   />
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.approved}
                     totalInvoice={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.approved_invoice_count.toString()
-                      )
+                      loading ? '...' : val.approved_invoice_count.toString()
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
-                    rupees={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.approved_amount.toString()
-                      )
-                    }
+                    rupees={loading ? '...' : val.approved_amount.toString()}
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#B5EAD7'}}
                   />
                   <InvoiceCard
                     status={AppLocalizedStrings.invoice.rejected}
                     totalInvoice={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.rejected_invoice_count.toString()
-                      )
+                      loading ? '...' : val.rejected_invoice_count.toString()
                     }
                     invoiceText={AppLocalizedStrings.invoice.invoiceText}
-                    rupees={
-                      loading ? (
-                        <Animated.View>
-                          <SkeletonPlaceholder speed={1000} borderRadius={4}>
-                            <SkeletonPlaceholder.Item
-                              width={wp('15%')}
-                              height={hp('3%')}
-                            />
-                          </SkeletonPlaceholder>
-                        </Animated.View>
-                      ) : (
-                        val.rejected_amount.toString()
-                      )
-                    }
+                    rupees={loading ? '...' : val.rejected_amount.toString()}
                     rewardPointText={AppLocalizedStrings.invoice.rewardPoints}
                     buttonStyle={{backgroundColor: '#FFD7DA'}}
                   />
