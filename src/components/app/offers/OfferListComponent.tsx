@@ -32,11 +32,11 @@ const OfferListComponent: React.FC<offerItemProps> = props => {
         <View style={styles.secondContainer}>
           <Icon name="medicinebox" size={35} color="#000" />
           <View style={styles.medicineTextContainer}>
-            <Text style={styles.medicineText}>{item.name}</Text>
+            <Text style={styles.medicineText}>{item.name} </Text>
             {/* <Text style={styles.pointText}>{item.pointText}</Text> */}
           </View>
           <View>
-            <Text style={styles.percentageText}>{item.value}</Text>
+            <Text style={styles.percentageText}>{item.product_value}</Text>
           </View>
           {/* {item.downArrow && (
             <TouchableOpacity

@@ -50,7 +50,31 @@ import {
   fetchCouponPartnersWorker,
   fetchAuthorizedStockistsWorker,
   fetchNotificationsWorker,
+  fetchOrdersWorker,
+  changeOrderStatusWorker,
+  fetchOrdersServiceWorker,
+  fetchBrandOffersWorker,
+  fetchIdentityWorker,
 } from '../workers/ApiWorkers';
+import {FetchOrdersListParams} from '../../domain/usages/FetchOrdersList';
+import {OrdersListResponse} from '../../models/interfaces/OrdersListResponse';
+import {ChangeOrderStatusParams} from '../../domain/usages/ChnageOrderStatus';
+import {ChangesOrderStatusResponse} from '../../models/interfaces/ChangesOrderStatusResponse';
+import {OrdersServiceResponse} from '../../models/interfaces/OrderServiceResponse';
+import {
+  FetchOrderStatus,
+  FetchOrderStatusParams,
+} from '../../domain/usages/FetchOrderStatus';
+import {OrderStatusResponse} from '../../models/interfaces/OrderStatusResponse';
+import {fetchOrderStatusWorker} from '../workers/ApiWorkers';
+import {FetchBrandOffersParams} from '../../domain/usages/FetchBrandOffers';
+import {BrandOffersResponse} from '../../models/interfaces/BrandOffersResponse';
+import {
+  FetchIdentity,
+  FetchIdentityParams,
+} from '../../domain/usages/FetchIdentity';
+import {GstVerifiedResponse} from '../../models/interfaces/GstVerifiedResponse';
+import {PanVerificationResponse} from '../../models/interfaces/PanVerificationResponse';
 
 const verifyOtp = createAsyncThunk(
   'verifiying otp...',
@@ -219,6 +243,84 @@ const fetchNotifications = createAsyncThunk(
   },
 );
 
+const fetchOrders = createAsyncThunk(
+  'fetching orders...',
+  async (params: {
+    page: number;
+    params: FetchOrdersListParams.params;
+    forNew: boolean;
+  }): Promise<OrdersListResponse> => {
+    const data = await fetchOrdersWorker.fetch(params.page, params.params);
+    return data;
+  },
+);
+
+const fetchBrandOffers = createAsyncThunk(
+  'fetching brand offers...',
+  async (params: {
+    page: number;
+    params: FetchBrandOffersParams.params;
+  }): Promise<BrandOffersResponse> => {
+    const data = await fetchBrandOffersWorker.fetch(params.page, params.params);
+    return data;
+  },
+);
+
+const fetchOrdersFromService = createAsyncThunk(
+  'fetching orders...',
+  async (params: {
+    page: number;
+    params: FetchOrdersListParams.params;
+    forNew: boolean;
+  }): Promise<OrdersServiceResponse> => {
+    const data = await fetchOrdersServiceWorker.fetch(
+      params.page,
+      params.params,
+    );
+    return data;
+  },
+);
+
+const changeOrderStatus = createAsyncThunk(
+  'changing order status...',
+  async (
+    params: ChangeOrderStatusParams.params,
+  ): Promise<ChangesOrderStatusResponse> => {
+    const data = await changeOrderStatusWorker.change(params);
+    return data;
+  },
+);
+
+const trackOrder = createAsyncThunk(
+  'tracking order status...',
+  async (
+    params: FetchOrderStatusParams.params,
+  ): Promise<OrderStatusResponse> => {
+    const data = await fetchOrderStatusWorker.fetch(params);
+    return data;
+  },
+);
+
+const fetchIdentityFromGst = createAsyncThunk(
+  'fetching identity from gst...',
+  async (params: FetchIdentityParams.params): Promise<GstVerifiedResponse> => {
+    const data = await fetchIdentityWorker.fetch<GstVerifiedResponse>(params);
+    return data;
+  },
+);
+
+const fetchIdentityFromPan = createAsyncThunk(
+  'fetching identity from pan...',
+  async (
+    params: FetchIdentityParams.params,
+  ): Promise<PanVerificationResponse> => {
+    const data = await fetchIdentityWorker.fetch<PanVerificationResponse>(
+      params,
+    );
+    return data;
+  },
+);
+
 export {
   fetchInvoiceSummary,
   fetchWalletSummary,
@@ -238,4 +340,11 @@ export {
   fetchCouponPartners,
   fetchAuthorizedStockists,
   fetchNotifications,
+  fetchOrders,
+  changeOrderStatus,
+  fetchOrdersFromService,
+  trackOrder,
+  fetchBrandOffers,
+  fetchIdentityFromGst,
+  fetchIdentityFromPan,
 };

@@ -41,23 +41,21 @@ const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = props => {
         borderTopLeftRadius: 10,
       }}
       onPress={() => {
-        setOpenReason(true);
+        item.status === InvoiceStatus.REJECTED && setOpenReason(true);
       }}>
       <View style={ViewStyle}>
         <View style={styles.secondView}>
-          <View
-
-          // style={{...styles.nameView}}
-          >
-            <Text style={{...styles.valueText, width: wp('48%')}}>
-              {item.product_name}
-            </Text>
+          <View style={{...styles.nameView}}>
+            <Text style={{...styles.valueText}}>{item.product_name}</Text>
           </View>
-          <Text style={{...styles.valueText, marginLeft: wp('7%')}}>
-            {item.points}
-          </Text>
-          <Spacer width={wp('18%')} />
-          <Text style={{...styles.valueText, textAlign: 'center'}}>
+          <Text style={{...styles.valueText}}>{item.points}</Text>
+          <Text
+            style={{
+              ...styles.valueText,
+
+              textAlign: 'right',
+              width: wp('25%'),
+            }}>
             {item.quantity}
           </Text>
           {/* <AdaptiveButton
@@ -95,10 +93,12 @@ export default InvoiceDetailView;
 
 const styles = StyleSheet.create({
   mainView: {
-    paddingHorizontal: 8,
+    textAlign: 'center',
+    paddingHorizontal: 7,
     backgroundColor: 'pink',
     borderRadius: 10,
     paddingVertical: hp('1%'),
+    paddingRight: wp(4),
   },
   secondView: {
     flexDirection: 'row',

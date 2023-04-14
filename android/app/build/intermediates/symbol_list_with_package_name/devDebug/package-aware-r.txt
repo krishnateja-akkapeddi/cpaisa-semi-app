@@ -1529,6 +1529,7 @@ drawable src_assets_images_pfizer
 drawable src_assets_images_placeholder
 drawable src_assets_images_successicon
 drawable src_assets_images_swipericon
+drawable src_assets_videos_channel_paisa_splash_screen
 drawable test_custom_background
 drawable test_level_drawable
 drawable tile

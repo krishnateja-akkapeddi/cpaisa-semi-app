@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, ViewStyle, TextStyle} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  Image,
+} from 'react-native';
 import React, {useEffect, useMemo} from 'react';
 import ImageView from './image/ImageView';
 import {hp, wp} from '../utility/responsive/ScreenResponsive';
@@ -7,6 +14,8 @@ import Fonts from '../theme/Fonts';
 import AdaptiveButton from './button/AdaptiveButton';
 import {OfferEntity} from '../models/interfaces/OffersResponse';
 import AppLoader from './indicator/AppLoader';
+import {BrandOfferEntity} from '../models/interfaces/BrandOffersResponse';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface SubscribeCardProps {
   leftTitle: string;
@@ -18,7 +27,7 @@ interface SubscribeCardProps {
   rightIcon?: string;
   onPressLeft: () => void;
   onPressRight: () => void;
-  offer: OfferEntity | undefined;
+  offer: BrandOfferEntity | undefined;
 }
 
 const SubscribeCard = (props: SubscribeCardProps) => {
@@ -51,22 +60,26 @@ const SubscribeCard = (props: SubscribeCardProps) => {
   }, [rightBtnTextStyle]);
 
   return (
-    <View style={styles.bottomContainer}>
+    <View style={{...styles.bottomContainer}}>
       {offer ? (
-        <ImageView style={styles.imageStyle} source={offer?.path} />
+        <Image
+          resizeMode="cover"
+          style={{height: hp('28%'), width: wp('92%')}}
+          source={{uri: offer?.path}}
+        />
       ) : (
         <View style={{width: wp('90%'), height: hp('30%')}}>
           <AppLoader type="view" loading={true} />
         </View>
       )}
-      <View style={styles.textContainer}>
-        <Text style={styles.offerText}>
-          {offer?.acp_in_district} channel partners are subscribed to this offer
-          in your district
-        </Text>
-      </View>
+      {/* <View style={styles.textContainer}>
+          <Text style={styles.offerText}>
+            {offer?.acp_in_district} channel partners are subscribed to this offer
+            in your district
+          </Text>
+      </View> */}
       <View style={styles.buttonContainer}>
-        {offer?.can_upload_invoice && (
+        {offer?.show_upload_button && (
           <AdaptiveButton
             title={leftTitle}
             buttonStyle={leftBtnViewStyle}
@@ -75,13 +88,15 @@ const SubscribeCard = (props: SubscribeCardProps) => {
           />
         )}
 
-        <AdaptiveButton
-          icon={rightIcon}
-          title={offer ? offer?.acp_in_district?.toString() : 'Loading...'}
-          buttonStyle={rightBtnViewStyle}
-          textStyle={rightBtnText}
-          onPress={onPressRight}
-        />
+        {offer?.show_upload_button && (
+          <AdaptiveButton
+            icon={rightIcon}
+            title={<Text>Call</Text>}
+            buttonStyle={rightBtnViewStyle}
+            textStyle={rightBtnText}
+            onPress={onPressRight}
+          />
+        )}
       </View>
     </View>
   );
@@ -102,8 +117,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   textContainer: {
-    backgroundColor: '#E5E5E5',
-    paddingVertical: hp('1%'),
+    // backgroundColor: '#E5E5E5',
+    // paddingVertical: hp('1%'),
   },
   buttonContainer: {
     flexDirection: 'row',

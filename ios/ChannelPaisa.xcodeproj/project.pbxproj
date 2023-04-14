@@ -21,9 +21,9 @@
 		5D9E372E1AB049A4AC40E327 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 770E3B094D764CB6A78D94C9 /* FontAwesome.ttf */; };
 		5FECFF2FA12B480DADB12A5B /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FADD23623614E0683D30DF3 /* Fontisto.ttf */; };
 		686CE65412394D6B8C39F44B /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4190A094EF1A4E26A31A23D9 /* DMSans-Bold.ttf */; };
-		689B1FB029DC395D0033B311 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 689B1FAF29DC395D0033B311 /* LaunchScreen.storyboard */; };
 		751BBD3291B1409BB1027D13 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C760674115CD463992E6D27C /* Entypo.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-ChannelPaisa-ChannelPaisaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ChannelPaisa-ChannelPaisaTests.a */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		94009D3539074ACEBEEE954F /* DMSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA18132EB9E649489E90DE81 /* DMSans-Italic.ttf */; };
 		94850903F1B74348A446DD9C /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C8CC3DACC094508B59D149F /* FontAwesome5_Regular.ttf */; };
 		9D865BAC3B3947D8AC2598D6 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67A34AE846CB4BF690D96396 /* SimpleLineIcons.ttf */; };
@@ -77,11 +77,11 @@
 		6672F159B46E44F19D499ED8 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = ../src/assets/fonts/FontAwesome5_Solid.ttf; sourceTree = "<group>"; };
 		6739C3621C7642BAA3B5160E /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = ../src/assets/fonts/Foundation.ttf; sourceTree = "<group>"; };
 		67A34AE846CB4BF690D96396 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = ../src/assets/fonts/SimpleLineIcons.ttf; sourceTree = "<group>"; };
-		689B1FAF29DC395D0033B311 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		770E3B094D764CB6A78D94C9 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = ../src/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
 		77B29EA6FEB544968CFBA35D /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../src/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		7C0DF02758474C4399CC8F5A /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../src/assets/fonts/Feather.ttf; sourceTree = "<group>"; };
 		7C8CC3DACC094508B59D149F /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = ../src/assets/fonts/FontAwesome5_Regular.ttf; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ChannelPaisa/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ChannelPaisa-ChannelPaisaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChannelPaisa-ChannelPaisaTests.release.xcconfig"; path = "Target Support Files/Pods-ChannelPaisa-ChannelPaisaTests/Pods-ChannelPaisa-ChannelPaisaTests.release.xcconfig"; sourceTree = "<group>"; };
 		89CF5AD70F5B42D7962417ED /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = ../src/assets/fonts/EvilIcons.ttf; sourceTree = "<group>"; };
 		C5F31DCDC2454BAA89DE5993 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = ../src/assets/fonts/MaterialIcons.ttf; sourceTree = "<group>"; };
@@ -138,6 +138,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = ChannelPaisa;
@@ -206,7 +207,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				689B1FAF29DC395D0033B311 /* LaunchScreen.storyboard */,
 				13B07FAE1A68108700A75B9A /* ChannelPaisa */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ChannelPaisaTests */,
@@ -361,11 +361,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				686CE65412394D6B8C39F44B /* DMSans-Bold.ttf in Resources */,
 				94009D3539074ACEBEEE954F /* DMSans-Italic.ttf in Resources */,
 				FA14EAD88D7E40A8955ED407 /* DMSans-Medium.ttf in Resources */,
-				689B1FB029DC395D0033B311 /* LaunchScreen.storyboard in Resources */,
 				CADC122B66F64492834C3A15 /* DMSans-Regular.ttf in Resources */,
 				33DA5AD941CA4A448003CECB /* AntDesign.ttf in Resources */,
 				751BBD3291B1409BB1027D13 /* Entypo.ttf in Resources */,

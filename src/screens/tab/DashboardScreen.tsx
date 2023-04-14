@@ -22,20 +22,33 @@ import {
 } from '../../models/interfaces/WalletSummary';
 import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
 import {RootState, store} from '../../store/Store';
+import OrganisationList from '../../components/app/offers/OrganisationList';
+
 import {
+  fetchClients,
   fetchSliderImages,
   fetchWalletSummary,
 } from '../../store/thunks/ApiThunks';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import Animated from 'react-native-reanimated';
+import Animated, {log} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import Spacer from '../../components/layout/Spacer';
-import OfferOverView from '../../components/app/dashboard/OfferOverView';
+import Snackbar from 'react-native-snackbar';
+import {ClientListParams} from '../../domain/usages/FetchClientsList';
+import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
+import {FlatList} from 'react-native-gesture-handler';
+import DepartmentItem from '../../components/app/offers/DepartmentItem';
+import {Convert} from '../../utility/converter/Convert';
+import RootNavigation from '../../navigation/RootNavigation';
+import DashboardOrganisations from '../../components/drawer/dashboard/DashboardOrganisations';
 
 const DashboardScreen: React.FC<
   BottomTabScreenProps<'DashboardScreen'>
 > = () => {
+  const [organizations, setOrganizations] = React.useState<ClientEntity[]>([]);
+  const [loadingOrganisations, setLoadingOrganisations] = React.useState(true);
+
   const [images, setImages] = React.useState<string[]>();
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
@@ -81,6 +94,24 @@ const DashboardScreen: React.FC<
     AppLocalizedStrings.dashboard.youproductx,
   ];
 
+  const getClients = useCallback(async () => {
+    setLoadingOrganisations(true);
+    let params = {} as ClientListParams.params;
+    const data = await store.dispatch(fetchClients(params)).unwrap();
+    if (data.success) {
+      setOrganizations(data.clients.data);
+    } else {
+      Snackbar.show({
+        text: data?.errors
+          ? data?.errors?.message
+          : AppLocalizedStrings.somethingWrong,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      });
+    }
+    setLoadingOrganisations(false);
+  }, []);
+
   const renderItem = useCallback((item: string) => {
     return <ImageView style={styles.banner} source={item} />;
   }, []);
@@ -96,6 +127,7 @@ const DashboardScreen: React.FC<
   React.useEffect(() => {
     fetchImages();
     getWalletSummary();
+    getClients();
   }, [refreshDashboard]);
 
   React.useEffect(() => {}, [images, walletSummary]);
@@ -146,7 +178,6 @@ const DashboardScreen: React.FC<
           renderItem={renderItem}
         />
       )}
-
       {/*
       //Todo: Will be implemented next release
        <PriorityNotificationList items={notificatios} /> */}
@@ -159,6 +190,14 @@ const DashboardScreen: React.FC<
       {/* 
       //Todo: Will be implemented next release
       <SuggestionList items={suggestionData} /> */}
+      <Text style={{fontWeight: '500'}}>All Organisations</Text>
+      <Spacer height={hp(2)} />
+      <View style={{paddingHorizontal: wp(2)}}>
+        {organizations && (
+          <DashboardOrganisations organizations={organizations} />
+        )}
+        <Spacer height={hp(5)} />
+      </View>
     </ScrollView>
   );
 };
@@ -169,6 +208,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     paddingTop: hp(1),
   },
+  seprator: {width: wp('20%')},
+
   banner: {
     height: 260,
     alignSelf: 'center',

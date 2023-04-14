@@ -33,6 +33,10 @@ import {StackScreenProps} from '@react-navigation/stack';
 import OrganisationStackNavigator, {
   OrganisationStackParamList,
 } from '../stack/OrganisationStackNavigator';
+import WalletScreen from '../../screens/wallet/WalletScreen';
+import WalletStackNavigator, {
+  WalletStackParamList,
+} from '../stack/WalletStackNavigator';
 
 export type DrawerParamList = {
   HomeStack: NavigatorScreenParams<HomeStackParamList>;
@@ -40,6 +44,7 @@ export type DrawerParamList = {
   SubscriptionStack: NavigatorScreenParams<SubscriptionStackParamList>;
   StockistStack: NavigatorScreenParams<StockistStackParamList>;
   OrganisationsStack: NavigatorScreenParams<OrganisationStackParamList>;
+  WalletStack: NavigatorScreenParams<WalletStackParamList>;
 };
 
 export type DrawerStackScreenProps<T extends keyof DrawerParamList> =
@@ -107,6 +112,19 @@ const DrawerNavigator = () => {
           })
         }
       />
+
+      <Drawer.Screen
+        name="WalletStack"
+        component={WalletStackNavigator}
+        options={props =>
+          DrawerOptions({
+            label: AppLocalizedStrings.wallet.name,
+            icon: 'wallet',
+            props: props,
+          })
+        }
+      />
+
       {
         //Todo: Will be implemented in the next release
       }

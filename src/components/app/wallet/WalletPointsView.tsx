@@ -11,6 +11,8 @@ import Fonts from '../../../theme/Fonts';
 import {WalletSummaryEntity} from '../../../models/interfaces/WalletSummary';
 import {PriceChipSkeleton} from '../../SkeletonCards';
 import {Filter} from '../../../models/enum/Filter';
+import {useDispatch} from 'react-redux';
+import {openPopup} from '../../../store/slices/AppSlice';
 
 interface WalletPointsViewProps {
   onPress: () => void;
@@ -20,7 +22,7 @@ interface WalletPointsViewProps {
 
 const WalletPointsView: React.FC<WalletPointsViewProps> = props => {
   const {onPress, selectedWallet, walletSummaryLoading} = props;
-
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log('FROM_WALLET_POINTS', selectedWallet);
   }, [selectedWallet]);
@@ -78,14 +80,36 @@ const WalletPointsView: React.FC<WalletPointsViewProps> = props => {
           <PriceChipSkeleton />
         ) : (
           <AdaptiveButton
-            isDisable={
-              parseFloat(selectedWallet?.redeemable_points ?? '0.0') === 0.0 ||
-              selectedWallet?.display_name === Filter.SELECT_ALL
-            }
+            // isDisable={
+            //   parseFloat(selectedWallet?.redeemable_points ?? '0.0') === 0.0 ||
+            //   selectedWallet?.display_name === Filter.SELECT_ALL
+            // }
             buttonStyle={styles.btn}
             type="light"
             title={AppLocalizedStrings.wallet.redeemNow}
-            onPress={onPress}
+            onPress={() => {
+              const cannotRedeem =
+                parseFloat(selectedWallet?.redeemable_points ?? '0.0') ===
+                  0.0 || selectedWallet?.display_name === Filter.SELECT_ALL;
+              if (cannotRedeem) {
+                dispatch(
+                  openPopup({
+                    message:
+                      selectedWallet?.display_name === Filter.SELECT_ALL
+                        ? 'Please select the division before redeeming'
+                        : parseFloat(
+                            selectedWallet?.redeemable_points ?? '0.0',
+                          ) === 0.0
+                        ? 'You must have the minimum points to redeem'
+                        : '',
+                    title: 'Coupon',
+                    type: 'error',
+                  }),
+                );
+              } else {
+                onPress();
+              }
+            }}
           />
         )}
       </View>

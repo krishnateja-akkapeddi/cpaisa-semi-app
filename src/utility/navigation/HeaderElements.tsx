@@ -70,7 +70,26 @@ const getHeaderRight = (
           showHelp={false}
         />
       );
-    case 'AboutChannelPaisaScreen':
+    case 'AboutUs':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+
+    case 'SingleOrderScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'SingleOrderServiceScreen':
       return (
         <HeaderRightView
           showBell={false}

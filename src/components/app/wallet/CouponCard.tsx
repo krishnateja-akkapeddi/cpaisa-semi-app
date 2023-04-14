@@ -55,14 +55,6 @@ const CouponCard: React.FC<CouponCardProps> = props => {
                 : AppLocalizedStrings.na,
             },
             {
-              title: 'Request Processed',
-              date: Convert.dateFormatter(
-                null,
-                'DD, MMM yyyy',
-                item.request_processing,
-              ),
-            },
-            {
               title: 'Coupon Generated',
               date: item?.generated_on
                 ? Convert.dateFormatter(
@@ -74,7 +66,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
             },
             // {title: 'Coupon Processed', date: AppLocalizedStrings.na},
           ]}
-          completedSteps={item?.generated_on ? 2 : 1}
+          completedSteps={item?.generated_on !== undefined || null ? 0 : 1}
           style={styles.bar}
         />
         <Spacer height={15} />

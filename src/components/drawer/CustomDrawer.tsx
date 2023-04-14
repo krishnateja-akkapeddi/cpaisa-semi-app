@@ -26,6 +26,8 @@ import RootNavigation from '../../navigation/RootNavigation';
 import {RootAllMixedParamList} from '../../navigation/navigator/types';
 import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 import {Convert} from '../../utility/converter/Convert';
+import {useDispatch} from 'react-redux';
+import {appSlice} from '../../store/slices/AppSlice';
 
 interface BottomViewProps {
   title: string;
@@ -42,7 +44,7 @@ const kPaddingHorizontal = wp('4%');
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
   const [userData, setUserData] = React.useState({} as Data);
-
+  const dispatch = useDispatch();
   const getUserData = async () => {
     const data = await SharedPreference.shared.getUser();
     const objectData: AuthResult = await Convert.toObject(data);
@@ -76,7 +78,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
         navigateTo('TermsConditionsScreen');
         break;
       case 1:
-        navigateTo('AboutChannelPaisaScreen');
+        navigateTo('AboutUs');
         break;
       default:
         logoutHandler();
@@ -105,6 +107,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
           props.navigation.closeDrawer();
           await SharedPreference.shared.removeItem(kSharedKeys.userDetails);
           await SharedPreference.shared.removeItem(kSharedKeys.authToken);
+          dispatch(appSlice.actions.resetState());
           props.navigation.reset({
             index: 0,
             routes: [{name: 'AuthStack', params: {screen: 'LoginScreen'}}],
@@ -139,11 +142,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
           <View>
             <Text style={styles.userName}>{userData?.user?.full_name}</Text>
             <Spacer height={5} />
-            <Text style={styles.userInfo}>
-              {userData?.channel_partner?.address?.line ??
-                '' + ', ' + userData?.channel_partner?.address?.state?.name ??
-                ''}
-            </Text>
+            <Text style={styles.userInfo}>{userData?.user?.mobile}</Text>
           </View>
           {/* <TouchableOpacity onPress={onQRCodeHandler}>
             <SVGIcon color={Colors.darkBlack} name="qrcode" size={hp('5%')} />

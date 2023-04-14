@@ -32,12 +32,13 @@ const PriceChipView: React.FC<PriceChipProps> = props => {
   const priceCol =
     props.isPriceColorActive == true ? props.priceColor : Colors.black;
   return (
-    <TouchableOpacity
+    <View
       style={[
         stylesWallet.walletTouch,
         {backgroundColor: props.backGroundColor},
       ]}
-      onPress={props.onPress}>
+      // onPress={props.onPress}
+    >
       <Text
         numberOfLines={props.titleNumberLine}
         style={[stylesWallet.wallettext, {color: titleCol, width: wp('26%')}]}>
@@ -46,7 +47,7 @@ const PriceChipView: React.FC<PriceChipProps> = props => {
       <Text style={[stylesWallet.walletRate, {color: priceCol}]}>
         {props.price}
       </Text>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -56,7 +57,8 @@ const stylesWallet = StyleSheet.create({
   walletTouch: {
     flexDirection: 'row',
     height: wp('13%'),
-    flex: 1,
+    width: wp('44%'),
+    // flex: 1,
     borderRadius: Style.kBorderRadius,
     backgroundColor: Colors.black,
     justifyContent: 'space-around',

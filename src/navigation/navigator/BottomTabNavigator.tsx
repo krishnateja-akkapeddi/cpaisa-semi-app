@@ -15,14 +15,14 @@ import {CompositeScreenProps} from '@react-navigation/native';
 import {BottomTabScreenProps as BTSP} from '@react-navigation/bottom-tabs';
 import {HomeStackParamList} from '../stack/HomeStackNavigator';
 import {StackScreenProps} from '@react-navigation/stack';
-import Animated from 'react-native-reanimated';
+import OrdersScreen from '../../screens/order/OrdersScreen';
 
 export type BottomTabParamList = {
   DashboardScreen: RouteParamList;
   OffersScreen: RouteParamList;
   InvoiceScreen: RouteParamList & {fromInvoiceUpload: Function};
   UploadScreen: RouteParamList;
-  WalletScreen: RouteParamList;
+  OrdersScreen: RouteParamList & {referenceId?: string};
 };
 
 export type BottomTabScreenProps<T extends keyof BottomTabParamList> =
@@ -39,8 +39,8 @@ export const getTabHeaderTitle = (routeName: keyof BottomTabParamList) => {
       return AppLocalizedStrings.tab.offers;
     case 'InvoiceScreen':
       return AppLocalizedStrings.tab.invoice;
-    case 'WalletScreen':
-      return AppLocalizedStrings.tab.wallet;
+    case 'OrdersScreen':
+      return AppLocalizedStrings.tab.orders;
     default:
       return AppLocalizedStrings.tab.dashboard;
   }
@@ -66,9 +66,9 @@ const BottomTabNavigator = () => {
         options={{title: AppLocalizedStrings.tab.invoice}}
       />
       <Tab.Screen
-        name="WalletScreen"
-        component={WalletScreen}
-        options={{title: AppLocalizedStrings.tab.wallet}}
+        name="OrdersScreen"
+        component={OrdersScreen}
+        options={{title: AppLocalizedStrings.tab.orders}}
       />
     </Tab.Navigator>
   );

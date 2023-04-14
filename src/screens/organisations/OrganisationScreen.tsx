@@ -23,12 +23,14 @@ import Colors from '../../theme/Colors';
 import ImageView from '../../components/image/ImageView';
 import DepartmentItem from '../../components/app/offers/DepartmentItem';
 import {Convert} from '../../utility/converter/Convert';
-import RootNavigation from '../../navigation/RootNavigation';
+import {OrganisationStackScreenProps} from '../../navigation/stack/OrganisationStackNavigator';
 
 type Props = {};
 const kScreenPadding = wp(5);
 
-const OrganisationScreen = (props: Props) => {
+const OrganisationScreen = (
+  props: OrganisationStackScreenProps<'OrganisationsScreen'>,
+) => {
   const [selectedOrg, setSelectedOrg] = useState<null | number>();
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
@@ -69,7 +71,13 @@ const OrganisationScreen = (props: Props) => {
           renderItem={val => {
             if (val.index !== 0) {
               return (
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('BrandsScreen', {
+                      organisation: val.item,
+                      isLogin: true,
+                    });
+                  }}>
                   <View
                     style={{
                       width: '95%',

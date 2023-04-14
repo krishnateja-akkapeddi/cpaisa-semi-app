@@ -10,7 +10,9 @@ export type initialPopupState = {
   description?: string;
   onDismiss?: Function;
   onSubmit?: Function;
-  type: 'success' | 'error' | 'danger|plain';
+  type: 'success' | 'error' | 'danger' | 'plain';
+  showDismiss?: boolean;
+  showHeader?: boolean;
 };
 
 export interface AppSliceState {
@@ -96,6 +98,9 @@ export const appSlice = createSlice({
     },
     setGenerateQrCode: (state, action) => {
       state.generateQrCode = action.payload;
+    },
+    resetState: state => {
+      state = initialState;
     },
   },
 });

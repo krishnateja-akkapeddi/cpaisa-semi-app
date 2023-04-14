@@ -1,8 +1,11 @@
 import {AuthHeader} from '../../constants/Auth';
 import {RemoteVerifyOtp} from '../../data/usecases/auth/RemoteVerifyOtp';
+import {RemoteChangeOrderStatus} from '../../data/usecases/RemoteChangeOrderStatus';
+import {RemoteFetchBrandOffers} from '../../data/usecases/RemoteFetchBrandOffers';
 import {RemoteFetchClientsList} from '../../data/usecases/RemoteFetchClientsList';
 import {RemoteFetchCouponPartners} from '../../data/usecases/RemoteFetchCouponPartners';
 import {RemoteFetchFetchAuthorizedStockists} from '../../data/usecases/RemoteFetchFetchAuthorizedStockists';
+import {RemoteFetchIdentity} from '../../data/usecases/RemoteFetchIdentity';
 import {RemoteFetchImages} from '../../data/usecases/RemoteFetchImages';
 import {RemoteFetchInvoiceDetail} from '../../data/usecases/RemoteFetchInvoiceDetail';
 import {RemoteFetchInvoiceList} from '../../data/usecases/RemoteFetchInvoiceList';
@@ -10,6 +13,9 @@ import {RemoteFetchInvoiceSumary} from '../../data/usecases/RemoteFetchInvoiceSu
 import {RemoteFetchNotifications} from '../../data/usecases/RemoteFetchNotifications';
 import {RemoteFetchOffers} from '../../data/usecases/RemoteFetchOffers';
 import {RemoteFetchOffersList} from '../../data/usecases/RemoteFetchOffersList';
+import {RemoteFetchOrdersList} from '../../data/usecases/RemoteFetchOrdersList';
+import {RemoteFetchOrdersServiceList} from '../../data/usecases/RemoteFetchOrdersServiceList';
+import {RemoteFetchOrderStatus} from '../../data/usecases/RemoteFetchOrderStatus';
 import {RemoteFetchRewardRequestList} from '../../data/usecases/RemoteFetchRewardRequestList';
 import {RemoteFetchWalletSumary} from '../../data/usecases/RemoteFetchWalletSummary';
 import {RemoteGenerateOtp} from '../../data/usecases/RemoteGenerateOtp';
@@ -18,6 +24,12 @@ import {RemoteReedemReward} from '../../data/usecases/RemoteReedemReward';
 import {RemoteUpdateContact} from '../../data/usecases/RemoteUpdateContact';
 import {RemoteUploadInvoice} from '../../data/usecases/RemoteUploadInvoice';
 import ApiEndpoints from '../../domain/ApiEndpoints';
+import {ChangeOrderStatus} from '../../domain/usages/ChnageOrderStatus';
+import {
+  FetchOrdersList,
+  FetchOrdersServiceList,
+} from '../../domain/usages/FetchOrdersList';
+import {FetchOrderStatus} from '../../domain/usages/FetchOrderStatus';
 import {AxiosHttpClient} from '../../infra/http/axios-http-client';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 
@@ -141,6 +153,36 @@ const fetchNotificationsWorker = new RemoteFetchNotifications(
   apiClient,
 );
 
+const fetchOrdersWorker: FetchOrdersList = new RemoteFetchOrdersList(
+  ApiEndpoints.ORDERS,
+  apiClient,
+);
+
+const fetchOrdersServiceWorker = new RemoteFetchOrdersServiceList(
+  ApiEndpoints.ORDER_SERVICE,
+  apiClient,
+);
+
+const changeOrderStatusWorker = new RemoteChangeOrderStatus(
+  ApiEndpoints.CHANGE_ORDER_STATUS,
+  apiClient,
+);
+
+const fetchOrderStatusWorker = new RemoteFetchOrderStatus(
+  ApiEndpoints.TRACK_ORDER,
+  apiClient,
+);
+
+const fetchBrandOffersWorker = new RemoteFetchBrandOffers(
+  ApiEndpoints.OFFERS,
+  apiClient,
+);
+
+const fetchIdentityWorker = new RemoteFetchIdentity(
+  ApiEndpoints.FETCH_IDENTITY,
+  apiClient,
+);
+
 export {
   fetchInvoiceSummaryWorker,
   fetchOffersWorker,
@@ -160,4 +202,10 @@ export {
   reedemRewardWorker,
   fetchCouponPartnersWorker,
   fetchNotificationsWorker,
+  fetchOrdersWorker,
+  changeOrderStatusWorker,
+  fetchOrdersServiceWorker,
+  fetchOrderStatusWorker,
+  fetchBrandOffersWorker,
+  fetchIdentityWorker,
 };

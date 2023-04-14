@@ -33,6 +33,13 @@ import TermsConditionsScreen from '../../screens/drawer/TermsConditionsScreen';
 import CouponScreen from '../../screens/wallet/CouponScreen';
 import HelpScreen from '../../screens/invoice/HelpScreen';
 import ContactSupportScreen from '../../screens/invoice/ContactSupportScreen';
+import SingleOrderScreen from '../../screens/order/SingleOrderScreen';
+import {OrderEntity} from '../../models/interfaces/OrdersListResponse';
+import {
+  OrderServiceEntity,
+  OrderServiceItemEntity,
+} from '../../models/interfaces/OrderServiceResponse';
+import SingleOrderServiceScreen from '../../screens/order/SingleOrderServiceScreen';
 
 export type HomeStackParamList = {
   TabStack: NavigatorScreenParams<BottomTabParamList>;
@@ -42,9 +49,17 @@ export type HomeStackParamList = {
   InvoiceUploadScreen: RouteParamList;
   InvoiceDetailScreen: InvoiceDetailScreenParams;
   TermsConditionsScreen: RouteParamList;
-  AboutChannelPaisaScreen: RouteParamList;
+  AboutUs: RouteParamList;
   CouponScreen: RouteParamList & {goRupiLink: string};
+  SingleOrderServiceScreen: RouteParamList & {
+    orderServiceInfo: OrderServiceItemEntity;
+  };
+  SingleOrderScreen: RouteParamList & {
+    orderInfo: OrderEntity;
+  };
   Help: RouteParamList;
+  OrdersScreen: RouteParamList & {referenceId?: string};
+
   ContactSupport: RouteParamList;
 };
 
@@ -122,10 +137,13 @@ const HomeStackNavigator = () => {
         name="TermsConditionsScreen"
         component={TermsConditionsScreen}
       />
+      <Stack.Screen name="SingleOrderScreen" component={SingleOrderScreen} />
       <Stack.Screen
-        name="AboutChannelPaisaScreen"
-        component={AboutChannelPaisaScreen}
+        name="SingleOrderServiceScreen"
+        component={SingleOrderServiceScreen}
       />
+
+      <Stack.Screen name="AboutUs" component={AboutChannelPaisaScreen} />
       <Stack.Screen name="CouponScreen" component={CouponScreen} />
       <Stack.Screen name="Help" component={HelpScreen} />
       <Stack.Screen name="ContactSupport" component={ContactSupportScreen} />

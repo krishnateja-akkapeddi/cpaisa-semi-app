@@ -14,6 +14,7 @@ import {
 import {getRewardRequestListArgs} from '../../../screens/wallet/WalletScreen';
 import {CouponPartnerEntity} from '../../../models/interfaces/ReemPartnersResponse';
 import {ClientEntity} from '../../../models/interfaces/ClientsListResponse';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export type WalletDivisionPickerProps = {
   walletSummaries: PickerItem[];
@@ -50,6 +51,15 @@ const WalletDivisionPicker: React.FC<WalletDivisionPickerProps> = ({
 }) => {
   return (
     <View>
+      <Icon
+        name="caretdown"
+        style={{
+          position: 'absolute',
+          zIndex: 10,
+          top: hp('2%'),
+          left: wp('83%'),
+        }}
+      />
       <Picker
         item={walletSummaries?.find(val => {
           return val?.value === selectedWallet?.division_code;

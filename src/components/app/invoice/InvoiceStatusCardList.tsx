@@ -7,6 +7,7 @@ import {
   OverallInvoiceStatus,
 } from '../../../models/interfaces/InvoiceSummaryResponse';
 import {AppLocalizedStrings} from '../../../localization/Localization';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 type Props = {
   loading?: boolean;

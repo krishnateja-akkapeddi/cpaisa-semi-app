@@ -25,10 +25,7 @@ import {OffersListEntity} from '../../models/interfaces/OffersListResponse';
 import SearchBar from '../../components/app/SearchBar';
 import Spacer from '../../components/layout/Spacer';
 import GaCaughtUp from '../../components/GaCaughtUp';
-import {
-  OfferSkeletonItem,
-  OrganisationSkeletonItem,
-} from '../../components/SkeletonCards';
+import {OfferSkeletonItem} from '../../components/SkeletonCards';
 import Colors from '../../theme/Colors';
 
 interface Offer {

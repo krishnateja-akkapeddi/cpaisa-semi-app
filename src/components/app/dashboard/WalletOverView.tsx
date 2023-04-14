@@ -20,7 +20,7 @@ type Props = {
 };
 const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
   const goToWalletHandler = () => {
-    RootNavigation.navigate('WalletScreen');
+    RootNavigation.navigate('WalletStack');
   };
 
   console.log(

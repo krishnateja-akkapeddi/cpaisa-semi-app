@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Modal} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import SVGIcon from '../../../utility/svg/SVGIcon';
 import Spacer from '../../layout/Spacer';
@@ -10,11 +10,13 @@ import Carousel from '../../carousel/Carousel';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import {InvoiceDetail} from '../../../models/interfaces/InvoiceDetailResponse';
 import AppLoader from '../../indicator/AppLoader';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import PopupContainer from '../../popup/PopupContainer';
+import AdaptiveButton from '../../button/AdaptiveButton';
 
 const InvoiceDetailHeader = (props: {
   invoice: InvoiceDetail;
@@ -119,26 +121,51 @@ const InvoiceDetailHeader = (props: {
               </TouchableOpacity>
             </View>
             {openFullImage && (
-              <PopupContainer
-                title={AppLocalizedStrings.invoice.invoiceText}
-                onDismiss={() => {
-                  setOpenFullImage(false);
-                }}
-                showDismiss>
-                <View
-                  style={{
-                    height: 500, // set the fixed height of the container
-                    width: '100%',
-                  }}>
-                  <ImageView
-                    resizeMode="contain"
-                    source={{
-                      uri: invoice?.image_url,
-                    }}
-                    style={{flex: 1}}
-                  />
-                </View>
-              </PopupContainer>
+              // <PopupContainer
+              //   title={AppLocalizedStrings.invoice.invoiceText}
+              //   onDismiss={() => {
+              //     setOpenFullImage(false);
+              //   }}
+              //   showDismiss>
+              //   <View
+              //     style={{
+              //       height: 500, // set the fixed height of the container
+              //       width: '100%',
+              //     }}>
+              //     <ImageView
+              //       resizeMode="contain"
+              //       source={{
+              //         uri: invoice?.image_url,
+              //       }}
+              //       style={{flex: 1}}
+              //     />
+              //   </View>
+              // </PopupContainer>
+              <Modal visible={true} transparent={true}>
+                <ImageViewer
+                  menus={val => {
+                    return (
+                      <View>
+                        <Text>What's up</Text>
+                      </View>
+                    );
+                  }}
+                  renderHeader={() => {
+                    return (
+                      <View>
+                        <Text>What's up</Text>
+                      </View>
+                    );
+                  }}
+                  imageUrls={[
+                    {
+                      url: invoice?.image_url,
+                      height: hp('50%'),
+                      width: wp('80%'),
+                    },
+                  ]}
+                />
+              </Modal>
             )}
             <Spacer height={hp(1.5)} />
             {/* <View>
@@ -157,11 +184,11 @@ const InvoiceDetailHeader = (props: {
               </View>
               <Spacer width={wp(5)} />
 
-              <Text style={styles.barTitleText}>Points</Text>
-              <Spacer width={wp(14)} />
-              <Text style={{...styles.barTitleText, marginRight: wp(3)}}>
-                Qty
+              <Text style={{...styles.barTitleText, marginRight: wp('3%')}}>
+                Points
               </Text>
+              <Spacer width={wp(14)} />
+              <Text style={styles.barTitleText}>Qty</Text>
             </View>
           )}
         </View>
@@ -239,7 +266,7 @@ const styles = StyleSheet.create({
   bottomBar: {
     flexDirection: 'row',
     marginVertical: hp('2%'),
-    paddingHorizontal: 4,
+    paddingHorizontal: wp(4),
   },
   lineView: {
     borderTopWidth: 1,

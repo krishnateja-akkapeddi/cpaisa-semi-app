@@ -93,23 +93,27 @@ const EnterOTPScreen: React.FC<
       } else if (!fromNewContact || !forUpdateContact) {
         const data = await store.dispatch(verifyOtp(params)).unwrap();
         if (data?.success) {
-          const stringData = JSON.stringify(data);
-          dispatch(authSlice.actions.storeAuthResult(data));
-          await SharedPreference.shared.setUser(stringData);
-          await SharedPreference.shared
-            .setToken(data?.data?.user.auth_token)
-            .then(async () => {
-              await setClientHeaders();
-            });
-          setOtp('');
-          RootNavigation.replace('Drawer');
-          dispatch(
-            openPopup({
-              title: 'OTP',
-              type: 'success',
-              message: data?.data?.message,
-            }),
-          );
+          if (data.data.isMobileNumberRegistered) {
+            const stringData = JSON.stringify(data);
+            dispatch(authSlice.actions.storeAuthResult(data));
+            await SharedPreference.shared.setUser(stringData);
+            await SharedPreference.shared
+              .setToken(data?.data?.user.auth_token)
+              .then(async () => {
+                await setClientHeaders();
+              });
+            setOtp('');
+            RootNavigation.replace('Drawer');
+            dispatch(
+              openPopup({
+                title: 'OTP',
+                type: 'success',
+                message: data?.data?.message,
+              }),
+            );
+          } else {
+            RootNavigation.navigate('EnterDetailsScreen');
+          }
         } else {
           dispatch(
             openPopup({

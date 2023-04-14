@@ -5,7 +5,7 @@ const ApiEndpoints = {
   FETCH_IMAGES: '/slider-images',
   FETCH_WALLET_SUMMARY: '/wallets/summery',
   FETCH_INVOICE_SUMMARY: '/invoices/summary',
-  OFFERS: '/offers',
+  OFFERS: '/offers?page=:pageNumber',
   FETCH_INVOICE_LIST: '/invoices?page=:pageNumber',
   FETCH_INVOICE_DETAIL: '/invoices/:id/details',
   UPDATE_CONTACT: '/contacts',
@@ -18,6 +18,12 @@ const ApiEndpoints = {
   COUPON_PARTNERS: '/rewards/forOrganization/:id',
   AUTHORIZED_STOCKISTS: '/channel-partners/stockist?page=:pageNumber',
   NOTIFICATIONS: '/notifications',
+  ORDERS: '/orders?page=:pageNumber',
+  CHANGE_ORDER_STATUS: '/orders/consent/:uuid/:status',
+  ORDER_SERVICE: '/orders/service?page=:pageNumber',
+  TRACK_ORDER: '/orders/:orderId/track-order/:subOrderId',
+  FETCH_IDENTITY: '/identity/validate/:identityType/:value',
+  REGISTER_USER: '/channel-partners/register',
 };
 
 export default ApiEndpoints;

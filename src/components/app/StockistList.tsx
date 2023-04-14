@@ -31,7 +31,7 @@ const StockistList: React.FC<StockistProps> = props => {
   }, [props.isVisible]);
 
   return (
-    <View style={styles.mainView}>
+    <TouchableOpacity onPress={props.onPress} style={styles.mainView}>
       <View style={styles.listContainer}>
         <View style={styles.rowContainer}>
           {/* <ImageView source={`${props.image}`} style={styles.imageStyle} /> */}
@@ -73,7 +73,7 @@ const StockistList: React.FC<StockistProps> = props => {
           })}
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 

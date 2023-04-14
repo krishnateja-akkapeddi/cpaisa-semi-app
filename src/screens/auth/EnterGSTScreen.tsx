@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import AdaptiveTextInput from '../../components/input/AdaptiveTextInput';
 import Style from '../../constants/Style';
@@ -9,45 +9,120 @@ import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import AuthBaseScreen from './AuthBaseScreen';
 import Validator from '../../utility/validation/Validator';
 import RootNavigation from '../../navigation/RootNavigation';
-
-enum State {
-  GST,
-  PAN,
-}
+import Spacer from '../../components/layout/Spacer';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {IdenitifcationType} from '../../models/enum/IdentificationType';
+import {store} from '../../store/Store';
+import {PanDetails} from '../../models/interfaces/PanVerificationResponse';
+import {
+  GstAddress,
+  GstDetails,
+} from '../../models/interfaces/GstVerifiedResponse';
+import {
+  fetchIdentityFromGst,
+  fetchIdentityFromPan,
+} from '../../store/thunks/ApiThunks';
+import getLocation from '../../utility/custom-hooks/GetLocation';
 
 const EnterGSTScreen = () => {
-  const [state, setState] = useState<State>(State.GST);
+  const [state, setState] = useState<IdenitifcationType>(
+    IdenitifcationType.GST,
+  );
   const [GSTNo, setGSTNo] = useState('22AABCU9603R1ZX');
-
-  const onContinueHandler = () => {
-    RootNavigation.navigate('EnterDetailsScreen');
-  };
-
+  const [PANNo, setNo] = useState('22AABCU9603R1ZX');
+  const [panInfo, setPanInfo] = useState<PanDetails>();
+  const [gstInfo, setGstInfo] = useState<GstDetails>();
   const onStateChange = () => {
-    setState(state == State.GST ? State.PAN : State.GST);
+    setState(
+      state == IdenitifcationType.GST
+        ? IdenitifcationType.PAN
+        : IdenitifcationType.GST,
+    );
   };
 
   const isValidData = (): boolean => {
-    if (state == State.GST) {
+    if (state == IdenitifcationType.GST) {
       return Validator.isValidGSTNumber(GSTNo);
     }
     return Validator.isValidPanNumber(GSTNo);
   };
 
+  const getIdentity = async () => {
+    if (state === IdenitifcationType.GST) {
+      const data = await store
+        .dispatch(
+          fetchIdentityFromGst({
+            identityType: IdenitifcationType.GST,
+            value: GSTNo,
+          }),
+        )
+        .unwrap();
+      setGstInfo(data.gst_details);
+    } else {
+      const data = await store
+        .dispatch(
+          fetchIdentityFromPan({
+            identityType: IdenitifcationType.PAN,
+            value: GSTNo,
+          }),
+        )
+        .unwrap();
+      setPanInfo(data.pan_details);
+    }
+  };
+
+  const onContinueHandler = async () => {
+    RootNavigation.navigate('EnterDetailsScreen');
+    // const locationInfo = await getLocation();
+    // if (locationInfo && gstInfo) {
+    //   RootNavigation.navigate('EnterDetailsScreen', {
+    //     firm_name: gstInfo?.business.legalName,
+    //     mobileNumber: '920519570',
+    //     gst_no: gstInfo?.gstNumber,
+    //     isLogin: false,
+    //     address: {
+    //       lat: locationInfo.latitude.toString(),
+    //       long: locationInfo.longitude.toString(),
+    //       line: gstInfo?.addresses[0].line,
+    //       pincode: gstInfo.addresses[0].pincode,
+    //     },
+    //   });
+    // }
+  };
+
   return (
     <AuthBaseScreen
       title={
-        state == State.GST
+        state == IdenitifcationType.GST
           ? AppLocalizedStrings.auth.enterGSTDetails
           : AppLocalizedStrings.auth.enterPANDetails
       }
       iconName="enter_gst_number">
+      {!isValidData() && (
+        <View
+          style={{
+            alignSelf: 'flex-start',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Icon color={Colors.red} name="infocirlceo" />
+          <Spacer width={wp(1)} />
+          <View>
+            <Text style={{textAlign: 'left', color: Colors.red}}>
+              {state === IdenitifcationType.GST
+                ? AppLocalizedStrings.validGst
+                : AppLocalizedStrings.validPan}
+            </Text>
+          </View>
+          <Spacer height={hp(4)} />
+        </View>
+      )}
       <AdaptiveTextInput
         autoCapitalize="characters"
         value={GSTNo}
         onChangeText={setGSTNo}
         placeholder={
-          state == State.GST
+          state == IdenitifcationType.GST
             ? AppLocalizedStrings.auth.enterGSTNumber
             : AppLocalizedStrings.auth.enterPANNumber
         }
@@ -65,7 +140,7 @@ const EnterGSTScreen = () => {
           textStyle={styles.btnGSTText}
           type="text"
           title={
-            state == State.GST
+            state == IdenitifcationType.GST
               ? AppLocalizedStrings.auth.dontHaveGST
               : AppLocalizedStrings.auth.dontHavePAN
           }

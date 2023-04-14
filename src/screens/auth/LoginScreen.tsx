@@ -75,6 +75,7 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
           isLogin: false,
           mobileNumber: mobileNo,
         });
+        // RootNavigation.navigate('EnterGSTScreen');
       }
     } catch (error) {
       console.log('FROM_LOGOM', error);
@@ -100,7 +101,7 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
           : AppLocalizedStrings.auth.loginWithMobile
       }
       iconName="mobile_number">
-      {mobileNo.length >= 10 && !Validator.isValidMobileNumber(mobileNo) && (
+      {!Validator.isValidMobileNumber(mobileNo) && (
         <View
           style={{
             alignSelf: 'flex-start',
@@ -121,7 +122,9 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
       <AdaptiveTextInput
         value={mobileNo}
         keyboardType="number-pad"
-        onChangeText={setMobileNo}
+        onChangeText={e => {
+          setMobileNo(e);
+        }}
         placeholder={AppLocalizedStrings.auth.mobileNo}
         style={{
           ...styles.input,

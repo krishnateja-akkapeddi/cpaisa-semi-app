@@ -48,6 +48,7 @@ import {
 import WalletDivisionPicker, {
   WalletDivisionPickerProps,
 } from '../../components/app/wallet/WalletDivisionPicker';
+import {WalletStackScreenProps} from '../../navigation/stack/WalletStackNavigator';
 
 export enum WalletMode {
   Transaction,
@@ -81,7 +82,9 @@ const segmentBarItems = [
   AppLocalizedStrings.wallet.couponsCode,
 ];
 
-const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
+const WalletScreen: React.FC<
+  WalletStackScreenProps<'WalletScreen'>
+> = props => {
   const [transactions, setTransactions] = useState(
     Transactions as Transaction[],
   );
@@ -91,7 +94,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
   const [couponPartners, setCouponPartners] = useState<CouponPartnerEntity[]>(
     [],
   );
-  const [loadingOrganisations, setLoadingOrganisations] = useState(false);
+  const [loadingOrganisations, setLoadingOrganisations] = useState(true);
   const [walletSummaryLoading, setWalletSummaryLoading] = useState(true);
   const [sectedReedemOrg, setSectionedReedemOrg] = useState('');
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>();
@@ -303,7 +306,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     (toDashboard = false) => {
       setMode(WalletMode.Transaction);
       if (toDashboard === true) {
-        props.navigation.jumpTo('WalletScreen');
+        props.navigation.navigate('WalletScreen');
       }
     },
     [props],
@@ -341,7 +344,8 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     setShowFilter(false);
   };
 
-  const onDismissHandler = () => {
+  const onDismissHandler = async () => {
+    await onClearHandler();
     setShowFilter(false);
   };
 
@@ -417,6 +421,16 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
     loadingOrganisations,
   ]);
 
+  const filterCount = (): number => {
+    return rewardRequestListParams.status
+      ? startDate
+        ? 2
+        : 1
+      : startDate
+      ? 1
+      : 0;
+  };
+
   const segmentContainer = useMemo(() => {
     return (
       <View style={styles.segmentContainer}>
@@ -426,9 +440,27 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
           items={segmentBarItems}
           onValueChange={onTransactionModeChange}
         />
+        <View style={styles.filterContainer}>
+          <AdaptiveButton
+            type="text"
+            isReverse
+            title={AppLocalizedStrings.filter.filter}
+            icon="filter"
+            iconSize={hp('2.3')}
+            iconColor={Colors.primary}
+            textStyle={styles.btnFilterText}
+            onPress={onFilterHandler}
+          />
+          {filterCount() !== 0 && (
+            <View style={styles.filterBadge}>
+              <Text style={styles.filterBadgeText}>{filterCount()} </Text>
+            </View>
+          )}
+        </View>
       </View>
     );
-  }, [transactionMode, onTransactionModeChange, onFilterHandler]);
+  }, [transactionMode, onTransactionModeChange, onFilterHandler, filterCount]);
+
   const handleRefreshApi = () => {
     setRewardRequestList([]);
     onClearHandler();
@@ -450,6 +482,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
                 onDismiss={changeMode.bind(this, WalletMode.Transaction)}
               />
             )}
+
             {mode === WalletMode.RedeemDetails && (
               <RedeemPointDetail
                 refreshApi={handleRefreshApi}
@@ -596,17 +629,7 @@ const WalletScreen: React.FC<BottomTabScreenProps<'WalletScreen'>> = props => {
               renderItem={renderItem}
               keyExtractor={keyExtractor}
             />
-            <AdaptiveButton
-              type="text"
-              isReverse
-              title={AppLocalizedStrings.filter.filter}
-              icon="filter"
-              iconSize={hp('2.3')}
-              iconColor={Colors.primary}
-              buttonStyle={styles.btnFilter}
-              textStyle={styles.btnFilterText}
-              onPress={onFilterHandler}
-            />
+
             <View>
               <FlatList renderItem={renderItem} data={rewardRequestList} />
               {rewardRequestListLoading && (
@@ -722,7 +745,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
 
     // todo: Will be using this once the transactions are also implemented
-    // justifyContent: 'space-between',
+    justifyContent: 'space-between',
   },
   skelLoadingContainer: {
     padding: 16,
@@ -761,5 +784,22 @@ const styles = StyleSheet.create({
     zIndex: 100,
     bottom: -220,
     left: 90,
+  },
+  filterBadge: {
+    position: 'absolute',
+    top: wp('-1%'),
+    right: wp('-2%'),
+    backgroundColor: Colors.red,
+    borderRadius: wp('100%'),
+    minWidth: 20,
+    height: 20,
+    textAlign: 'center',
+    zIndex: 1,
+    paddingTop: 1,
+  },
+  filterBadgeText: {
+    color: Colors.white,
+    fontWeight: '700',
+    textAlign: 'center',
   },
 });

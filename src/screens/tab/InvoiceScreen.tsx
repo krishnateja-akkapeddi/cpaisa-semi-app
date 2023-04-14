@@ -53,6 +53,8 @@ const InvoiceScreen: React.FC<
   const fromInvoiceUpload = props?.route?.params?.fromInvoiceUpload;
   const [invoices, setInvoices] = useState<InvoiceOverview>();
   const [refreshInvoices, setRefreshInvoices] = useState<boolean>();
+  const [isFilterApplied, setFilterApplied] = useState<boolean>(false);
+
   const [selectedOverallSummary, setSelectedOverallSummary] = useState(true);
   const [monthlyInvoices, setMonthlyInvoices] =
     useState<MonthlyInvoiceStatusEntity[]>();
@@ -110,11 +112,14 @@ const InvoiceScreen: React.FC<
     }
   }, [fromInvoiceUpload]);
 
+  const filterCount = (): number => {
+    return invoiceListParams.status ? (startDate ? 2 : 1) : startDate ? 1 : 0;
+  };
+
   const listHeaderComponent = useCallback(() => {
     return (
       <>
         <InvoiceCombineCmpt
-          filterChecked={true}
           setSelectedDatesHandler={setSelectedDatesHandler}
           selectedDates={selectedDates}
           num={num}
@@ -126,6 +131,8 @@ const InvoiceScreen: React.FC<
           invoiceSummary={invoices?.overall_invoice_status}
           monthlyInvoices={monthlyInvoices}
           onFilterHandler={onFilterHandler}
+          isFilterApplied={isFilterApplied}
+          filterCount={filterCount}
         />
         <View style={styles.topView}>
           <SearchBar
@@ -151,10 +158,13 @@ const InvoiceScreen: React.FC<
     query,
     startDate,
     endDate,
+    isFilterApplied,
+    filterCount,
   ]);
 
   const onApplyHandler = async () => {
     await getInvoiceList({fromFilter: true});
+    setFilterApplied(true);
     setCurrentPage(1);
     setShowFilter(false);
   };
@@ -250,6 +260,7 @@ const InvoiceScreen: React.FC<
     await getInvoiceList({fromResetFilter: true}, 1);
     setResetFilterLoading(false);
     setShowFilter(false);
+    setFilterApplied(false);
   };
 
   const onDismissHandler = () => {
@@ -294,7 +305,7 @@ const InvoiceScreen: React.FC<
   }, []);
 
   useEffect(() => {
-    if (dates)
+    if (dates[1] !== 'Invalid date')
       Convert.dateFormatter('MMM YY', 'YYYY-MM', dates[1]) !== 'Invalid+date' &&
         fetchInvoices(
           selectedDates
@@ -417,6 +428,7 @@ const InvoiceScreen: React.FC<
 
       {showFilter && (
         <TransactionFilterPopup
+          showInvoiceStatus
           setEndDate={setEndDate}
           setStartDate={setStartDate}
           endDate={endDate}
@@ -435,7 +447,7 @@ const InvoiceScreen: React.FC<
           showReedem={false}
           onApply={onApplyHandler}
           onClear={onClearHandler}
-          onDismiss={onDismissHandler}
+          onDismiss={onClearHandler}
         />
       )}
     </SafeAreaView>

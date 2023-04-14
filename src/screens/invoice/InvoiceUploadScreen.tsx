@@ -87,7 +87,6 @@ const InvoiceUploadScreen = () => {
               onSubmit: () => {
                 RootNavigation.navigation.navigate('InvoiceScreen', {
                   isLogin: true,
-
                   fromInvoiceUpload: (getInvoiceList: Function) => {
                     return getInvoiceList({}, 1, false);
                   },
@@ -296,7 +295,7 @@ const InvoiceUploadScreen = () => {
                 />,
               ]}
               cancelButtonIndex={2}
-              onPress={id => {
+              onPress={(id: any) => {
                 uploadDocumentHandler(id);
               }}
             />

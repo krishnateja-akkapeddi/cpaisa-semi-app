@@ -34,9 +34,9 @@ interface TransactionFilterPopupProps {
   params?: any;
   setParams?: any;
   showInvoiceStatus?: boolean;
-  year: number | null;
-  setYear: React.Dispatch<React.SetStateAction<number | null>>;
-  setQuarter: React.Dispatch<React.SetStateAction<number | null>>;
+  year?: number | null;
+  setYear?: React.Dispatch<React.SetStateAction<number | null>>;
+  setQuarter?: React.Dispatch<React.SetStateAction<number | null>>;
   startDate?: Date | null;
   setStartDate?: Function;
   endDate?: Date | null;
@@ -177,7 +177,7 @@ const TransactionFilterPopup: React.FC<TransactionFilterPopupProps> = props => {
           />
         )} */}
 
-        {!showReedem && !showTransaxtion && (
+        {!showReedem && !showTransaxtion && props.showInvoiceStatus && (
           <RadioView
             selectedIds={
               params?.status

@@ -10,5 +10,6 @@ export namespace FetchInvoiceSummaryParams {
   export type params = {
     start_date?: string;
     end_date?: string;
+    client_id?: number;
   };
 }

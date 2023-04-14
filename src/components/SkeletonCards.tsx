@@ -438,3 +438,32 @@ export const OrganisationSkeletonItem = () => {
     </ScrollView>
   );
 };
+
+export const OrderSkeletonCard = () => {
+  return (
+    <View>
+      {[1, 2, 3].map(val => {
+        return (
+          <View>
+            {val !== 1 && <Spacer height={hp('2%')} />}
+
+            <View
+              style={{
+                borderWidth: 1,
+                borderRadius: 20,
+                borderColor: Colors.lightGrey,
+              }}
+              key={val.toString()}>
+              <SkeletonPlaceholder borderRadius={20}>
+                <SkeletonPlaceholder.Item
+                  width={wp('91%')}
+                  height={hp('10%')}
+                />
+              </SkeletonPlaceholder>
+            </View>
+          </View>
+        );
+      })}
+    </View>
+  );
+};

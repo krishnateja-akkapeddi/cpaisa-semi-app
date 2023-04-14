@@ -71,31 +71,32 @@ const OfferOverView: React.FC<Props> = props => {
     });
   };
 
-  const renderItem = useCallback(
-    (offer: OfferEntity) => {
-      const onPressPriceHandler = () => {};
+  // const renderItem = useCallback(
+  //   (offer: OfferEntity) => {
+  //     const onPressPriceHandler = () => {};
 
-      const onPressUploadHandler = () => {
-        RootNavigation.navigate('InvoiceUploadScreen');
-      };
+  //     const onPressUploadHandler = () => {
+  //       RootNavigation.navigate('InvoiceUploadScreen');
+  //     };
 
-      return (
-        <SubscribeCard
-          offer={offer}
-          leftTitle={AppLocalizedStrings.subscription.upload}
-          rightTitle="2,345"
-          rightIcon="channelpaisa_logo"
-          leftBtnStyle={styles.leftBtnView}
-          rightBtnStyle={styles.rightBtnView}
-          leftBtnTextStyle={styles.leftBtnText}
-          rightBtnTextStyle={styles.rightBtnText}
-          onPressLeft={onPressUploadHandler}
-          onPressRight={onPressPriceHandler}
-        />
-      );
-    },
-    [offers, selectedIndex],
-  );
+  //     return (
+  //       <SubscribeCard
+  //         offer={offer}
+  //         leftTitle={AppLocalizedStrings.subscription.upload}
+  //         rightTitle="2,345"
+  //         rightIcon="channelpaisa_logo"
+  //         leftBtnStyle={styles.leftBtnView}
+  //         rightBtnStyle={styles.rightBtnView}
+  //         leftBtnTextStyle={styles.leftBtnText}
+  //         rightBtnTextStyle={styles.rightBtnText}
+  //         onPressLeft={onPressUploadHandler}
+  //         onPressRight={onPressPriceHandler}
+  //       />
+  //     );
+  //   },
+  //   [offers, selectedIndex],
+  // );
+
   useEffect(() => {
     const yearMonthsList = Generator.generateYearMonth(11);
     setData(yearMonthsList);
@@ -128,7 +129,7 @@ const OfferOverView: React.FC<Props> = props => {
 };
 export default OfferOverView;
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   btnDate: {
     height: hp(4.5),
     borderRadius: hp(1.5),

@@ -21,16 +21,28 @@ const GaNotification = () => {
     <View>
       {popup.visible && (
         <PopupContainer
+          showHeader={popup.showHeader}
+          onOutsidePress={() => {
+            dispatch(appSlice.actions.closePoup());
+          }}
           animationType="fade"
-          showDismiss={true}
+          showDismiss={popup.showDismiss}
           onDismiss={() => {
             dispatch(appSlice.actions.closePoup());
           }}
           title={popup.title}>
           <View style={styles.popupContainer}>
-            {popup.type !== 'error' ? (
+            {popup.type === 'success' ? (
               <Image
                 source={require('../assets/images/SuccessIcon.png')}></Image>
+            ) : popup.type === 'plain' ? (
+              <>
+                <Icon
+                  size={wp('20%')}
+                  name="exclamationcircleo"
+                  color={Colors.lightYellow}
+                />
+              </>
             ) : (
               <>
                 <Icon size={wp('20%')} name="closecircle" color={Colors.red} />

@@ -7,6 +7,7 @@ import {ProfileStackParamList} from '../stack/ProfileStackNavigator';
 import {SubscriptionStackParamList} from '../stack/SubscriptionStackNavigator';
 import {StockistStackParamList} from '../stack/StockistStackNavigator';
 import {InvoiceListEntity} from '../../models/interfaces/InvoiceListResponse';
+import {OrganisationStackParamList} from '../stack/OrganisationStackNavigator';
 
 export type InvoiceDetailScreenParams = {
   invoiceItem: InvoiceListEntity;
@@ -19,6 +20,7 @@ export type RootAllMixedParamList = RootStackParamList &
   SubscriptionStackParamList &
   AuthStackParamList &
   BottomTabParamList &
+  OrganisationStackParamList &
   DrawerParamList;
 
 export type RouteParamList = {isLogin: boolean} | undefined;

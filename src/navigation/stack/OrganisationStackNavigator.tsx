@@ -9,10 +9,12 @@ import {AppLocalizedStrings} from '../../localization/Localization';
 import NotificationScreen from '../../screens/notification/NotificationScreen';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
 import OrganisationScreen from '../../screens/organisations/OrganisationScreen';
+import BrandsScreen from '../../screens/organisations/BrandsScreen';
+import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
 
 export type OrganisationStackParamList = {
   OrganisationsScreen: RouteParamList;
-  BrandsScreen: RouteParamList;
+  BrandsScreen: RouteParamList & {organisation: ClientEntity};
 };
 
 export type OrganisationStackScreenProps<
@@ -39,7 +41,7 @@ const OrganisationStackNavigator = () => {
       />
       <Stack.Screen
         name="BrandsScreen"
-        component={OrganisationScreen}
+        component={BrandsScreen}
         options={{title: AppLocalizedStrings.Organisations.name}}
       />
     </Stack.Navigator>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useMemo, useState} from 'react';
 import {
   View,
   Text,
@@ -47,76 +47,38 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   const onEndDateChange = (date: Date) => setEndDate(date);
 
   const onLastMonthPress = () => {
-    const lastMonthStartDate = moment()
-      .subtract(1, 'months')
-      .startOf('month')
-      .toDate();
-
-    const lastMonthEndDate = moment()
-      .subtract(1, 'months')
-      .endOf('month')
-      .toDate();
-
+    const lastMonthStartDate = moment().subtract(30, 'days').toDate();
+    const lastMonthEndDate = moment().toDate();
     setStartDate(lastMonthStartDate);
     setEndDate(lastMonthEndDate);
     onDatesSelected(lastMonthStartDate, lastMonthEndDate);
   };
 
   const onLastTwoMonthsPress = () => {
-    const lastTwoMonthsStartDate = moment()
-      .subtract(2, 'months')
-      .startOf('month')
-      .toDate();
-
-    const lastTwoMonthsEndDate = moment()
-      .subtract(1, 'months')
-      .endOf('month')
-      .toDate();
-
+    const lastTwoMonthsStartDate = moment().subtract(60, 'days').toDate();
+    const lastTwoMonthsEndDate = moment().toDate();
     setStartDate(lastTwoMonthsStartDate);
     setEndDate(lastTwoMonthsEndDate);
     onDatesSelected(lastTwoMonthsStartDate, lastTwoMonthsEndDate);
   };
 
-  const isLastMonth = () => {
-    const lastMonthStartDate = moment()
-      .subtract(1, 'months')
-      .startOf('month')
-      .toDate();
+  const isLastMonth = useMemo(() => {
+    const lastMonthStartDate = moment().subtract(30, 'days').toDate();
+    const lastMonthEndDate = moment().toDate();
+    return (
+      moment(lastMonthStartDate).isSame(startDate, 'day') &&
+      moment(lastMonthEndDate).isSame(endDate, 'day')
+    );
+  }, [startDate, endDate]);
 
-    const lastMonthEndDate = moment()
-      .subtract(1, 'months')
-      .endOf('month')
-      .toDate();
-
-    if (
-      lastMonthEndDate.getTime() === endDate?.getTime() &&
-      lastMonthStartDate.getTime() === startDate?.getTime()
-    ) {
-      return true;
-    }
-    return false;
-  };
-
-  const isLast2Months = () => {
-    const lastTwoMonthsStartDate = moment()
-      .subtract(2, 'months')
-      .startOf('month')
-      .toDate();
-
-    const lastTwoMonthsEndDate = moment()
-      .subtract(1, 'months')
-      .endOf('month')
-      .toDate();
-
-    if (
-      lastTwoMonthsEndDate.getTime() === endDate?.getTime() &&
-      lastTwoMonthsStartDate.getTime() === startDate?.getTime()
-    ) {
-      return true;
-    }
-    return false;
-  };
+  const isLast2Months = useMemo(() => {
+    const lastTwoMonthsStartDate = moment().subtract(60, 'days').toDate();
+    const lastMonthEndDate = moment().toDate();
+    return (
+      moment(lastTwoMonthsStartDate).isSame(startDate, 'day') &&
+      moment(lastMonthEndDate).isSame(endDate, 'day')
+    );
+  }, [startDate, endDate]);
 
   return (
     <View>
@@ -132,15 +94,15 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
               borderWidth: 0.5,
               borderRadius: wp(10),
               borderColor: Colors.primary,
-              backgroundColor: isLastMonth() ? Colors.primary : Colors.white,
+              backgroundColor: isLastMonth ? Colors.primary : Colors.white,
             }}>
             <Text
               style={{
-                color: isLastMonth() ? Colors.white : Colors.primary,
+                color: isLastMonth ? Colors.white : Colors.primary,
                 fontSize: 12,
                 fontWeight: 'bold',
               }}>
-              Last month
+              Last 30 days
             </Text>
           </View>
         </TouchableOpacity>
@@ -148,8 +110,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
         <TouchableOpacity onPress={onLastTwoMonthsPress}>
           <View
             style={{
-              backgroundColor: isLast2Months() ? Colors.primary : Colors.white,
-
+              backgroundColor: isLast2Months ? Colors.primary : Colors.white,
               // width: wp('25%'),
               paddingLeft: wp('3%'),
               paddingRight: wp('3%'),
@@ -163,9 +124,9 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
               style={{
                 fontSize: 12,
                 fontWeight: 'bold',
-                color: isLast2Months() ? Colors.white : Colors.primary,
+                color: isLast2Months ? Colors.white : Colors.primary,
               }}>
-              Last 2 months
+              Last 60 days
             </Text>
           </View>
         </TouchableOpacity>
@@ -280,7 +241,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
   );
 };
 
-export default DateRangePicker;
+export default memo(DateRangePicker);
 
 const styles = StyleSheet.create({
   container: {

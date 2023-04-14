@@ -11,7 +11,8 @@ type currentFormat =
   | 'dd mm'
   | 'mmmm yy'
   | 'yyyy-mm-dd'
-  | 'DD MMM yyyy, HH:mm';
+  | 'DD MMM yyyy, HH:mm'
+  | 'DD MMM y, HH:mm';
 
 export class Convert {
   public static toObject<T>(json: string): T {

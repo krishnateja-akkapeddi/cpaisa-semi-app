@@ -131,9 +131,7 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
         <TouchableOpacity
           style={styles.supportContainer}
           onPress={() =>
-            RootNavigation.navigate('OrganisationsStack', {
-              screen: 'BrandsScreen',
-            })
+            RootNavigation.navigate('HomeStack', {screen: 'ContactSupport'})
           }>
           <Text style={styles.supportTextStyle}>Contact Support</Text>
         </TouchableOpacity>

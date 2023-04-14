@@ -50,8 +50,8 @@ const kTabItems: TabItem[] = [
     icon: 'invoice',
   },
   {
-    title: AppLocalizedStrings.tab.wallet,
-    icon: 'wallet',
+    title: AppLocalizedStrings.tab.orders,
+    icon: 'order',
   },
 ];
 

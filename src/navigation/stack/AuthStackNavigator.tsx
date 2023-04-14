@@ -19,6 +19,7 @@ import LoginScreen from '../../screens/auth/LoginScreen';
 import TermsConditionsScreen from '../../screens/drawer/TermsConditionsScreen';
 import EnterUpdateContactOtpScreen from '../../screens/auth/EnterUpdateContactOtpScreen';
 import LoginHelpScreen from '../../screens/auth/LoginHelpScreen';
+import {optionRegisterParams} from '../../domain/usages/RegisterUser';
 
 export type AuthStackParamList = {
   SplashScreen: RouteParamList;
@@ -35,7 +36,7 @@ export type AuthStackParamList = {
     contactType: 'whatsapp' | 'mobile';
   };
   EnterGSTScreen: RouteParamList;
-  EnterDetailsScreen: RouteParamList;
+  EnterDetailsScreen: RouteParamList & optionRegisterParams;
   DocumentUploadScreen: RouteParamList;
   ChooseOrganisationScreen: RouteParamList;
   CompleteKYCScreen: RouteParamList;

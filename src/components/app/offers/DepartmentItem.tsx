@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import {hp} from '../../../utility/responsive/ScreenResponsive';
+import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Fonts from '../../../theme/Fonts';
 import Colors from '../../../theme/Colors';
 import SVGIcon from '../../../utility/svg/SVGIcon';

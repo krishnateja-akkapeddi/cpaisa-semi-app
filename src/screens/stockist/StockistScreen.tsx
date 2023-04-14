@@ -1,4 +1,11 @@
-import {SafeAreaView, StyleSheet, View, FlatList, AppState} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  FlatList,
+  AppState,
+  Text,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';
@@ -121,10 +128,11 @@ const StockistScreen = () => {
       console.log('STOCSIID', result);
 
       if (result.success) {
+        setIsNextPageThere(result.stockists.has_next_page);
+
         // await debounce(2000);
         if (scrolled) {
           setStockists(oldData => [...oldData, ...result.stockists.data]);
-          setIsNextPageThere(result.stockists.has_next_page);
         } else {
           setStockists(result.stockists.data);
         }
@@ -178,9 +186,9 @@ const StockistScreen = () => {
     getClients();
   }, [userInfo?.channel_partner?.address?.state]);
 
-  useEffect(() => {
-    getStockistsList({}, 1, false);
-  }, []);
+  // useEffect(() => {
+  //   getStockistsList({}, 1, false);
+  // }, []);
 
   useEffect(() => {}, [
     organizations,
@@ -197,35 +205,38 @@ const StockistScreen = () => {
           {loadingOrganisations ? (
             <View>
               <Spacer height={hp('1%')} />
-              <View style={{paddingLeft: wp('5%')}}>
+              <View style={{paddingLeft: wp('5'), paddingRight: wp('5')}}>
                 <OrganisationSkeletonItem />
               </View>
               <Spacer height={hp('3%')} />
             </View>
           ) : (
-            <OrganisationList
-              selectedIds={selectedIds}
-              horizontal={true}
-              showAll={true}
-              data={organizations}
-              onSelect={ids => {
-                setSelectedIds(ids);
-                const orgId = organizations && organizations[ids[0]]?.id;
-                if (orgId) {
-                  setStockists([]);
-                  setCurrentPage(1);
-                  setSelectedOrganization(organizations[ids[0]]);
-                  getStockistsList({
-                    client_code: organizations[ids[0]].short_code,
-                  });
-                } else {
-                  setSelectedOrganization(null);
-                  setStockists([]);
-                  setCurrentPage(1);
-                  getStockistsList({client_code: '-1'}, 1, false);
-                }
-              }}
-            />
+            <View>
+              <OrganisationList
+                style={{paddingLeft: wp('5'), paddingRight: wp('5')}}
+                selectedIds={selectedIds}
+                horizontal={true}
+                showAll={true}
+                data={organizations}
+                onSelect={ids => {
+                  setSelectedIds(ids);
+                  const orgId = organizations && organizations[ids[0]]?.id;
+                  if (orgId) {
+                    setStockists([]);
+                    setCurrentPage(1);
+                    setSelectedOrganization(organizations[ids[0]]);
+                    getStockistsList({
+                      client_code: organizations[ids[0]].short_code,
+                    });
+                  } else {
+                    setSelectedOrganization(null);
+                    setStockists([]);
+                    setCurrentPage(1);
+                    getStockistsList({client_code: '-1'}, 1, false);
+                  }
+                }}
+              />
+            </View>
           )}
         </View>
       </View>
@@ -328,7 +339,7 @@ const styles = StyleSheet.create({
   flatlistContainer: {
     marginTop: hp('2%'),
     marginBottom: hp('1.5%'),
-    marginLeft: hp('2%'),
+    // marginLeft: hp('2%'),
   },
   bottomContainer: {
     flex: 1,

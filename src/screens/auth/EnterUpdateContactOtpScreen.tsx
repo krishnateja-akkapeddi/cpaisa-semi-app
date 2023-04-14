@@ -20,6 +20,7 @@ import AppLoader from '../../components/indicator/AppLoader';
 import {UpdateContactParams} from '../../domain/usages/UpdateContact';
 import {useDispatch} from 'react-redux';
 import {appSlice} from '../../store/slices/AppSlice';
+import {Timer, TimerType} from '../../utility/timer/TimerClass';
 
 const EnterUpdateContactOtpScreen: React.FC<
   AuthStackScreenProps<'EnterUpdateContactOtpScreen'>
@@ -28,10 +29,17 @@ const EnterUpdateContactOtpScreen: React.FC<
   const [otp, setOtp] = useState('');
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false);
   const [timeLimit, setTimeLimit] = useState(0.5);
-  const {seconds, minutes} = useTimer(timeLimit);
+  const [timer, setTimer] = useState({minutes: 0, seconds: 0});
   const onRequestHandler = () => {};
   const mobile = props.route.params?.mobileNumber;
   const contactType = props.route.params?.contactType;
+
+  function resetTimer() {
+    const timer = new Timer();
+    timer.startTimer(0.5, (time: TimerType) => {
+      setTimer({minutes: time.minutes, seconds: time.seconds});
+    });
+  }
 
   const onSubmitHandler = async () => {
     setVerifyOtpLoading(true);
@@ -75,9 +83,13 @@ const EnterUpdateContactOtpScreen: React.FC<
     }
     setVerifyOtpLoading(false);
   };
+
   useEffect(() => {
-    console.log('OTP', otp);
-  }, [props, otp]);
+    const timer = new Timer();
+    timer.startTimer(0.5, (time: TimerType) => {
+      setTimer({minutes: time.minutes, seconds: time.seconds});
+    });
+  }, []);
 
   return (
     <AuthBaseScreen
@@ -86,12 +98,12 @@ const EnterUpdateContactOtpScreen: React.FC<
       <OTPView code={otp} onSelect={setOtp} />
 
       <Spacer height={hp('3')} />
-      {seconds > 0 ? (
+      {timer.seconds > 0 ? (
         <Text style={styles.resendOTP}>
           {AppLocalizedStrings.auth.requestOTPIn}
           <Text style={styles.timer}>
-            {minutes < 10 ? '0' + minutes : minutes} :
-            {seconds < 10 ? '0' + seconds : seconds}
+            {timer.minutes < 10 ? '0' + timer.minutes : timer.minutes} :
+            {timer.seconds < 10 ? '0' + timer.seconds : timer.seconds}
           </Text>
         </Text>
       ) : (
@@ -111,7 +123,12 @@ const EnterUpdateContactOtpScreen: React.FC<
         />
       </View>
       <Spacer height={hp('3%')} />
-      <ResendOTPMode minutes={minutes} seconds={seconds} mobile={mobile} />
+      <ResendOTPMode
+        minutes={timer.minutes}
+        seconds={timer.seconds}
+        mobile={mobile}
+        resetTimer={resetTimer}
+      />
       <AdaptiveButton
         isDisable={otp.length < 4 || verifyOtpLoading}
         title={

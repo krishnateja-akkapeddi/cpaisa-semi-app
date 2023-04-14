@@ -17,5 +17,7 @@ class Colors {
   static lightGreen: string = '#B5EAD7';
   static lightPink: string = '#FFD7DA';
   static red: string = '#FF5577';
+  static yellow: string = '#ffc112';
+  static lightOrange: string = '#F7DFC4';
 }
 export default Colors;

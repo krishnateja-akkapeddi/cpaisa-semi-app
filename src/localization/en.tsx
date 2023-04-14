@@ -1,6 +1,8 @@
 export default {
   caughtUp: "You're all caught up!",
   validMobile: 'Number must be 10 digit and starts from 6-9.',
+  validGst: 'Please enter a valid GST number',
+  validPan: 'Please enter a valid PAN number',
   enterMobile: 'New Mobile Number',
   enterValidNumber: 'Please enter a valid number',
   yes: 'Yes',
@@ -107,6 +109,11 @@ export default {
     uploaded: 'Invoice successfully uploaded',
     notUploaded: 'Unable to upload invoice',
   },
+  orders: {
+    overview: 'Orders Overview',
+    name: 'Orders',
+  },
+
   subscription: {
     successSubscription: 'Subscription Request Successful',
     successSubscriptionInfo:
@@ -192,6 +199,7 @@ export default {
     offers: 'Offers',
     wallet: 'Wallet',
     invoice: 'Invoice',
+    orders: 'Orders',
   },
   offer: {
     enterQuantity: 'Enter Quantity',
@@ -219,6 +227,7 @@ export default {
   },
 
   wallet: {
+    name: 'Wallet',
     selectDivision: 'Select Division',
     selectCompany: 'Select company to redeem points',
     redeemPoints: 'Redeem Points',

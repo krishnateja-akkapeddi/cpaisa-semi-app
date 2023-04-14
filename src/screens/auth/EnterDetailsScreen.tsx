@@ -17,7 +17,7 @@ const EnterDetailsScreen = () => {
   const [pincode, setPincode] = useState('335002');
 
   const onContinueHandler = () => {
-    RootNavigation.navigate('DocumentUploadScreen');
+    RootNavigation.navigate('ChooseOrganisationScreen');
   };
 
   const isValidData = (): boolean => {

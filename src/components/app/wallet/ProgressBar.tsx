@@ -24,6 +24,9 @@ interface ProgressBarProps {
   items: {title: string; date: string}[];
   completedSteps?: number;
   style?: ViewStyle;
+  direction?: 'horizontal' | 'vertical';
+  icon?: React.ReactNode;
+  ownStyles?: {};
 }
 const ProgressBar = (props: ProgressBarProps) => {
   const {style, completedSteps = 0, items} = props;
@@ -54,11 +57,14 @@ const ProgressBar = (props: ProgressBarProps) => {
   return (
     <View style={mainStyle}>
       <StepIndicator
+        direction={props.direction ?? 'horizontal'}
         stepCount={items.length}
-        customStyles={customStyles}
+        customStyles={props.icon ? props.ownStyles : customStyles}
         currentPosition={completedSteps}
         labels={labels}
-        renderStepIndicator={() => undefined}
+        renderStepIndicator={val => {
+          return props.icon ? props.icon : <View></View>;
+        }}
         renderLabel={renderLabel}
       />
     </View>
@@ -69,6 +75,7 @@ export default memo(ProgressBar);
 
 const styles = StyleSheet.create({
   main: {width: '100%', paddingHorizontal: 20},
+
   //   track: {
   //     flexGrow: 1,
   //     height: hp(0.3),
@@ -89,6 +96,7 @@ const styles = StyleSheet.create({
   //   labelContainer: {
   //     alignItems: 'center',
   //   },
+
   infoContainer: {
     marginTop: hp(0.2),
     paddingHorizontal: wp(0.3),
