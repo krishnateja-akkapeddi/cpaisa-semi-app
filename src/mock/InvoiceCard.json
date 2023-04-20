@@ -1,0 +1,26 @@
+[
+  {
+    "status": "Under Review",
+    "totalInvoice": "125",
+    "invoiceText": "Invoice",
+    "rupees": "₹ 53,50,550",
+    "rewardPoint": "Reward Points",
+    "color": "#F7DFC4"
+  },
+  {
+    "status": "Approved",
+    "totalInvoice": "125",
+    "invoiceText": "Invoice",
+    "rupees": "₹ 50,550",
+    "rewardPoint": "Reward Points",
+    "color": "#B5EAD7"
+  },
+  {
+    "status": "Rejected",
+    "totalInvoice": "125",
+    "invoiceText": "Invoice",
+    "rupees": "₹ 5,350",
+    "rewardPoint": "Reward Points",
+    "color": "#FFD7DA"
+  }
+]

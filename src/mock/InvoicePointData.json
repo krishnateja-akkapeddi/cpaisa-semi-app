@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Becosules Caps (23 +2)",
+    "points": "10",
+    "qty": "X2",
+    "reason": "",
+    "status": 0
+  },
+  {
+    "name": "Gelusil 200 ml bottle (35+5)",
+    "points": "10",
+    "qty": "X5",
+    "reason": "",
+    "status": 1
+  },
+  {
+    "name": "Gelusil 400 ml bottle (35+7)",
+    "points": "10",
+    "qty": "X7",
+    "reason": "",
+    "status": 2
+  },
+  {
+    "name": "Becosules Caps (23 +2)",
+    "points": "10",
+    "qty": "X7",
+    "reason": "Rejected due to some top secret reason",
+    "status": 3
+  }
+]
