@@ -16,6 +16,10 @@
     <!-- Value from default config. -->
     <string name="BASE_URL" translatable="false">"http://stageapi.channelpaisa.com/api/v4"</string>
     <!-- Value from default config. -->
+    <string name="ORDER_SERVICE_BASE_URL" translatable="false">"http://orders-staging.goapptiv.com/api/v1"</string>
+    <!-- Value from default config. -->
+    <string name="ORDER_SERVICE_TOKEN" translatable="false">"eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJvbmVnb2FwcHRpdl9mcyIsImlzX2FkbWluIjp0cnVlfQ.kvjiyk1yAs4Cs9lwwTyzijjN3b8whhIU5hdAkT2i350"</string>
+    <!-- Value from default config. -->
     <string name="SUFFIX_ID" translatable="false">".dev"</string>
     <!-- Value from default config. -->
     <string name="USER_INFO" translatable="false">"userInfo"</string>

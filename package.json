@@ -51,6 +51,7 @@
     "react-native-alert-notification": "^0.3.4",
     "react-native-config": "^1.4.5",
     "react-native-date-picker": "^4.2.10",
+    "react-native-element-textinput": "^2.2.0",
     "react-native-fast-image": "^8.6.1",
     "react-native-gesture-handler": "^2.6.2",
     "react-native-get-location": "^2.2.1",

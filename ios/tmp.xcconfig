@@ -2,5 +2,7 @@ APP_NAME=ChannelPaisaDev
 APP_ID=com.channelpaisa.channelpaisa
 SUFFIX_ID=.dev
 BASE_URL=http:/$()/stageapi.channelpaisa.com/api/v4
+ORDER_SERVICE_BASE_URL=http:/$()/orders-staging.goapptiv.com/api/v1
 USER_INFO=userInfo
 AUTH_HEADER=Auth-Token
+ORDER_SERVICE_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJvbmVnb2FwcHRpdl9mcyIsImlzX2FkbWluIjp0cnVlfQ.kvjiyk1yAs4Cs9lwwTyzijjN3b8whhIU5hdAkT2i350

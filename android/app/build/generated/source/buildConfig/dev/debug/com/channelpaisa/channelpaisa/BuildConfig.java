@@ -21,6 +21,10 @@ public final class BuildConfig {
   // Field from default config.
   public static final boolean IS_NEW_ARCHITECTURE_ENABLED = false;
   // Field from default config.
+  public static final String ORDER_SERVICE_BASE_URL = "http://orders-staging.goapptiv.com/api/v1";
+  // Field from default config.
+  public static final String ORDER_SERVICE_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJvbmVnb2FwcHRpdl9mcyIsImlzX2FkbWluIjp0cnVlfQ.kvjiyk1yAs4Cs9lwwTyzijjN3b8whhIU5hdAkT2i350";
+  // Field from default config.
   public static final String SUFFIX_ID = ".dev";
   // Field from default config.
   public static final String USER_INFO = "userInfo";
