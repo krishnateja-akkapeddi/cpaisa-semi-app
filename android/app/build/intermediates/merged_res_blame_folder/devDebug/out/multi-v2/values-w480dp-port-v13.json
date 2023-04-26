@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-w480dp-port-v13/values-w480dp-port-v13.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-w480dp-port-v13/values-w480dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/2501ae2de24b58a2629b101359eada6f/transformed/material-1.1.0/res/values-w480dp-port-v13/values-w480dp-port-v13.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/0ba19b00c96e3fedc9ff9ae2f25e75f9/transformed/material-1.1.0/res/values-w480dp-port-v13/values-w480dp-port-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

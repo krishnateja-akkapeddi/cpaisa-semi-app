@@ -31,4 +31,6 @@ export interface RewardTransactionEntity {
   gorupi_link: string;
   coupon_partner: string;
   expiry_date?: string;
+  tax_amount: string;
+  tax_percentage: string;
 }

@@ -61,9 +61,7 @@ const NotificationScreen = () => {
   const renderItem = useCallback(
     ({item, index}: ListRenderItemInfo<NotificationEntity>) => {
       return (
-        <TouchableOpacity key={item.id.toString()}>
-          <NotificationItem item={item} isLast={index == items.length - 1} />
-        </TouchableOpacity>
+        <NotificationItem item={item} isLast={index == items.length - 1} />
       );
     },
     [],

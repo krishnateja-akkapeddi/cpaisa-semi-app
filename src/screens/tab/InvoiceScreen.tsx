@@ -293,7 +293,7 @@ const InvoiceScreen: React.FC<
   );
 
   useEffect(() => {
-    getInvoiceList({}, 1, false);
+    debounce(2000).then(() => getInvoiceList({}, 1, false));
   }, [refreshInvoices]);
 
   console.log('FROM_INVL_UPL', fromInvoiceUpload);
@@ -321,16 +321,6 @@ const InvoiceScreen: React.FC<
         );
   }, [dates, selectedDates]);
 
-  useEffect(() => {}, [
-    selectedDates,
-    monthlyInvoices,
-    invoiceListParams,
-    invoiceList,
-    year,
-    quarter,
-    invoiceListLoading,
-    invoiceSummaryLoading,
-  ]);
   console.log('LOG_RAJ', currentPage);
 
   const onRefresh = React.useCallback(() => {
@@ -357,7 +347,8 @@ const InvoiceScreen: React.FC<
             }
             onEndReached={() => {
               setCurrentPage(prev => prev + 1);
-              getInvoiceList({}, currentPage, true).then(() => {});
+              currentPage !== lastPage &&
+                getInvoiceList({}, currentPage, true).then(() => {});
             }}
             data={
               <View>
@@ -416,7 +407,7 @@ const InvoiceScreen: React.FC<
                     </View>
                   )}
 
-                  {currentPage === lastPage + 1 && (
+                  {invoiceList.length > 0 && currentPage === lastPage + 1 && (
                     <GaCaughtUp message="You're all caught up!" />
                   )}
                 </View>

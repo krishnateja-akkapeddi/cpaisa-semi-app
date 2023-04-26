@@ -33,14 +33,30 @@ const CouponCard: React.FC<CouponCardProps> = props => {
 
   return (
     <View style={styles.mainContainer}>
-      <View style={styles.subContainer}>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignContent: 'center',
+          alignItems: 'center',
+          marginBottom: hp(2),
+        }}>
         <View style={styles.transactionName}>
           <Text style={styles.transactionText}>{item.organization_name}</Text>
         </View>
+        {/* <View style={styles.transactionName}>
+          <Text style={styles.transactionText}>{item.tax_amount}</Text>
+        </View>
+        <View style={styles.transactionName}>
+          <Text style={styles.transactionText}>{item.tax_percentage}</Text>
+        </View> */}
         <View style={styles.nameStyle}>
           <Text style={styles.titleText}></Text>
           <Text style={[styles.priceText]}>{item.points}</Text>
         </View>
+      </View>
+      <View style={styles.subContainer}>
         <Spacer height={15} />
         <ProgressBar
           items={[

@@ -1,5 +1,11 @@
-import React, {useEffect, useLayoutEffect, useMemo, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Text, Animated} from 'react-native';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import Colors from '../../theme/Colors';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Brands from '../../components/brands/Brands';
@@ -20,22 +26,25 @@ import {setRouteName} from '../../store/slices/AppSlice';
 import {Filter} from '../../models/enum/Filter';
 import {WalletSummary} from '../../models/interfaces/WalletSummary';
 import {AppLocalizedStrings} from '../../localization/Localization';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
 
 const TABS = [
   {id: 1, label: 'Brands'},
   {id: 2, label: 'Stockist'},
 ];
 
-const AnimatedTouchableOpacity =
-  Animated.createAnimatedComponent(TouchableOpacity);
-
 const BrandsScreen: React.FC<HomeStackScreenProps<'BrandsScreen'>> = props => {
   const organisation = props?.route.params.organisation;
   const [invoiceSummary, setInvoiceSummary] = useState<InvoiceOverview>();
   const [activeTab, setActiveTab] = useState(TABS[0].id);
-  const [indicatorPosition, setIndicatorPosition] = useState(
-    new Animated.Value(0),
-  );
+
+  const animatedTabPosition = useSharedValue(wp('-20%'));
+
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>();
   const [walletSummaryLoading, setWalletSummaryLoading] = useState(true);
 
@@ -63,24 +72,16 @@ const BrandsScreen: React.FC<HomeStackScreenProps<'BrandsScreen'>> = props => {
     setInvoiceSummary(data.invoice_overview);
   };
 
-  const handleTabPress = (tabId: number) => {
+  const animatedStyles = useAnimatedStyle(() => {
+    return {transform: [{translateX: animatedTabPosition.value}]};
+  }, []);
+
+  const handleTabPress = useCallback((tabId: number) => {
+    animatedTabPosition.value = withSpring(
+      tabId === 1 ? wp('-20%') : wp('20%'),
+    );
     setActiveTab(tabId);
-
-    Animated.timing(indicatorPosition, {
-      toValue: tabId === TABS[0].id ? 0 : 1,
-      duration: 200,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const getIndicatorPosition = () => {
-    return {
-      left: indicatorPosition.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['6%', '56%'],
-      }),
-    };
-  };
+  }, []);
 
   useEffect(() => {
     getInvoiceSummary();
@@ -164,17 +165,12 @@ const BrandsScreen: React.FC<HomeStackScreenProps<'BrandsScreen'>> = props => {
             </Text>
           </TouchableOpacity>
         ))}
-        <AnimatedTouchableOpacity
-          style={[styles.indicator, getIndicatorPosition()]}
-        />
+        <Animated.View style={[styles.indicator, animatedStyles]} />
       </View>
       {activeTab === 1 ? (
         <Brands organization={organisation} />
       ) : (
         <Stockist organisation={organisation} />
-
-        // <ScrollView style={{height: hp('75%')}}>
-        // </ScrollView>
       )}
     </View>
   );

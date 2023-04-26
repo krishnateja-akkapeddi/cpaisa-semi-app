@@ -11,7 +11,6 @@ const StockistView = () => {
   const {
     app: {openQrCode, isQrCodeExpired, qrExpiry, qrCodeData},
   } = useSelector<RootState, RootState>(state => state);
-  console.log('STOCK_VIEW', qrExpiry);
 
   return (
     <View>

@@ -4,17 +4,22 @@ import {useDispatch} from 'react-redux';
 import RootNavigation from '../../navigation/RootNavigation';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {authSlice} from '../../store/slices/AuthSlice';
-import FastImage from 'react-native-fast-image';
-import ImageView from '../../components/image/ImageView';
-import AppLoader from '../../components/indicator/AppLoader';
+
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
+import {
+  NotificationListener,
+  getFcmToken,
+  requestUserPermission,
+} from '../../utility/NotificationHelper';
 
 const WelcomeScreen = () => {
   const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
+    requestUserPermission();
+    getFcmToken();
+    NotificationListener();
     setTimeout(async () => {
       setLoading(false);
       const rawUserDetails: any = await SharedPreference.shared.getItem(

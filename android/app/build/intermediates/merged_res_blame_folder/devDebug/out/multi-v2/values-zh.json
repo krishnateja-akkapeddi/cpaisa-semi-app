@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-zh/values-zh.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-zh/values-zh.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/12260ee3acb8a0fc9930defbc98c530a/transformed/jetified-ucrop-2.2.6-native/res/values-zh/values-zh.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/c779b5810284a73f013fb4c21ad5edcb/transformed/jetified-ucrop-2.2.6-native/res/values-zh/values-zh.xml",
                     "from": {
                         "startLines": "2,3,4",
                         "startColumns": "4,4,4",

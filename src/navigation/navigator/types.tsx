@@ -19,6 +19,7 @@ export type RootAllMixedParamList = RootStackParamList &
   ProfileStackParamList &
   StockistStackParamList &
   SubscriptionStackParamList &
+  BottomTabParamList &
   AuthStackParamList &
   BottomTabParamList &
   OrganisationStackParamList &

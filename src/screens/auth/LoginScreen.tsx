@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import AdaptiveTextInput from '../../components/input/AdaptiveTextInput';
@@ -20,6 +20,7 @@ import {Convert} from '../../utility/converter/Convert';
 import Icon from 'react-native-vector-icons/AntDesign';
 import GaInputValidationMessage from '../../components/GaInputValidationMessage';
 import GaInputField from '../../components/GaInputField';
+import SharedPreference from '../../storage/SharedPreference';
 
 const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
   const forUpdateContact = props.route?.params?.forUpdateContact;
@@ -28,6 +29,14 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
   const [mobileNo, setMobileNo] = useState(
     forUpdateContact ? '' : '7396730681',
   );
+
+  async function jdj() {
+    const token = await SharedPreference.shared.getFcmToken();
+    console.log('FMDMD_ROKE', token);
+  }
+  useEffect(() => {
+    jdj();
+  }, []);
 
   const loginHandler = async () => {
     try {

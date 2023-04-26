@@ -27,6 +27,8 @@ import Spacer from '../../components/layout/Spacer';
 import GaCaughtUp from '../../components/GaCaughtUp';
 import {OfferSkeletonItem} from '../../components/SkeletonCards';
 import Colors from '../../theme/Colors';
+import {HomeStackScreenProps} from '../../navigation/stack/HomeStackNavigator';
+import {debounce} from 'lodash';
 
 interface Offer {
   name: string;
@@ -51,32 +53,6 @@ const OffersScreen = () => {
   );
   const [refreshing, setRefreshing] = React.useState(false);
   const [refreshOffers, setRefreshOffers] = useState<boolean>();
-
-  const Header = useCallback(() => {
-    function wp(arg0: string): string | number | undefined {
-      throw new Error('Function not implemented.');
-    }
-
-    return (
-      <View>
-        <OfferHeaderComponent
-          loading={loadingOrganisations}
-          onSelect={ids => {
-            setOffersList([]);
-            const orgId = organizations && organizations[ids[0]]?.id;
-            if (orgId) {
-              setSelectedOrg(orgId);
-              getOffersList(1, false, orgId);
-            } else {
-              setSelectedOrg(null);
-              getOffersList(1, false, -1);
-            }
-          }}
-          organizations={organizations}
-        />
-      </View>
-    );
-  }, [organizations, loadingOrganisations]);
 
   const getClients = async () => {
     setLoadingOrganisations(true);
@@ -172,22 +148,45 @@ const OffersScreen = () => {
     setShowCalculator(false);
   }, []);
 
+  const Header = useCallback(() => {
+    return (
+      <View>
+        <OfferHeaderComponent
+          loading={loadingOrganisations}
+          onSelect={ids => {
+            setOffersList([]);
+            const orgId = organizations && organizations[ids[0]]?.id;
+            if (orgId) {
+              setSelectedOrg(orgId);
+              getOffersList(1, false, orgId);
+            } else {
+              setSelectedOrg(null);
+              getOffersList(1, false, -1);
+            }
+          }}
+          organizations={organizations}
+        />
+      </View>
+    );
+  }, [organizations, loadingOrganisations]);
+
   useEffect(() => {
     getClients();
+    getOffersList(1, false);
   }, [refreshOffers]);
 
   useEffect(() => {
     if (query === '') {
-      setOffersList([]);
       getOffersList(1, false);
     }
-  }, [query, refreshOffers]);
+  }, [query]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setOffersList([]);
     setLoadingOrganisations(true);
     setOffersListLoading(true);
+    setSelectedOrg(null);
     setTimeout(() => {
       setRefreshing(false);
       setRefreshOffers(prev => !prev);

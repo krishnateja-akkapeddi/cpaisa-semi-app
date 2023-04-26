@@ -30,6 +30,7 @@ import Fonts from '../../theme/Fonts';
 import VectorIcon from '../../components/button/VectorIcon';
 import GaTextIcon from '../../components/GaTextIcon';
 import {PermissionType} from '../../utility/permissions/PermissionsList';
+import {pickMessageFromErrors} from '../../utility/ErrorPicker';
 interface FileInfo {
   state: UploadState;
   progress: number;
@@ -76,39 +77,34 @@ const InvoiceUploadScreen = () => {
         name: uploadedFileInfo?.docName?.split('/').pop(),
       });
       formData.append('channel_partner_id', channel_partner.id);
-      try {
-        const result = await store.dispatch(uploadInvoice(formData)).unwrap();
-        if (result.success) {
-          dispatch(
-            appSlice.actions.openPopup({
-              message: AppLocalizedStrings.invoice.uploaded,
-              title: AppLocalizedStrings.invoice.invoiceUpload,
-              type: 'success',
-              onSubmit: () => {
-                RootNavigation.navigation.navigate('InvoiceScreen', {
-                  isLogin: true,
-                  fromInvoiceUpload: (getInvoiceList: Function) => {
-                    return getInvoiceList({}, 1, false);
-                  },
-                });
-                return;
-              },
-            }),
-          );
-        }
-        if (result.errors) {
-          Dialog.show({
-            type: ALERT_TYPE.DANGER,
-            title: 'Error',
-            textBody:
-              result.errors.image ??
-              result.errors.invoice ??
-              AppLocalizedStrings.invoice.notUploaded,
-            button: 'close',
-          });
-        }
-      } catch (err) {
-        console.log('ERR', err);
+
+      const result = await store.dispatch(uploadInvoice(formData)).unwrap();
+      console.log('RESULT_RASIK', result);
+
+      if (result.success) {
+        dispatch(
+          appSlice.actions.openPopup({
+            message: AppLocalizedStrings.invoice.uploaded,
+            title: AppLocalizedStrings.invoice.invoiceUpload,
+            type: 'success',
+            onSubmit: () => {
+              RootNavigation.navigation.navigate('InvoiceScreen', {
+                isLogin: true,
+                fromInvoiceUpload: (getInvoiceList: Function) => {
+                  return getInvoiceList({}, 1, false);
+                },
+              });
+            },
+          }),
+        );
+      } else if (result.errors) {
+        dispatch(
+          appSlice.actions.openPopup({
+            message: pickMessageFromErrors(result?.errors ?? {}),
+            title: AppLocalizedStrings.invoice.invoiceUpload,
+            type: 'error',
+          }),
+        );
       }
     } catch (err) {
       console.log('DSJF', err);

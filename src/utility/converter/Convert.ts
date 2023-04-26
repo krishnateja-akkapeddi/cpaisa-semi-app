@@ -122,7 +122,7 @@ export class Convert {
       formattedIntegerPart + (decimalPart !== '' ? '.' + decimalPart : '');
 
     // Add '₹' symbol in front
-    formattedValue = '₹' + formattedValue;
+    formattedValue = '₹ ' + formattedValue;
 
     return formattedValue;
   }

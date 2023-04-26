@@ -59,6 +59,7 @@ const getHeaderRight = (
           showBell={false}
         />
       );
+
     case 'ProfileScreen':
       return <HeaderRightView showQRCode={false} showOffers={true} />;
     case 'LoginHelpScreen':
@@ -128,6 +129,33 @@ const getHeaderRight = (
       );
 
     case 'WalletScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'InvoiceUploadScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'AuthStack':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'OffersScreen':
       return (
         <HeaderRightView
           showBell={false}

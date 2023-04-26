@@ -25,8 +25,6 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import {OrderStatus} from '../../../models/enum/OrderStatusEnum';
 import {OrderEntity} from '../../../models/interfaces/OrdersListResponse';
 
-import AdaptiveButton from '../../button/AdaptiveButton';
-
 interface InvoiceProps {
   item: OrderEntity;
 }
@@ -35,10 +33,20 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
   const {item} = props;
   return (
     <TouchableOpacity
+      onPress={() => {
+        if (item.order_status === OrderStatus.ON_HOLD) {
+          RootNavigation.navigate('SingleOrderScreen', {
+            orderInfo: item,
+            isLogin: true,
+          });
+        } else {
+          return;
+        }
+      }}
       style={{
         ...styles.mainContainer,
       }}>
-      <View style={styles.minOrderContainer}>
+      {/* <View style={styles.minOrderContainer}>
         <View
           style={{
             ...styles.minOrangeView,
@@ -54,18 +62,11 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
             {item?.order_status && Convert.capitalize(item?.order_status)}
           </Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.listMainContainer}>
-        <Text style={{paddingLeft: wp('3%')}}>#{item.id}</Text>
+        <Text>#{item.id}</Text>
 
         <View style={styles.rowContainer}>
-          <View style={styles.imageContainer}>
-            {/* <ImageView
-              source={require('../../../assets/images/InvoiceArt.png')}
-              style={styles.imageStyle}
-            /> */}
-            {/* <Icon name="calculator" size={60}></Icon> */}
-          </View>
           <View style={styles.leftContainer}>
             <Spacer style={{height: hp('0.5%')}} />
             <View style={styles.middleContainer}>
@@ -84,10 +85,6 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
                       ', ' +
                       item.delivery_address.pin_code
                     : AppLocalizedStrings.na}
-                </Text>
-                <Text style={{color: Colors.black}}>
-                  Contact:
-                  {item.mobile ? ' ' + item.mobile : AppLocalizedStrings.na}
                 </Text>
               </View>
               <Spacer style={{width: wp('2%')}} />
@@ -133,7 +130,12 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
 
       <TouchableOpacity onPress={() => {}} style={styles.starMark}>
         <Spacer height={hp('1%')} />
-        <Text style={{color: Colors.darkBlack, fontWeight: '600'}}>
+        <Text
+          style={{
+            color: Colors.darkBlack,
+            fontWeight: '600',
+            paddingRight: wp(2),
+          }}>
           {Convert.dateFormatter(null, 'DD, MMM yyyy', item.order_date)}
         </Text>
       </TouchableOpacity>
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
   },
   listMainContainer: {
     padding: 10,
+    marginHorizontal: wp('2%'),
   },
   rowContainer: {
     flexDirection: 'row',
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    marginTop: hp(1),
   },
   titleStyle: {
     fontFamily: Fonts.regular,
@@ -197,14 +201,13 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: Fonts.getFontSize('headline5'),
     color: Colors.black,
-    marginLeft: wp('2%'),
     flex: 1,
   },
   minOrangeView: {
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
-    paddingHorizontal: wp('4%'),
-    paddingVertical: hp('0.2%'),
+    // paddingHorizontal: wp('4%'),
+    // paddingVertical: hp('0.2%'),
   },
   minOrderText: {
     fontFamily: Fonts.medium,
@@ -224,14 +227,14 @@ const styles = StyleSheet.create({
     fontSize: Fonts.getFontSize('headline5'),
     color: Colors.white,
     backgroundColor: '#FF5577',
-    paddingHorizontal: hp('1.5%'),
+    // paddingHorizontal: hp('1.5%'),
   },
   statusTextSecond: {
     fontFamily: Fonts.bold,
     fontSize: Fonts.getFontSize('headline5'),
     color: Colors.white,
     backgroundColor: '#F89E1B',
-    paddingHorizontal: hp('1.5%'),
+    // paddingHorizontal: hp('1.5%'),
   },
   hexCodeText: {
     fontFamily: Fonts.bold,
@@ -274,7 +277,6 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     flex: 1,
-    marginLeft: wp('3%'),
     justifyContent: 'center',
   },
   starMark: {

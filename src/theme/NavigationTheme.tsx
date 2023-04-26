@@ -55,6 +55,11 @@ export const tabOptions = ({
 }: NavigationOptionProps): BottomTabNavigationOptions => {
   return {
     headerShown: false,
+    headerRight: props =>
+      HeaderElements.getHeaderRight(
+        route?.name ?? '',
+        navigation?.canGoBack() ?? false,
+      ),
     tabBarStyle: {
       borderTopWidth: 0,
     },

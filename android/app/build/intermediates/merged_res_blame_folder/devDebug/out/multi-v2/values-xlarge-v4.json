@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-xlarge-v4/values-xlarge-v4.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-xlarge-v4/values-xlarge-v4.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-xlarge-v4/values-xlarge-v4.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/07d178f35a6797509457225426cd3e83/transformed/appcompat-1.4.1/res/values-xlarge-v4/values-xlarge-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7",
                         "startColumns": "4,4,4,4,4,4",

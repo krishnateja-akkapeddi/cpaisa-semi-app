@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  FlatList,
-  AppState,
-  Text,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, View, FlatList} from 'react-native';
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';

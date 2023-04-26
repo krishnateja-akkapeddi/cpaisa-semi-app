@@ -19,6 +19,10 @@ import com.reactnativecommunity.clipboard.ClipboardPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-community/netinfo
 import com.reactnativecommunity.netinfo.NetInfoPackage;
+// @react-native-firebase/app
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+// @react-native-firebase/messaging
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 // @react-native-masked-view/masked-view
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
@@ -104,6 +108,8 @@ public class PackageList {
       new ClipboardPackage(),
       new RNDateTimePickerPackage(),
       new NetInfoPackage(),
+      new ReactNativeFirebaseAppPackage(),
+      new ReactNativeFirebaseMessagingPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
       new RNCConfigPackage(),

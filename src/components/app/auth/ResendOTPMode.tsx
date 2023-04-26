@@ -60,9 +60,7 @@ const ResendOTPMode: React.FC<Props> = ({
     resetTimer();
   };
 
-  useEffect(() => {
-    console.log('FROM_EREM', minutes, seconds);
-  }, [minutes, seconds]);
+  useEffect(() => {}, [minutes, seconds]);
   return (
     <View style={styles.btnContainer}>
       {!onlyWhatsapp && (

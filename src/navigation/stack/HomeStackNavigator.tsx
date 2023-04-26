@@ -154,10 +154,15 @@ const HomeStackNavigator = () => {
         name="TermsConditionsScreen"
         component={TermsConditionsScreen}
       />
-      <Stack.Screen name="SingleOrderScreen" component={SingleOrderScreen} />
+      <Stack.Screen
+        name="SingleOrderScreen"
+        options={{title: 'Order Details'}}
+        component={SingleOrderScreen}
+      />
       <Stack.Screen
         name="SingleOrderServiceScreen"
         component={SingleOrderServiceScreen}
+        options={{title: 'Order Details'}}
       />
 
       <Stack.Screen name="AboutUs" component={AboutChannelPaisaScreen} />

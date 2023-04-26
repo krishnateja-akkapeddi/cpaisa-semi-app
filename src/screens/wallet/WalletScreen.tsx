@@ -1,5 +1,12 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {SafeAreaView, StyleSheet, View, FlatList, Text} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  RefreshControl,
+} from 'react-native';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';
@@ -16,7 +23,6 @@ import Transaction from '../../models/interfaces/Transaction';
 import CouponCard from '../../components/app/wallet/CouponCard';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import TransactionFilterPopup from '../../components/popup/TransactionFilterPopup';
-import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
 import {
   WalletSummaryEntity,
   WalletSummary,
@@ -34,7 +40,6 @@ import Snackbar from 'react-native-snackbar';
 import {RewardTransactionEntity} from '../../models/interfaces/RewardRequestResponse';
 import {FetchRewardRequestListParams} from '../../domain/usages/FetchRewardRequestList';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
-import {Generator} from '../../utility/Generator';
 import {Convert} from '../../utility/converter/Convert';
 import GaScrollView from '../../components/GaScrollView';
 import GaCaughtUp from '../../components/GaCaughtUp';
@@ -88,6 +93,8 @@ const WalletScreen: React.FC<
   const [transactions, setTransactions] = useState(
     Transactions as Transaction[],
   );
+  const [refreshing, setRefreshing] = React.useState(false);
+
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const [mode, setMode] = useState(WalletMode.Transaction);
@@ -97,14 +104,16 @@ const WalletScreen: React.FC<
   const [loadingOrganisations, setLoadingOrganisations] = useState(true);
   const [walletSummaryLoading, setWalletSummaryLoading] = useState(true);
   const [sectedReedemOrg, setSectionedReedemOrg] = useState('');
-  const [walletSummary, setWalletSummary] = React.useState<WalletSummary>();
+  const [walletSummary, setWalletSummary] =
+    React.useState<WalletSummary | null>();
   const [walletSummaries, setWalletSummaries] = React.useState<PickerItem[]>(
     [],
   );
   const [startDate, setStartDate] = useState<null | Date>();
   const [endDate, setEndDate] = useState<null | Date>();
 
-  const [selectedWallet, setSelectedWallet] = useState<WalletSummaryEntity>();
+  const [selectedWallet, setSelectedWallet] =
+    useState<WalletSummaryEntity | null>();
   const [transactionMode, setTransactionMode] = useState(
     TransactionMode.CouponCode,
   );
@@ -345,7 +354,7 @@ const WalletScreen: React.FC<
   };
 
   const onDismissHandler = async () => {
-    await onClearHandler();
+    // await onClearHandler();
     setShowFilter(false);
   };
 
@@ -384,7 +393,7 @@ const WalletScreen: React.FC<
             </>
           ) : (
             <View>
-              {walletSummaries && selectedWallet && walletSummary ? (
+              {selectedWallet && walletSummaries && walletSummary ? (
                 <WalletDivisionPicker
                   organizations={organizations}
                   walletSummaries={walletSummaries}
@@ -406,7 +415,9 @@ const WalletScreen: React.FC<
         {walletSummaries && (
           <WalletPointsView
             walletSummaryLoading={loadingOrganisations || walletSummaryLoading}
-            selectedWallet={selectedWallet}
+            selectedWallet={
+              selectedWallet ? selectedWallet : ({} as WalletSummaryEntity)
+            }
             onPress={onRedeemHandler}
           />
         )}
@@ -483,7 +494,7 @@ const WalletScreen: React.FC<
               />
             )}
 
-            {mode === WalletMode.RedeemDetails && (
+            {mode === WalletMode.RedeemDetails && selectedWallet && (
               <RedeemPointDetail
                 refreshApi={handleRefreshApi}
                 getRewardRequestList={getRewardRequestList}
@@ -541,10 +552,14 @@ const WalletScreen: React.FC<
     );
   };
 
-  React.useEffect(() => {
+  const fetchScreenData = useCallback(() => {
     getClients();
     getWalletSummary();
     getRewardRequestList({}, 1, false);
+  }, []);
+
+  React.useEffect(() => {
+    fetchScreenData();
   }, []);
 
   React.useEffect(() => {}, [
@@ -555,6 +570,36 @@ const WalletScreen: React.FC<
     couponPartners,
   ]);
 
+  const resetState = () => {
+    setOrganizations([]);
+    setSelectedIds([0]);
+    setMode(WalletMode.Transaction);
+    setCouponPartners([]);
+    setSectionedReedemOrg('');
+    setWalletSummary(null);
+    setWalletSummaries([]);
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedWallet(null);
+    setTransactionMode(TransactionMode.CouponCode);
+    setRewardRequestList([]);
+    setCurrentPage(1);
+    setLastPage(null);
+    setRewardRequestListParams({});
+    setSelectedOrg(null);
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setLoadingOrganisations(true);
+    setRewardRequestListLoading(true);
+    resetState();
+    setTimeout(() => {
+      fetchScreenData();
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   React.useEffect(() => {
     if (selectedWallet?.organization_id) {
       getCouponPartners(selectedWallet?.organization_id);
@@ -564,9 +609,13 @@ const WalletScreen: React.FC<
   return (
     <SafeAreaView>
       <GaScrollView
+        onRefresh={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         hasMore={currentPage < (lastPage ? lastPage : 1)}
         onEndReached={async () => {
-          await getRewardRequestList({}, currentPage + 1, true);
+          !rewardRequestListLoading &&
+            (await getRewardRequestList({}, currentPage + 1, true));
         }}
         data={
           <View>
@@ -598,6 +647,8 @@ const WalletScreen: React.FC<
                         data={organizations}
                         onSelect={ids => {
                           setSelectedIds(ids);
+                          setSelectedWallet(null);
+                          setRewardRequestListParams({});
                           const orgId =
                             organizations && organizations[ids[0]]?.id;
                           if (orgId) {

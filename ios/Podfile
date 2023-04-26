@@ -1,3 +1,5 @@
+use_modular_headers!
+
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -12,6 +14,7 @@ target 'ChannelPaisa' do
   permissions_path = '../node_modules/react-native-permissions/ios'
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
   
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 

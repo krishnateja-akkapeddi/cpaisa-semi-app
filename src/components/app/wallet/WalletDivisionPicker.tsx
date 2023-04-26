@@ -20,7 +20,7 @@ export type WalletDivisionPickerProps = {
   walletSummaries: PickerItem[];
   selectedWallet: WalletSummaryEntity;
   setSelectedWallet: React.Dispatch<
-    React.SetStateAction<WalletSummaryEntity | undefined>
+    React.SetStateAction<WalletSummaryEntity | null | undefined>
   >;
   walletSummary: WalletSummary;
   resetFilterState: () => void;

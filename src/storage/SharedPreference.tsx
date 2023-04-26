@@ -3,6 +3,7 @@ import RNSInfo from 'react-native-sensitive-info';
 export const kSharedKeys = {
   userDetails: 'userDetails',
   authToken: 'token',
+  fcmToken: 'FCM_TOKEN',
 };
 
 const options: RNSInfo.RNSensitiveInfoOptions = {
@@ -41,6 +42,14 @@ class SharedPreference {
 
   setToken = async (value: string) => {
     await RNSInfo.setItem(kSharedKeys.authToken, value, options);
+  };
+
+  setFcmToken = async (value: string) => {
+    await RNSInfo.setItem(kSharedKeys.fcmToken, value, options);
+  };
+
+  getFcmToken = async () => {
+    return RNSInfo.getItem(kSharedKeys.fcmToken, options);
   };
 }
 

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-32:/values-h720dp-v13/values-h720dp-v13.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-h720dp-v13/values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "/Users/kt/.gradle/caches/transforms-3/0bfc5590eb222e43df7ffab21693e80d/transformed/appcompat-1.4.1/res/values-h720dp-v13/values-h720dp-v13.xml",
+                    "source": "/Users/kt/.gradle/caches/transforms-3/07d178f35a6797509457225426cd3e83/transformed/appcompat-1.4.1/res/values-h720dp-v13/values-h720dp-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

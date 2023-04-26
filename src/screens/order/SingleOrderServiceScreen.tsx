@@ -176,24 +176,19 @@ const SingleOrderServiceScreen: React.FC<
           <Text style={styles.heading}>Delivery Address</Text>
           <Spacer height={hp(1)} />
           <View style={{paddingLeft: wp(1)}}>
-            {Object.keys(order.address)
-              .filter(val => {
-                return val !== 'lat' && val !== 'long';
-              })
-              .map(val => {
-                const value = order.address[val as keyof DeliveryAddress];
-                if (value)
-                  return (
-                    <Text>
-                      <Text>{Convert.capitalize(val)}:</Text>
-                      <Text style={{color: Colors.black, fontWeight: '700'}}>
-                        {'  '}
-                        {Convert.capitalize(value.toString())}
-                      </Text>
-                      <Spacer height={hp(2)} />
-                    </Text>
-                  );
-              })}
+            <Text>
+              <Text>{`${Convert.capitalize(
+                order.address.line,
+              )}, ${Convert.capitalize(
+                order.address.landmark,
+              )}, ${Convert.capitalize(order.address.district)}`}</Text>
+              <Spacer height={hp(2)} />
+            </Text>
+            <Text>{`${Convert.capitalize(
+              order.address.state,
+            )}, ${Convert.capitalize(
+              order.address.pin_code.toString(),
+            )}`}</Text>
           </View>
         </View>
         <Spacer height={hp(1)} />

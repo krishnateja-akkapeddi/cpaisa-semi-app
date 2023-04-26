@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Touchable, Animated} from 'react-native';
+import {View, Text, StyleSheet, Touchable} from 'react-native';
 import React, {memo, useState, useRef} from 'react';
 import Colors from '../../../theme/Colors';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
@@ -9,7 +9,11 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Spacer from '../../layout/Spacer';
 import {NotificationEntity} from '../../../models/interfaces/NotificationsResponse';
-
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 interface NotificationItemProps {
   isLast: boolean;
   item: NotificationEntity;
@@ -17,21 +21,18 @@ interface NotificationItemProps {
 
 const NotificationItem: React.FC<NotificationItemProps> = ({item, isLast}) => {
   const [isSelected, setIsSelected] = useState(false);
-  const animatedHeight = useRef(new Animated.Value(0)).current;
+  const animatedHeight = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      height: animatedHeight.value,
+    };
+  }, []);
 
   const toggleDropdown = () => {
     setIsSelected(prev => !prev);
-    Animated.timing(animatedHeight, {
-      toValue: isSelected ? 0 : 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+    animatedHeight.value = isSelected ? withTiming(hp(0)) : withTiming(hp(7));
   };
-
-  const dropdownHeight = animatedHeight.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, hp(6)],
-  });
 
   return (
     <TouchableOpacity onPress={toggleDropdown}>
@@ -45,7 +46,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({item, isLast}) => {
             </View>
           </View>
         </View>
-        <Animated.View style={{height: dropdownHeight, overflow: 'hidden'}}>
+        <Animated.View style={[{overflow: 'hidden'}, animatedStyle]}>
           <View style={styles.subTitileContainer}>
             <Text style={styles.subTitileText}>{item?.description}</Text>
           </View>

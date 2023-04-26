@@ -23,13 +23,6 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
     RootNavigation.navigate('WalletStack');
   };
 
-  console.log(
-    'POINTS',
-    parseFloat(
-      walletSummary?.total_redeemable_points?.toString() ?? '',
-    ).toFixed(2),
-  );
-
   return (
     <View>
       <DashboardSectionHeader

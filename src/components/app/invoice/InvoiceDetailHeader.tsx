@@ -17,6 +17,7 @@ import {
 } from 'react-native-gesture-handler';
 import PopupContainer from '../../popup/PopupContainer';
 import AdaptiveButton from '../../button/AdaptiveButton';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const InvoiceDetailHeader = (props: {
   invoice: InvoiceDetail;
@@ -30,8 +31,6 @@ const InvoiceDetailHeader = (props: {
   //   {title: ' Processed Date', date: invoice.uploaded_at},
   //   {title: 'Approval Date', date: ''},
   // ];
-
-  console.log('DEBUG_RAJ', invoice.invoice_items);
 
   const renderItem = useCallback(
     (item: string) => {
@@ -141,27 +140,51 @@ const InvoiceDetailHeader = (props: {
               //     />
               //   </View>
               // </PopupContainer>
+
               <Modal visible={true} transparent={true}>
+                {/* <TouchableOpacity>
+                  <Icon name="closecircle" />
+                </TouchableOpacity> */}
+                <View
+                  style={{
+                    backgroundColor: Colors.darkBlack,
+                    position: 'absolute',
+                    zIndex: 20,
+                    top: hp(5),
+                    left: wp(5),
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setOpenFullImage(false);
+                    }}>
+                    <Icon color={Colors.white} size={wp(6)} name="close" />
+                  </TouchableOpacity>
+                </View>
+
                 <ImageViewer
-                  menus={val => {
-                    return (
-                      <View>
-                        <Text>What's up</Text>
-                      </View>
-                    );
+                  style={{height: hp(10)}}
+                  useNativeDriver
+                  enableSwipeDown
+                  onSwipeDown={() => {
+                    setOpenFullImage(false);
                   }}
-                  renderHeader={() => {
+                  onDoubleClick={() => {
+                    setOpenFullImage(false);
+                  }}
+                  renderFooter={() => {
                     return (
-                      <View>
-                        <Text>What's up</Text>
-                      </View>
+                      <Icon
+                        size={wp(20)}
+                        style={{position: 'absolute', zIndex: 10}}
+                        name="closecircle"
+                      />
                     );
                   }}
                   imageUrls={[
                     {
                       url: invoice?.image_url,
-                      height: hp('50%'),
-                      width: wp('80%'),
+                      height: hp('40%'),
+                      width: wp('100%'),
                     },
                   ]}
                 />
@@ -177,6 +200,7 @@ const InvoiceDetailHeader = (props: {
             </View> */}
           </View>
           <View style={styles.lineView} />
+
           {invoice.invoice_items?.length !== 0 && (
             <View style={styles.bottomBar}>
               <View style={{flex: 1}}>

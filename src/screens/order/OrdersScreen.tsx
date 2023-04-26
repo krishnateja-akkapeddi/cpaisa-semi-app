@@ -6,8 +6,8 @@ import {
   FlatList,
   ListRenderItemInfo,
   Text,
-  Image,
   RefreshControl,
+  Animated,
 } from 'react-native';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Fonts from '../../theme/Fonts';
@@ -20,7 +20,6 @@ import {
 } from '../../models/interfaces/InvoiceSummaryResponse';
 import {Convert} from '../../utility/converter/Convert';
 import {
-  fetchInvoiceSummary,
   fetchOrderSummary,
   fetchOrders,
   fetchOrdersFromService,
@@ -38,18 +37,11 @@ import OrdersFilterTabs, {
   OrderStatusFilterType,
 } from '../../components/app/orders/OrdersFilterTabs';
 import OrderListItem from '../../components/app/orders/OrderListItem';
-import {
-  OrderEntity,
-  OrdersListResponse,
-} from '../../models/interfaces/OrdersListResponse';
-import RootNavigation from '../../navigation/RootNavigation';
+import {OrderEntity} from '../../models/interfaces/OrdersListResponse';
 import {useSelector} from 'react-redux';
 import {AuthResult} from '../../models/interfaces/AuthResponse';
 import {OrderStatus} from '../../models/enum/OrderStatusEnum';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import FilterActionView from '../../components/app/filters/FilterActionView';
-import InvoiceCombineCmpt from '../../components/app/invoice/InvoiceCombineCmpt';
+
 import OrdersFilterView from '../../components/app/orders/OrdersFilterView';
 import {FetchOrdersListParams} from '../../domain/usages/FetchOrdersList';
 
@@ -62,6 +54,8 @@ import OrderServiceListItem from '../../components/app/orders/OrderServiceListIt
 import OrdersStatusCardList from '../../components/app/orders/OrdersStatusCardList';
 import {AppCode} from '../../models/enum/AppCode';
 import OrderSummary from '../../components/app/orders/OrderSummary';
+import SVGIcon from '../../utility/svg/SVGIcon';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export type getInvoiceListArgs = {
   fromFilter?: boolean;
@@ -93,8 +87,8 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
   const [orderServiceList, setOrderServiceList] = useState<
     OrderServiceItemEntity[]
   >([] as OrderServiceItemEntity[]);
-  const [lastPage, setLastPage] = useState<number>(10);
-  const [invoiceSummaryLoading, setInvoiceSummaryLoading] = useState(false);
+  const [lastPage, setLastPage] = useState<number | null>();
+  const [orderSummaryLoading, setOrderSummaryLoading] = useState(true);
   const [ordersListLoading, setOrdersListLoading] = useState(true);
   const [resetFilterLoading, setResetFilterLoading] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
@@ -128,26 +122,15 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
     setOrdersList(filteredData);
   }
 
-  useEffect(() => {
-    // debounce the search function
-    const debounceArch = setTimeout(() => {
-      debounceSearch();
-    }, 1500);
-
-    // clear the timeout on unmount
-    return () => {
-      clearTimeout(debounceArch);
-    };
-  }, [query]);
-
   const filterCount = (): number => {
     return startDate || endDate ? 1 : 0;
   };
 
-  const handleOnTabChange = (tabValue: OrderStatusFilterType) => {
+  const handleOnTabChange = async (tabValue: OrderStatusFilterType) => {
+    setOrdersListLoading(true);
     setSelectedOrderStatus(tabValue.value);
     setCurrentPage(1);
-    setLastPage(10);
+    setLastPage(null);
     setOrdersList([]);
     setOrderServiceList([]);
     getOrdersList({status: tabValue.value}, 1, false);
@@ -155,8 +138,28 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
 
   const listHeaderComponent = useCallback(() => {
     return (
-      <>
-        <OrdersStatusCardList ordersMonthlyStatus={ordersSummary} />
+      <View style={{zIndex: 40}}>
+        {orderSummaryLoading ? (
+          <Animated.View style={{display: 'flex', flexDirection: 'row'}}>
+            {[1, 2, 3, 4].map(val => {
+              return (
+                <SkeletonPlaceholder>
+                  <SkeletonPlaceholder.Item
+                    borderRadius={10}
+                    width={wp('30%')}
+                    height={hp('20%')}
+                    marginLeft={val === 1 ? wp(1) : wp(2)}
+                  />
+                </SkeletonPlaceholder>
+              );
+            })}
+          </Animated.View>
+        ) : (
+          <OrdersStatusCardList
+            loading={!orderSummaryLoading}
+            ordersMonthlyStatus={ordersSummary}
+          />
+        )}
         <OrdersFilterView
           filterCount={filterCount()}
           onFilterHandler={onFilterHandler}
@@ -177,14 +180,14 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
             onTabChange={handleOnTabChange}
           />
         </View>
-      </>
+      </View>
     );
   }, [
     selectedOrderStatus,
     selectedDates,
     num,
     selectedOverallSummary,
-    invoiceSummaryLoading,
+    orderSummaryLoading,
     dates,
     invoices?.overall_invoice_status,
     monthlyInvoices,
@@ -192,7 +195,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
     query,
     startDate,
     endDate,
-    OrderSummary,
+    ordersSummary,
   ]);
 
   const onApplyHandler = async () => {
@@ -216,7 +219,6 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
           'YYYY-MM-DD',
           startDate,
         );
-
         orderParams.from_date = convertedStartDate;
       }
 
@@ -228,6 +230,8 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
         );
         orderParams.to_date = convertedEndDate;
       }
+      console.log('CONFEIDENTIAL', params.status);
+
       if (params.status) {
         orderParams.status = params.status;
       } else {
@@ -250,13 +254,20 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
       }
       console.log('CPARTNER_ID', selected?.data?.channel_partner?.id);
 
-      if (orderParams.status === OrderStatus.ON_HOLD) {
+      if (
+        orderParams.status === OrderStatus.ON_HOLD ||
+        orderParams.status === OrderStatus.DENIED
+      ) {
         const result = await store
           .dispatch(
             fetchOrders({
               page: page ?? 1,
               params: {
                 ...orderParams,
+                status:
+                  orderParams.status === OrderStatus.DENIED
+                    ? OrderStatus.REJECTED
+                    : orderParams.status,
               },
               forNew: true,
             }),
@@ -308,7 +319,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
         : setOrdersListLoading(false);
     },
 
-    [ordersListParams, currentPage, query, startDate, endDate],
+    [selectedOrderStatus, currentPage, query, startDate, endDate],
   );
 
   const onClearHandler = async () => {
@@ -355,39 +366,12 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
     [],
   );
 
-  // useEffect(() => {
-  //   getOrdersList({status: selectedOrderStatus}, 1, false);
-  // }, []);
-
   const refId = props?.route?.params?.referenceId;
 
-  useEffect(() => {
-    console.log('REFCHVHDCEDSOVWESF', refId);
-
-    if (refId) {
-      onRefresh();
-    }
-  }, [refId]);
-
-  useEffect(() => {}, [
-    monthlyInvoices,
-    ordersListParams,
-    ordersList,
-    ordersListLoading,
-    invoiceSummaryLoading,
-  ]);
   console.log('LOG_RAJ', currentPage);
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    onClearHandler();
-    setOrdersList([]);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   const getOrdersSummary = async () => {
+    setOrderSummaryLoading(true);
     try {
       const data = await store
         .dispatch(
@@ -399,17 +383,51 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
           }),
         )
         .unwrap();
+      console.log('DSDWDEFEWFE', data);
+
       setOrderSummary(data.orders[0].data.order_statues);
     } catch (err) {
       console.log('ORR_err', err);
     }
+    setOrderSummaryLoading(false);
   };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setOrdersList([]);
+    setOrderServiceList([]);
+    setOrderSummary([]);
+    onClearHandler();
+    getOrdersSummary();
+    setSelectedOrderStatus(OrderStatus.ON_HOLD);
+    getOrdersList({status: OrderStatus.ON_HOLD});
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    // debounce the search function
+    const debounceArch = setTimeout(() => {
+      debounceSearch();
+    }, 1500);
+
+    // clear the timeout on unmount
+    return () => {
+      clearTimeout(debounceArch);
+    };
+  }, [query]);
+
+  //This is to refresh the api on order accepted or rejected
+  useEffect(() => {
+    if (refId) {
+      onRefresh();
+    }
+  }, [refId]);
 
   useEffect(() => {
     getOrdersSummary();
   }, []);
-
-  useEffect(() => {}, [status]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -424,15 +442,20 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
             }
             onEndReached={() => {
               setCurrentPage(prev => prev + 1);
-              getOrdersList(
-                {status: selectedOrderStatus},
-                currentPage,
-                true,
-              ).then(() => {});
+              {
+                lastPage &&
+                  currentPage !== lastPage &&
+                  getOrdersList(
+                    {status: selectedOrderStatus},
+                    currentPage,
+                    true,
+                  ).then(() => {});
+              }
             }}
             data={
               <View>
                 <FlatList
+                  showsVerticalScrollIndicator={false}
                   contentContainerStyle={styles.contentContainerStyle}
                   data={[]}
                   extraData={ordersList}
@@ -450,6 +473,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                   renderItem={renderItem}
                   keyExtractor={keyExtractor}
                 />
+
                 <View>
                   {selectedOrderStatus === OrderStatus.ON_HOLD ? (
                     <FlatList
@@ -468,29 +492,48 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                       data={orderServiceList}
                     />
                   )}
-                  {(ordersList.length || orderServiceList.length) === 0 &&
-                    !ordersListLoading && (
-                      <>
-                        <Image
-                          style={styles.noInvoicesImage}
-                          source={require('../../assets/images/no_invoices_art.png')}
-                        />
-                        <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                          No Invoices Found
-                        </Text>
-                      </>
-                    )}
-                  {ordersListLoading && (
+
+                  {ordersListLoading ? (
                     <View style={{marginVertical: 10, marginBottom: hp(7)}}>
                       <Spacer height={hp('1%')} />
                       <OrderSkeletonCard />
                       <Spacer height={hp('2%')} />
                     </View>
+                  ) : selectedOrderStatus === OrderStatus.ON_HOLD ? (
+                    ordersList.length === 0 &&
+                    !refreshing && (
+                      <View
+                        style={{alignContent: 'center', alignItems: 'center'}}>
+                        <SVGIcon name="no_orders_svg" size={wp('60%')} />
+                        <Spacer height={hp(3)} />
+
+                        <Text style={{fontWeight: '500', color: Colors.grey}}>
+                          No Orders Found
+                        </Text>
+                        <Spacer height={hp(10)} />
+                      </View>
+                    )
+                  ) : (
+                    orderServiceList.length === 0 &&
+                    !refreshing && (
+                      <View
+                        style={{alignContent: 'center', alignItems: 'center'}}>
+                        <SVGIcon name="no_orders_svg" size={wp('60%')} />
+                        <Spacer height={hp(3)} />
+
+                        <Text style={{fontWeight: '500', color: Colors.grey}}>
+                          No Orders Found
+                        </Text>
+                        <Spacer height={hp(10)} />
+                      </View>
+                    )
                   )}
 
-                  {currentPage === lastPage + 1 && (
-                    <GaCaughtUp message="You're all caught up!" />
-                  )}
+                  {orderServiceList.length > 0 &&
+                    lastPage &&
+                    currentPage === lastPage + 1 && (
+                      <GaCaughtUp message="You're all caught up!" />
+                    )}
                 </View>
               </View>
             }

@@ -83,25 +83,21 @@ const SingleOrderScreen: React.FC<
           <Text style={styles.heading}>Delivery Address</Text>
           <Spacer height={hp(1)} />
           <View style={{paddingLeft: wp(1)}}>
-            {Object.keys(order.delivery_address)
-              .filter(val => {
-                return val !== 'lat' && val !== 'long';
-              })
-              .map(val => {
-                const value =
-                  order.delivery_address[val as keyof DeliveryAddress];
-                if (value)
-                  return (
-                    <Text>
-                      <Text>{Convert.capitalize(val)}:</Text>
-                      <Text style={{color: Colors.black, fontWeight: '700'}}>
-                        {'  '}
-                        {value}
-                      </Text>
-                      <Spacer height={hp(2)} />
-                    </Text>
-                  );
-              })}
+            <Text>
+              <Text>{`${Convert.capitalize(
+                order.delivery_address.line,
+              )}, ${Convert.capitalize(
+                order.delivery_address.landmark,
+              )}, ${Convert.capitalize(
+                order.delivery_address.district,
+              )}`}</Text>
+              <Spacer height={hp(2)} />
+            </Text>
+            <Text>{`${Convert.capitalize(
+              order.delivery_address.state,
+            )}, ${Convert.capitalize(
+              order.delivery_address.pin_code.toString(),
+            )}`}</Text>
           </View>
         </View>
         <Spacer height={hp(1)} />
@@ -177,7 +173,7 @@ const SingleOrderScreen: React.FC<
                   {order.ordered_organizations.map(val => {
                     return val.selected_suppliers.map(val => {
                       return (
-                        <View>
+                        <View key={val.gst_no.toString()}>
                           <View
                             style={{
                               ...styles.header,

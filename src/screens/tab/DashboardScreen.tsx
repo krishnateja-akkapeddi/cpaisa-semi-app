@@ -118,12 +118,11 @@ const DashboardScreen: React.FC<
   }, []);
 
   const onRefresh = React.useCallback(() => {
-    // setRefreshing(true);
-    // setTimeout(() => {
-    //   setRefreshing(false);
-    //   setRefreshDashboard(prev => !prev);
-    // }, 2000);
-    RootNavigation.resetRoot();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      setRefreshDashboard(prev => !prev);
+    }, 2000);
   }, []);
 
   React.useEffect(() => {

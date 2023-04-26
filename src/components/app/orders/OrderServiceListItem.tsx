@@ -39,12 +39,19 @@ interface InvoiceProps {
 const OrderServiceListItem: React.FC<InvoiceProps> = props => {
   const {item, orderServiceStatusInfo} = props;
   const orderStatus = orderServiceStatusInfo[0];
+
   return (
     <TouchableOpacity
+      onPress={() => {
+        RootNavigation.navigate('SingleOrderServiceScreen', {
+          orderServiceInfo: item,
+          isLogin: true,
+        });
+      }}
       style={{
         ...styles.mainContainer,
       }}>
-      <View style={styles.minOrderContainer}>
+      {/* <View style={styles.minOrderContainer}>
         <View
           style={{
             ...styles.minOrangeView,
@@ -57,42 +64,38 @@ const OrderServiceListItem: React.FC<InvoiceProps> = props => {
             {orderStatus?.status && Convert.capitalize(orderStatus?.status)}
           </Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.listMainContainer}>
-        <Text style={{paddingLeft: wp('3%')}}>#{item.order_id}</Text>
-
+        <Text>#{`${item.order_id}-${item.sub_order_id}`}</Text>
         <View style={styles.rowContainer}>
-          <View style={styles.imageContainer}>
-            {/* <ImageView
-                source={require('../../../assets/images/InvoiceArt.png')}
-                style={styles.imageStyle}
-              /> */}
-            {/* <Icon name="calculator" size={60}></Icon> */}
-          </View>
           <View style={styles.leftContainer}>
-            <Spacer style={{height: hp('0.5%')}} />
+            <Spacer style={{height: hp('2%')}} />
             <View style={styles.middleContainer}>
               <View style={styles.commonView}>
                 <Text style={styles.commonStyle}>
-                  {item.creator_name
-                    ? item.creator_name
+                  <Text style={{color: Colors.grey}}>Supplier: </Text>{' '}
+                  {item.suppliers
+                    ? Convert.toTitleCase(item.suppliers[0].name)
                     : AppLocalizedStrings.na}
                 </Text>
                 <Spacer height={hp(1)} />
-                <Text style={{color: Colors.black}}>
-                  Shop:
+                <Text style={{color: Colors.black, fontWeight: 'bold'}}>
+                  <Text style={{color: Colors.grey, fontWeight: 'bold'}}>
+                    Place:{' '}
+                  </Text>{' '}
                   {item.address
-                    ? ' ' + item.address.city + ', ' + item.address.pin_code
+                    ? ' ' +
+                      Convert.capitalize(item.address.city) +
+                      ', ' +
+                      item.address.pin_code
                     : AppLocalizedStrings.na}
                 </Text>
-                <Text style={{color: Colors.black}}>
-                  Contact:
-                  {item.mobile ? ' ' + item.mobile : AppLocalizedStrings.na}
-                </Text>
+                <Spacer height={hp(1)} />
               </View>
               <Spacer style={{width: wp('2%')}} />
 
               <View style={styles.leftSection}>
+                <Spacer height={hp(4)} />
                 <TouchableOpacity
                   onPress={() => {
                     RootNavigation.navigate('SingleOrderServiceScreen', {
@@ -125,12 +128,26 @@ const OrderServiceListItem: React.FC<InvoiceProps> = props => {
         </View>
       </View>
 
-      <TouchableOpacity onPress={() => {}} style={styles.starMark}>
+      <View style={styles.starMark}>
         <Spacer height={hp('1%')} />
         <Text style={{color: Colors.darkBlack, fontWeight: '600'}}>
           {Convert.dateFormatter(null, 'DD, MMM yyyy', item.order_date)}
         </Text>
-      </TouchableOpacity>
+        <Spacer height={hp(2)} />
+        <Text
+          style={{
+            paddingRight: wp(1),
+            fontWeight: '500',
+            color: Colors.grey,
+            fontSize: Fonts.getFontSize('headline6'),
+            textAlign: 'right',
+          }}>
+          Approx amt
+        </Text>
+        <Text style={{paddingLeft: wp('3%'), fontWeight: '500'}}>
+          {Convert.convertToRupeesFormat(item.total_amount)}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -167,6 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    paddingHorizontal: 1,
   },
   titleStyle: {
     fontFamily: Fonts.regular,
@@ -182,6 +200,7 @@ const styles = StyleSheet.create({
   },
   commonView: {
     // flex: 1,
+    width: wp('50%'),
   },
   leftSection: {
     flex: 1,
@@ -268,7 +287,6 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     flex: 1,
-    marginLeft: wp('3%'),
     justifyContent: 'center',
   },
   starMark: {

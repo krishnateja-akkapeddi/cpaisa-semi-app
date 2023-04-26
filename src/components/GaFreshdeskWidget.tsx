@@ -19,9 +19,7 @@ const FreshdeskWidget = () => {
       <WebView
         onLoad={() => setLoading(false)}
         scalesPageToFit={true}
-        onMessage={event => {
-          console.log(event);
-        }}
+        onMessage={event => {}}
         source={{
           uri: `https://channelpaisa.com/supports?auth-token=${user?.auth_token}&full-name=super&user-id=${user?.id}&role=CHANNEL_PARTNER&email=${user?.email_id}`,
         }}

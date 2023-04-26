@@ -10,7 +10,7 @@
     <!-- Value from default config. -->
     <string name="APP_ID" translatable="false">"com.channelpaisa.channelpaisa"</string>
     <!-- Value from default config. -->
-    <string name="APP_NAME" translatable="false">"ChannelPaisaDev"</string>
+    <string name="APP_NAME" translatable="false">"ChannelPaisa"</string>
     <!-- Value from default config. -->
     <string name="AUTH_HEADER" translatable="false">"Auth-Token"</string>
     <!-- Value from default config. -->
@@ -20,12 +20,12 @@
     <!-- Value from default config. -->
     <string name="ORDER_SERVICE_TOKEN" translatable="false">"eyJhbGciOiJIUzI1NiIsInR5cGUiOiJKV1QiLCJraWQiOm51bGx9.eyJwcm9qZWN0X25hbWUiOiJvbmVnb2FwcHRpdl9mcyIsImlzX2FkbWluIjp0cnVlfQ.kvjiyk1yAs4Cs9lwwTyzijjN3b8whhIU5hdAkT2i350"</string>
     <!-- Value from default config. -->
-    <string name="SUFFIX_ID" translatable="false">".dev"</string>
+    <string name="SUFFIX_ID" translatable="false">""</string>
     <!-- Value from default config. -->
     <string name="USER_INFO" translatable="false">"userInfo"</string>
     <!-- Value from default config. -->
     <string name="build_config_package" translatable="false">com.channelpaisa.channelpaisa</string>
     <!-- Value from the variant -->
-    <string name="app_name" translatable="false">"ChannelPaisaDev"</string>
+    <string name="app_name" translatable="false">"ChannelPaisa"</string>
 
 </resources>

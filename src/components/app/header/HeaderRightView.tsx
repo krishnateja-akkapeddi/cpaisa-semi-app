@@ -107,6 +107,7 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
 
   React.useEffect(() => {
     if (trigger) {
+      setQrLoading(true);
       onQRCodeHandler();
       setQrLoading(false);
       dispatch(appSlice.actions.triggerQrCode(false));

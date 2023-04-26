@@ -82,7 +82,7 @@ const Stockist = (props: Props) => {
   );
 
   useEffect(() => {
-    getStockistsList({}, 1, false);
+    setTimeout(() => getStockistsList({}, 1, false));
   }, []);
   return (
     <View style={{paddingHorizontal: wp('5%'), height: hp('55%')}}>

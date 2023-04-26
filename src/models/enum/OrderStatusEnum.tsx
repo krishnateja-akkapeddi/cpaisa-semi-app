@@ -9,4 +9,5 @@ export enum OrderStatus {
   CANCELLED = 'cancelled',
   ON_HOLD = 'on_hold',
   DELIVERED = 'delivered',
+  DENIED = 'denied',
 }

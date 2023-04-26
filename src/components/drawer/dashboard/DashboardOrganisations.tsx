@@ -1,6 +1,7 @@
 import {
   FlatList,
   ListRenderItemInfo,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -21,7 +22,14 @@ const DashboardOrganisations: React.FC<Props> = ({organizations}) => {
       return (
         <View
           key={index.toString()}
-          style={{marginLeft: index % 3 !== 0 ? wp('10%') : 0}}>
+          style={{
+            marginLeft:
+              index % 3 !== 0
+                ? Platform.OS === 'ios'
+                  ? wp('12%')
+                  : wp('14%')
+                : 0,
+          }}>
           <DepartmentItem
             isRounded={false}
             image={item.logo_link}

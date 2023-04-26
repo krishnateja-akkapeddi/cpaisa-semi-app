@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.channelpaisa.channelpaisa.dev"
+3    package="com.channelpaisa.channelpaisa"
 4    android:versionCode="1"
 5    android:versionName="1.0" >
 6
@@ -12,8 +12,8 @@
 11-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:5-77
 11-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:5:22-75
 12    <uses-permission android:name="android.permission.INTERNET" />
-12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:5-67
-12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:22-64
+12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:1-63
+12-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:4:18-60
 13    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 13-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:1-74
 13-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:5:18-72
@@ -30,164 +30,438 @@
 17-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:9:1-65
 17-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:9:18-62
 18    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-18-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
-18-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/8f53ee824e4dfff602a732c12d7f0463/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
-19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-19-->[:react-native-community_netinfo] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
-19-->[:react-native-community_netinfo] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-community/netinfo/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
-20
-21    <queries>
-21-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-13:15
-22        <intent>
-22-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:18
-23            <action android:name="android.media.action.IMAGE_CAPTURE" />
-23-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-73
-23-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:21-70
-24        </intent>
-25    </queries>
-26
-27    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-27-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-81
-27-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-78
-28    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-28-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
-28-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-69
-29    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-29-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-74
-29-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-71
-30
-31    <application
-31-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:12:5-31:19
-32        android:name="com.channelpaisa.channelpaisa.MainApplication"
-32-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:13:7-38
-33        android:allowBackup="false"
-33-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:17:7-34
-34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-34-->[androidx.core:core:1.7.0] /Users/kt/.gradle/caches/transforms-3/4c0f13976d02ef43c57c3cf0ee71b681/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
-35        android:debuggable="true"
-36        android:extractNativeLibs="false"
-37        android:icon="@mipmap/ic_launcher"
-37-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:15:7-41
-38        android:label="@string/app_name"
-38-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:14:7-39
-39        android:roundIcon="@mipmap/ic_launcher_round"
-39-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:16:7-52
-40        android:theme="@style/AppTheme"
-40-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:18:7-38
-41        android:usesCleartextTraffic="true" >
-41-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:8:9-44
-42        <activity
-42-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:9-111
-43            android:name="com.facebook.react.devsupport.DevSettingsActivity"
-43-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:19-83
-44            android:exported="false" />
-44-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:84-108
-45        <activity
-45-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:19:7-30:18
-46            android:name="com.channelpaisa.channelpaisa.MainActivity"
-46-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:20:9-37
-47            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-47-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:22:9-118
-48            android:exported="true"
-48-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:25:9-32
-49            android:label="@string/app_name"
-49-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:21:9-41
-50            android:launchMode="singleTask"
-50-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:23:9-40
-51            android:windowSoftInputMode="adjustPan" >
-51-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:24:9-48
-52            <intent-filter>
-52-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:26:9-29:25
-53                <action android:name="android.intent.action.MAIN" />
-53-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:27:13-65
-53-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:27:21-62
-54
-55                <category android:name="android.intent.category.LAUNCHER" />
-55-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:28:13-73
-55-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:28:23-70
-56            </intent-filter>
-57        </activity>
-58
-59        <provider
-59-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-26:20
-60            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
-60-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-94
-61            android:authorities="com.channelpaisa.channelpaisa.dev.provider"
-61-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-60
-62            android:exported="false"
-62-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-37
-63            android:grantUriPermissions="true" >
-63-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-47
-64            <meta-data
-64-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
-65                android:name="android.support.FILE_PROVIDER_PATHS"
-65-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
-66                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
-66-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
-67        </provider>
-68
-69        <activity
-69-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-30:72
-70            android:name="com.yalantis.ucrop.UCropActivity"
-70-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-60
-71            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-71-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-69
-72
-73        <provider
-73-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
-74            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
-74-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-83
-75            android:authorities="com.channelpaisa.channelpaisa.dev.fileprovider"
-75-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-64
-76            android:exported="false"
-76-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
-77            android:grantUriPermissions="true" >
-77-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
-78            <meta-data
-78-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
-79                android:name="android.support.FILE_PROVIDER_PATHS"
-79-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
-80                android:resource="@xml/file_provider_paths" />
-80-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
-81        </provider>
-82
-83        <activity
-83-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:28:9-31:67
-84            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
-84-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:29:13-78
-85            android:exported="true"
-85-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:30:13-36
-86            android:theme="@style/DeviceCredentialHandlerTheme" />
-86-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/f0cb3760b1d90f7b2c04dea84e9699da/transformed/biometric-1.0.1/AndroidManifest.xml:31:13-64
-87
-88        <meta-data
-88-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:11:9-13:43
-89            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-89-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:12:13-84
-90            android:value="GlideModule" />
-90-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/1c97b09990076fbce59d2f56d52348c8/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:13:13-40
-91
-92        <provider
-92-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
-93            android:name="androidx.startup.InitializationProvider"
-93-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
-94            android:authorities="com.channelpaisa.channelpaisa.dev.androidx-startup"
-94-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
-95            android:exported="false" >
-95-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
-96            <meta-data
-96-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
-97                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-97-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
-98                android:value="androidx.startup" />
-98-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/a6f37bd147f5b6d9026a1f99a41f4b05/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
-99            <meta-data
-99-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
-100                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-100-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
-101                android:value="androidx.startup" />
-101-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/5b38f376728b2aab34b02d48868695ed/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
-102        </provider>
-103    </application>
-104
-105</manifest>
+18-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/c327df8ec1759da8467f79f311517ae4/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
+18-->[com.facebook.flipper:flipper:0.125.0] /Users/kt/.gradle/caches/transforms-3/c327df8ec1759da8467f79f311517ae4/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
+19    <uses-permission android:name="android.permission.WAKE_LOCK" />
+19-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-68
+19-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-65
+20    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+20-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-79
+20-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-76
+21
+22    <queries>
+22-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-13:15
+23        <intent>
+23-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:18
+24            <action android:name="android.media.action.IMAGE_CAPTURE" />
+24-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-73
+24-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:21-70
+25        </intent>
+26    </queries>
+27
+28    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+28-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:5-81
+28-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:22-78
+29    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+29-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-72
+29-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-69
+30    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+30-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-74
+30-->[:react-native-sensitive-info] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-sensitive-info/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-71
+31    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+31-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:25:5-77
+31-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:25:22-74
+32    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+32-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:5-82
+32-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:28:22-79
+33    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+33-->[com.google.android.gms:play-services-measurement-api:21.2.1] /Users/kt/.gradle/caches/transforms-3/fa7dfa578b31f47b017419a5f4468fc8/transformed/jetified-play-services-measurement-api-21.2.1/AndroidManifest.xml:25:5-79
+33-->[com.google.android.gms:play-services-measurement-api:21.2.1] /Users/kt/.gradle/caches/transforms-3/fa7dfa578b31f47b017419a5f4468fc8/transformed/jetified-play-services-measurement-api-21.2.1/AndroidManifest.xml:25:22-76
+34    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+34-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:26:5-110
+34-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:26:22-107
+35
+36    <application
+36-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:12:5-31:19
+37        android:name="com.channelpaisa.channelpaisa.MainApplication"
+37-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:13:7-38
+38        android:allowBackup="false"
+38-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:17:7-34
+39        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+39-->[androidx.core:core:1.7.0] /Users/kt/.gradle/caches/transforms-3/b2dbb40bcb9c6f180d0ede04521eca00/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+40        android:debuggable="true"
+41        android:extractNativeLibs="false"
+42        android:icon="@mipmap/ic_launcher"
+42-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:15:7-41
+43        android:label="@string/app_name"
+43-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:14:7-39
+44        android:roundIcon="@mipmap/ic_launcher_round"
+44-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:16:7-52
+45        android:theme="@style/AppTheme"
+45-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:18:7-38
+46        android:usesCleartextTraffic="true" >
+46-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:8:9-44
+47        <activity
+47-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:9-111
+48            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+48-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:19-83
+49            android:exported="false" />
+49-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/debug/AndroidManifest.xml:11:84-108
+50        <activity
+50-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:19:7-30:18
+51            android:name="com.channelpaisa.channelpaisa.MainActivity"
+51-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:20:9-37
+52            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+52-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:22:9-118
+53            android:exported="true"
+53-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:25:9-32
+54            android:label="@string/app_name"
+54-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:21:9-41
+55            android:launchMode="singleTask"
+55-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:23:9-40
+56            android:windowSoftInputMode="adjustPan" >
+56-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:24:9-48
+57            <intent-filter>
+57-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:26:9-29:25
+58                <action android:name="android.intent.action.MAIN" />
+58-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:27:13-65
+58-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:27:21-62
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:28:13-73
+60-->/Users/kt/Documents/GitHub/channel-paisa-react-native-app/android/app/src/main/AndroidManifest.xml:28:23-70
+61            </intent-filter>
+62        </activity>
+63
+64        <service
+64-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-16:40
+65            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingHeadlessService"
+65-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-103
+66            android:exported="false" />
+66-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-37
+67        <service
+67-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:9-23:19
+68            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingService"
+68-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-95
+69            android:exported="false" >
+69-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-37
+70            <intent-filter>
+70-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-22:29
+71                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+71-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:17-78
+71-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:25-75
+72            </intent-filter>
+73        </service>
+74
+75        <receiver
+75-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:9-32:20
+76            android:name="io.invertase.firebase.messaging.ReactNativeFirebaseMessagingReceiver"
+76-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:26:13-96
+77            android:exported="true"
+77-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:27:13-36
+78            android:permission="com.google.android.c2dm.permission.SEND" >
+78-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:13-73
+79            <intent-filter>
+79-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-31:29
+80                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+80-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:17-81
+80-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:25-78
+81            </intent-filter>
+82        </receiver>
+83
+84        <meta-data
+84-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:34:9-36:36
+85            android:name="firebase_messaging_auto_init_enabled"
+85-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:35:13-64
+86            android:value="true" />
+86-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:36:13-33
+87        <meta-data
+87-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:37:9-39:32
+88            android:name="com.google.firebase.messaging.default_notification_channel_id"
+88-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:38:13-89
+89            android:value="" />
+89-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:39:13-29
+90        <meta-data
+90-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:40:9-42:47
+91            android:name="com.google.firebase.messaging.default_notification_color"
+91-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:41:13-84
+92            android:resource="@color/white" />
+92-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:42:13-44
+93        <meta-data
+93-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:9-13:36
+94            android:name="app_data_collection_default_enabled"
+94-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-63
+95            android:value="true" />
+95-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-33
+96
+97        <service
+97-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:15:9-23:19
+98            android:name="com.google.firebase.components.ComponentDiscoveryService"
+98-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-84
+99            android:directBootAware="true"
+99-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-43
+100            android:exported="false" >
+100-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
+101            <meta-data
+101-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-22:85
+102                android:name="com.google.firebase.components:io.invertase.firebase.app.ReactNativeFirebaseAppRegistrar"
+102-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:17-120
+103                android:value="com.google.firebase.components.ComponentRegistrar" />
+103-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:17-82
+104            <meta-data
+104-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:55:13-57:85
+105                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+105-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:56:17-119
+106                android:value="com.google.firebase.components.ComponentRegistrar" />
+106-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:57:17-82
+107            <meta-data
+107-->[com.google.android.gms:play-services-measurement-api:21.2.1] /Users/kt/.gradle/caches/transforms-3/fa7dfa578b31f47b017419a5f4468fc8/transformed/jetified-play-services-measurement-api-21.2.1/AndroidManifest.xml:31:13-33:85
+108                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+108-->[com.google.android.gms:play-services-measurement-api:21.2.1] /Users/kt/.gradle/caches/transforms-3/fa7dfa578b31f47b017419a5f4468fc8/transformed/jetified-play-services-measurement-api-21.2.1/AndroidManifest.xml:32:17-139
+109                android:value="com.google.firebase.components.ComponentRegistrar" />
+109-->[com.google.android.gms:play-services-measurement-api:21.2.1] /Users/kt/.gradle/caches/transforms-3/fa7dfa578b31f47b017419a5f4468fc8/transformed/jetified-play-services-measurement-api-21.2.1/AndroidManifest.xml:33:17-82
+110            <meta-data
+110-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kt/.gradle/caches/transforms-3/ff2374ef6c98e7cfe3ea73eeab0abd25/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+111                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+111-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kt/.gradle/caches/transforms-3/ff2374ef6c98e7cfe3ea73eeab0abd25/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+112                android:value="com.google.firebase.components.ComponentRegistrar" />
+112-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kt/.gradle/caches/transforms-3/ff2374ef6c98e7cfe3ea73eeab0abd25/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+113            <meta-data
+113-->[com.google.firebase:firebase-installations:17.1.3] /Users/kt/.gradle/caches/transforms-3/c6d3d9c8d4d362c4839cc0ba5f7de2d0/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:17:13-19:85
+114                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+114-->[com.google.firebase:firebase-installations:17.1.3] /Users/kt/.gradle/caches/transforms-3/c6d3d9c8d4d362c4839cc0ba5f7de2d0/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:18:17-127
+115                android:value="com.google.firebase.components.ComponentRegistrar" />
+115-->[com.google.firebase:firebase-installations:17.1.3] /Users/kt/.gradle/caches/transforms-3/c6d3d9c8d4d362c4839cc0ba5f7de2d0/transformed/jetified-firebase-installations-17.1.3/AndroidManifest.xml:19:17-82
+116        </service>
+117
+118        <provider
+118-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:9-29:38
+119            android:name="io.invertase.firebase.app.ReactNativeFirebaseAppInitProvider"
+119-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:26:13-88
+120            android:authorities="com.channelpaisa.channelpaisa.reactnativefirebaseappinitprovider"
+120-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:27:13-86
+121            android:exported="false"
+121-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:13-37
+122            android:initOrder="99" />
+122-->[:@react-native-firebase_app] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/app/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-35
+123        <provider
+123-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:18:9-26:20
+124            android:name="com.reactnative.ivpusic.imagepicker.IvpusicImagePickerFileProvider"
+124-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-94
+125            android:authorities="com.channelpaisa.channelpaisa.provider"
+125-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-60
+126            android:exported="false"
+126-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-37
+127            android:grantUriPermissions="true" >
+127-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-47
+128            <meta-data
+128-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
+129                android:name="android.support.FILE_PROVIDER_PATHS"
+129-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
+130                android:resource="@xml/ivpusic_imagepicker_provider_paths" />
+130-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
+131        </provider>
+132
+133        <activity
+133-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-30:72
+134            android:name="com.yalantis.ucrop.UCropActivity"
+134-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-60
+135            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+135-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-69
+136
+137        <provider
+137-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-18:20
+138            android:name="com.reactnativecommunity.webview.RNCWebViewFileProvider"
+138-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-83
+139            android:authorities="com.channelpaisa.channelpaisa.fileprovider"
+139-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-64
+140            android:exported="false"
+140-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-37
+141            android:grantUriPermissions="true" >
+141-->[:react-native-webview] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-webview/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-47
+142            <meta-data
+142-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:78
+143                android:name="android.support.FILE_PROVIDER_PATHS"
+143-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-67
+144                android:resource="@xml/file_provider_paths" />
+144-->[:react-native-image-crop-picker] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-image-crop-picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-75
+145        </provider>
+146
+147        <activity
+147-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/3929b7abb277d9b1fa20970a0b390ac6/transformed/biometric-1.0.1/AndroidManifest.xml:28:9-31:67
+148            android:name="androidx.biometric.DeviceCredentialHandlerActivity"
+148-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/3929b7abb277d9b1fa20970a0b390ac6/transformed/biometric-1.0.1/AndroidManifest.xml:29:13-78
+149            android:exported="true"
+149-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/3929b7abb277d9b1fa20970a0b390ac6/transformed/biometric-1.0.1/AndroidManifest.xml:30:13-36
+150            android:theme="@style/DeviceCredentialHandlerTheme" />
+150-->[androidx.biometric:biometric:1.0.1] /Users/kt/.gradle/caches/transforms-3/3929b7abb277d9b1fa20970a0b390ac6/transformed/biometric-1.0.1/AndroidManifest.xml:31:13-64
+151
+152        <receiver
+152-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:31:9-38:20
+153            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+153-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:32:13-78
+154            android:exported="true"
+154-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:33:13-36
+155            android:permission="com.google.android.c2dm.permission.SEND" >
+155-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:34:13-73
+156            <intent-filter>
+156-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-31:29
+157                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+157-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:17-81
+157-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:30:25-78
+158            </intent-filter>
+159        </receiver>
+160        <!--
+161             FirebaseMessagingService performs security checks at runtime,
+162             but set to not exported to explicitly avoid allowing another app to call it.
+163        -->
+164        <service
+164-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:44:9-51:19
+165            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+165-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:45:13-82
+166            android:directBootAware="true"
+166-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:46:13-43
+167            android:exported="false" >
+167-->[com.google.firebase:firebase-messaging:23.1.2] /Users/kt/.gradle/caches/transforms-3/ad9f274a52697da30371b0ccd60bc7c5/transformed/jetified-firebase-messaging-23.1.2/AndroidManifest.xml:47:13-37
+168            <intent-filter android:priority="-500" >
+168-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-22:29
+169                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+169-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:17-78
+169-->[:react-native-firebase_messaging] /Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/@react-native-firebase/messaging/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:21:25-75
+170            </intent-filter>
+171        </service>
+172
+173        <provider
+173-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:25:9-30:39
+174            android:name="com.google.firebase.provider.FirebaseInitProvider"
+174-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:26:13-77
+175            android:authorities="com.channelpaisa.channelpaisa.firebaseinitprovider"
+175-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:27:13-72
+176            android:directBootAware="true"
+176-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:28:13-43
+177            android:exported="false"
+177-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:29:13-37
+178            android:initOrder="100" />
+178-->[com.google.firebase:firebase-common:20.3.2] /Users/kt/.gradle/caches/transforms-3/f1a8a278c7738acae9d6bca0ecdbc59a/transformed/jetified-firebase-common-20.3.2/AndroidManifest.xml:30:13-36
+179
+180        <activity
+180-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:23:9-27:75
+181            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+181-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:24:13-93
+182            android:excludeFromRecents="true"
+182-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:25:13-46
+183            android:exported="false"
+183-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:26:13-37
+184            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+184-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:27:13-72
+185        <!--
+186            Service handling Google Sign-In user revocation. For apps that do not integrate with
+187            Google Sign-In, this service will never be started.
+188        -->
+189        <service
+189-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:33:9-37:51
+190            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+190-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:34:13-89
+191            android:exported="true"
+191-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:35:13-36
+192            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+192-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:36:13-107
+193            android:visibleToInstantApps="true" />
+193-->[com.google.android.gms:play-services-auth:20.3.0] /Users/kt/.gradle/caches/transforms-3/1f8eaec0be82777957bf02ae9ff4ed44/transformed/jetified-play-services-auth-20.3.0/AndroidManifest.xml:37:13-48
+194
+195        <meta-data
+195-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/47f2d7c09f02d6168ccdcad88bcaaeb1/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:11:9-13:43
+196            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+196-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/47f2d7c09f02d6168ccdcad88bcaaeb1/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:12:13-84
+197            android:value="GlideModule" />
+197-->[com.github.bumptech.glide:okhttp3-integration:4.12.0] /Users/kt/.gradle/caches/transforms-3/47f2d7c09f02d6168ccdcad88bcaaeb1/transformed/jetified-okhttp3-integration-4.12.0/AndroidManifest.xml:13:13-40
+198
+199        <service
+199-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+200            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+200-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+201            android:exported="false" >
+201-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+202            <meta-data
+202-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+203                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+203-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+204                android:value="cct" />
+204-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kt/.gradle/caches/transforms-3/d6a3ddafe241577a77bf012befd93b50/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+205        </service>
+206        <service
+206-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+207            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+207-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+208            android:exported="false"
+208-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+209            android:permission="android.permission.BIND_JOB_SERVICE" >
+209-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+210        </service>
+211
+212        <receiver
+212-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+213            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+213-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+214            android:exported="false" />
+214-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kt/.gradle/caches/transforms-3/93f21b47bf412f721c94f36ef744c372/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+215
+216        <activity
+216-->[com.google.android.gms:play-services-base:18.0.1] /Users/kt/.gradle/caches/transforms-3/987e79bbf77731e030be5ad6acb23fa4/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+217            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+217-->[com.google.android.gms:play-services-base:18.0.1] /Users/kt/.gradle/caches/transforms-3/987e79bbf77731e030be5ad6acb23fa4/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+218            android:exported="false"
+218-->[com.google.android.gms:play-services-base:18.0.1] /Users/kt/.gradle/caches/transforms-3/987e79bbf77731e030be5ad6acb23fa4/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+219            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+219-->[com.google.android.gms:play-services-base:18.0.1] /Users/kt/.gradle/caches/transforms-3/987e79bbf77731e030be5ad6acb23fa4/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+220
+221        <receiver
+221-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:29:9-33:20
+222            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+222-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:30:13-85
+223            android:enabled="true"
+223-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:31:13-35
+224            android:exported="false" >
+224-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:32:13-37
+225        </receiver>
+226
+227        <service
+227-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:35:9-38:40
+228            android:name="com.google.android.gms.measurement.AppMeasurementService"
+228-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:36:13-84
+229            android:enabled="true"
+229-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:37:13-35
+230            android:exported="false" />
+230-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:38:13-37
+231        <service
+231-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:39:9-43:72
+232            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+232-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:40:13-87
+233            android:enabled="true"
+233-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:41:13-35
+234            android:exported="false"
+234-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:42:13-37
+235            android:permission="android.permission.BIND_JOB_SERVICE" />
+235-->[com.google.android.gms:play-services-measurement:21.2.1] /Users/kt/.gradle/caches/transforms-3/d3ec22c62e03c5a01f7a05322c7ed678/transformed/jetified-play-services-measurement-21.2.1/AndroidManifest.xml:43:13-69
+236
+237        <meta-data
+237-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kt/.gradle/caches/transforms-3/ced805b64da2b6671b682926d5e7378b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+238            android:name="com.google.android.gms.version"
+238-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kt/.gradle/caches/transforms-3/ced805b64da2b6671b682926d5e7378b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+239            android:value="@integer/google_play_services_version" />
+239-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kt/.gradle/caches/transforms-3/ced805b64da2b6671b682926d5e7378b/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+240
+241        <provider
+241-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:26:9-34:20
+242            android:name="androidx.startup.InitializationProvider"
+242-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:27:13-67
+243            android:authorities="com.channelpaisa.channelpaisa.androidx-startup"
+243-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:28:13-68
+244            android:exported="false" >
+244-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:29:13-37
+245            <meta-data
+245-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:31:13-33:52
+246                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+246-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:32:17-75
+247                android:value="androidx.startup" />
+247-->[androidx.emoji2:emoji2:1.0.0] /Users/kt/.gradle/caches/transforms-3/3c899c9d0656fafd83e3a7034556bf5d/transformed/jetified-emoji2-1.0.0/AndroidManifest.xml:33:17-49
+248            <meta-data
+248-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/06184030e07f355cf662bb2d0fe69a6f/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:31:13-33:52
+249                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+249-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/06184030e07f355cf662bb2d0fe69a6f/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:32:17-78
+250                android:value="androidx.startup" />
+250-->[androidx.lifecycle:lifecycle-process:2.4.0] /Users/kt/.gradle/caches/transforms-3/06184030e07f355cf662bb2d0fe69a6f/transformed/jetified-lifecycle-process-2.4.0/AndroidManifest.xml:33:17-49
+251        </provider>
+252    </application>
+253
+254</manifest>

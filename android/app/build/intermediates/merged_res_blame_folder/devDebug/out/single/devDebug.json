@@ -1,162 +1,162 @@
 [
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_success.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_success.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-hdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_uneye.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_uneye.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-hdpi/ic_launcher.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_hashtaginput_icon_close.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_hashtaginput_icon_close.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_autocomplete_icon_close.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_autocomplete_icon_close.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_close.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_close.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backiconmask.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_placeholder.jpeg.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_placeholder.jpeg"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_invoiceart.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_invoiceart.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_pfizer.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_pfizer.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_no_invoices_art.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_no_invoices_art.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_warning.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_warning.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xxxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_nonotificationsart.jpg.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_nonotificationsart.jpg"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_swipericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_swipericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_eye.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_eye.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_eye.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_eye.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_danger.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_danger.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_close.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_close.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_pfizer.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_pfizer.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_swipericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_swipericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_nooffersart.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_nooffersart.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_textinput_icon_uneye.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_textinput_icon_uneye.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_danger.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_danger.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_hashtaginput_icon_close.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_hashtaginput_icon_close.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_success.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_success.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable_rn_edit_text_material.xml.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable/rn_edit_text_material.xml"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_nonotificationsart.jpg.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_nonotificationsart.jpg"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_nooffersart.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_nooffersart.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_no_invoices_art.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_no_invoices_art.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativealertnotification_src_assets_warning.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativealertnotification_src_assets_warning.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xxxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xxxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_successicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_successicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable_rn_edit_text_material.xml.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable/rn_edit_text_material.xml"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnativeelementtextinput_src_autocomplete_icon_close.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnativeelementtextinput_src_autocomplete_icon_close.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-hdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_videos_channel_paisa_splash_screen.gif.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_videos_channel_paisa_splash_screen.gif"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-mdpi/ic_launcher.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_images_invoiceart.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_images_invoiceart.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_node_modules_reactnative_libraries_newappscreen_components_logo.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/node_modules_reactnative_libraries_newappscreen_components_logo.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_successicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_successicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_src_assets_videos_channel_paisa_splash_screen.gif.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/src_assets_videos_channel_paisa_splash_screen.gif"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-mdpi_node_modules_reactnative_libraries_newappscreen_components_logo.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-mdpi/node_modules_reactnative_libraries_newappscreen_components_logo.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xxxhdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xxxhdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-hdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-hdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-hdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-hdpi_node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-hdpi/node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon.png"
     },
     {
-        "merged": "com.channelpaisa.channelpaisa.app-merged_res-34:/drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
-        "source": "com.channelpaisa.channelpaisa.app-main-38:/drawable-xxxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+        "merged": "com.channelpaisa.channelpaisa.app-merged_res-40:/drawable-mdpi_src_assets_images_placeholder.jpeg.flat",
+        "source": "com.channelpaisa.channelpaisa.app-main-44:/drawable-mdpi/src_assets_images_placeholder.jpeg"
     }
 ]

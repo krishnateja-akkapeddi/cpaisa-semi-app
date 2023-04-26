@@ -1,5 +1,5 @@
 import {Image, ListRenderItem, StyleSheet, Text, View} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -94,11 +94,13 @@ const Brands: React.FC<Props> = ({organization}) => {
     setLoadingBrandOffers(false);
   };
 
-  useEffect(() => {
-    setBrandOffers([]);
-    setCurrentPage(1);
-    setLastPage(10);
-    getBrandOffers();
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      setBrandOffers([]);
+      setCurrentPage(1);
+      setLastPage(10);
+      getBrandOffers();
+    }, 1000);
   }, [organization]);
 
   return (

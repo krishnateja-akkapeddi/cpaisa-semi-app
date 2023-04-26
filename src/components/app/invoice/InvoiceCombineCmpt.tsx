@@ -45,7 +45,6 @@ const InvoiceCombineCmpt = (props: InvoiceCombineCmptProps) => {
     isFilterApplied,
   } = props;
   useEffect(() => {}, [selectedDates, loading]);
-  console.log('FROK_DUFJSJ', filterCount());
 
   return (
     <View>
