@@ -27,10 +27,14 @@ import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
+// lottie-react-native
+import com.airbnb.android.react.lottie.LottiePackage;
 // react-native-config
 import com.lugg.RNCConfig.RNCConfigPackage;
 // react-native-date-picker
 import com.henninghall.date_picker.DatePickerPackage;
+// react-native-device-info
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 // react-native-fast-image
 import com.dylanvann.fastimage.FastImageViewPackage;
 // react-native-gesture-handler
@@ -112,8 +116,10 @@ public class PackageList {
       new ReactNativeFirebaseMessagingPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
+      new LottiePackage(),
       new RNCConfigPackage(),
       new DatePickerPackage(),
+      new RNDeviceInfo(),
       new FastImageViewPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeGetLocationPackage(),

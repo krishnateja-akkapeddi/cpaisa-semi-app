@@ -33,4 +33,5 @@ export interface RewardTransactionEntity {
   expiry_date?: string;
   tax_amount: string;
   tax_percentage: string;
+  net_amount: number;
 }

@@ -45,6 +45,7 @@ import BrandsScreen from '../../screens/organisations/BrandsScreen';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../store/Store';
 import {AppSliceState} from '../../store/slices/AppSlice';
+import {OrderStatus} from '../../models/enum/OrderStatusEnum';
 
 export type HomeStackParamList = {
   TabStack: NavigatorScreenParams<BottomTabParamList>;
@@ -61,6 +62,7 @@ export type HomeStackParamList = {
   };
   SingleOrderScreen: RouteParamList & {
     orderInfo: OrderEntity;
+    orderStatus: OrderStatus;
   };
   Help: RouteParamList;
   OrdersScreen: RouteParamList & {referenceId?: string};
@@ -164,7 +166,6 @@ const HomeStackNavigator = () => {
         component={SingleOrderServiceScreen}
         options={{title: 'Order Details'}}
       />
-
       <Stack.Screen name="AboutUs" component={AboutChannelPaisaScreen} />
       <Stack.Screen name="CouponScreen" component={CouponScreen} />
       <Stack.Screen name="Help" component={HelpScreen} />

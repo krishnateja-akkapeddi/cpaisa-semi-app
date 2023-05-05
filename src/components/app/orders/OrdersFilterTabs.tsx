@@ -30,8 +30,8 @@ const OrdersFilterTabs: React.FC<Props> = ({
   onTabChange,
   selectedOrderStatus,
 }) => {
-  const animatedBackgroundView = useSharedValue(0);
-  const animH = useSharedValue(0);
+  const animatedBackgroundView = useSharedValue(wp(0));
+  const animH = useSharedValue(hp(0));
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -44,21 +44,21 @@ const OrdersFilterTabs: React.FC<Props> = ({
   }, []);
 
   const orderStatus = [
-    {label: 'New', value: OrderStatus.ON_HOLD},
+    {label: 'Pending', value: OrderStatus.ON_HOLD},
     {label: 'Accepted', value: OrderStatus.CREATED},
-    {label: 'Dispatched', value: OrderStatus.DISPATCHED},
+    {label: 'Delivered', value: OrderStatus.DISPATCHED},
     {label: 'Rejected', value: OrderStatus.REJECTED},
     {label: 'Denied', value: OrderStatus.DENIED},
   ];
 
   const verticalBounce = () => {
-    animH.value = withSequence(
-      withTiming(hp(3), {
-        duration: 90,
-        easing: Easing.inOut(Easing.ease),
-      }),
-      withSpring(hp('0%')),
-    );
+    // animH.value = withSequence(
+    //   withTiming(hp(4), {
+    //     duration: 90,
+    //     easing: Easing.inOut(Easing.ease),
+    //   }),
+    //   withSpring(hp(0)),
+    // );
   };
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const OrdersFilterTabs: React.FC<Props> = ({
           style={[
             {
               width: wp('22%'),
-              height: Platform.OS === 'android' ? hp(6.5) : hp(5),
+              height: hp('5%'),
               backgroundColor: Colors.primary,
               position: 'absolute',
               borderRadius: 10,
@@ -115,10 +115,11 @@ const OrdersFilterTabs: React.FC<Props> = ({
                 <View
                   style={{
                     // width: wp('25%'),
+                    height: hp('5%'),
                     paddingLeft: wp('3%'),
                     paddingRight: wp('3%'),
-                    paddingTop: wp('3.5%'),
-                    paddingBottom: wp('3.5%'),
+                    paddingTop: wp('3%'),
+                    paddingBottom: wp('3%'),
                     borderWidth: 0.5,
                     borderRadius: 10,
                     borderColor: Colors.primary,
@@ -126,9 +127,10 @@ const OrdersFilterTabs: React.FC<Props> = ({
                   <Text
                     style={{
                       color: isSelected ? Colors.white : Colors.primary,
-                      fontSize: 11,
+                      fontSize: 12,
                       fontWeight: '500',
                       textAlign: 'center',
+                      letterSpacing: 0.5,
                     }}>
                     {val.label}
                   </Text>

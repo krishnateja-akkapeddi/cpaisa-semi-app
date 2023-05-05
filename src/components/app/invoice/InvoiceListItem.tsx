@@ -115,10 +115,12 @@ const InvoiceListItem: React.FC<InvoiceProps> = props => {
             <View style={styles.middleContainer}></View>
           </View>
         </View>
-        {/* <View style={styles.summeryContainer}>
-          <SVGIcon name="info" size={hp('2%')} color="red" />
-          <Text style={styles.summeryText}>{item.}</Text>
-        </View> */}
+        {item?.comments && item.invoice_status === InvoiceStatus.REJECTED && (
+          <View style={styles.summeryContainer}>
+            <SVGIcon name="info" size={hp('2%')} color="red" />
+            <Text style={styles.summeryText}>{item?.comments}</Text>
+          </View>
+        )}
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity

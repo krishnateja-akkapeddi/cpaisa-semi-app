@@ -1,4 +1,8 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {
+  AsyncThunk,
+  createAsyncThunk,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import {FetchAuthorizedStockistsParams} from '../../domain/usages/FetchAuthorizedStockists';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
 import {FetchInvoiceListParams} from '../../domain/usages/FetchInvoiceList';
@@ -12,7 +16,7 @@ import {GenerateOtpParams} from '../../domain/usages/GenerateOtp';
 import {GenerateQrCodeParams} from '../../domain/usages/GenerateQrCode';
 import {ReedemRewardParams} from '../../domain/usages/ReedemReward';
 import {UpdateContactParams} from '../../domain/usages/UpdateContact';
-import {VerifyOtpParams} from '../../domain/usages/VerifyOtp';
+import {VerifyOtp, VerifyOtpParams} from '../../domain/usages/VerifyOtp';
 import {AuthorizedStockistsResponse} from '../../models/interfaces/AuthorizedStockistsResponse';
 import {AuthResult} from '../../models/interfaces/AuthResponse';
 import {ClientListResponse} from '../../models/interfaces/ClientsListResponse';
@@ -58,6 +62,7 @@ import {
   fetchDivisionsWorker,
   registerUserWorker,
   fetchOrderSummaryWorker,
+  saveDeviceInfoWorker,
 } from '../workers/ApiWorkers';
 import {FetchOrdersListParams} from '../../domain/usages/FetchOrdersList';
 import {OrdersListResponse} from '../../models/interfaces/OrdersListResponse';
@@ -84,6 +89,23 @@ import {RegisteredUserResponse} from '../../models/interfaces/RegisteredUserResp
 import {RegisterUserParams} from '../../domain/usages/RegisterUser';
 import {FetchOrderSummaryParams} from '../../domain/usages/FetchOrderSummary';
 import {OrderSummaryResponse} from '../../models/interfaces/OrderSummaryResponse';
+import {
+  SaveDeviceInfo,
+  SaveDeviceInfoParams,
+} from '../../domain/usages/SaveDeviceInfo';
+import {SaveDeviceInfoResponse} from '../../models/interfaces/SaveDeviceInfoResponse';
+
+const preThunk = () => {
+  console.log('Function called before async thunk');
+};
+
+const modifiedGetDefaultMiddleware = () => {
+  return getDefaultMiddleware({
+    thunk: {
+      extraArgument: preThunk,
+    },
+  });
+};
 
 const verifyOtp = createAsyncThunk(
   'verifiying otp...',
@@ -366,7 +388,17 @@ const fetchOrderSummary = createAsyncThunk(
   },
 );
 
+const saveDeviceInfo = createAsyncThunk(
+  'saving device info...',
+  async (
+    params: SaveDeviceInfoParams.params,
+  ): Promise<SaveDeviceInfoResponse> => {
+    const data = await saveDeviceInfoWorker.save(params);
+    return data;
+  },
+);
 export {
+  saveDeviceInfo,
   fetchInvoiceSummary,
   fetchWalletSummary,
   fetchSliderImages,

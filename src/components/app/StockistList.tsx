@@ -21,6 +21,7 @@ interface StockistProps {
   isVisible: Boolean;
   onPress: () => void;
   organisations: StockistOrganizationEntity[];
+  gstNo: string;
 }
 
 const StockistList: React.FC<StockistProps> = props => {
@@ -43,6 +44,7 @@ const StockistList: React.FC<StockistProps> = props => {
           /> */}
           <Text style={styles.textStyle}>{props.name}</Text>
         </View>
+
         <TouchableOpacity style={styles.btnArrow} onPress={props.onPress}>
           <SVGIcon
             style={iconStyle}
@@ -52,6 +54,11 @@ const StockistList: React.FC<StockistProps> = props => {
           />
         </TouchableOpacity>
       </View>
+      {props.isVisible && (
+        <Text style={{marginLeft: wp(5), marginTop: hp(1)}}>
+          GSTIN: {props.gstNo}
+        </Text>
+      )}
       {props.isVisible && (
         <View>
           <View style={styles.whiteLine} />

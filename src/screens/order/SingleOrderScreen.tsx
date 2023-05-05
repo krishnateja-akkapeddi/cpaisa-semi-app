@@ -22,11 +22,13 @@ import RootNavigation from '../../navigation/RootNavigation';
 import {OrderStatus} from '../../models/enum/OrderStatusEnum';
 import AppLoader from '../../components/indicator/AppLoader';
 import {AppLocalizedStrings} from '../../localization/Localization';
+import GaInputValidationMessage from '../../components/GaInputValidationMessage';
 
 const SingleOrderScreen: React.FC<
   HomeStackScreenProps<'SingleOrderScreen'>
 > = props => {
   const order = props?.route?.params?.orderInfo;
+  const orderStatus = props?.route?.params?.orderStatus;
   const [updatingOrderStatus, setUpdatingOrderStatus] = useState(false);
   const dispatch = useDispatch();
 
@@ -204,63 +206,72 @@ const SingleOrderScreen: React.FC<
           );
         })}
       </ScrollView>
-      <View
-        style={{
-          ...styles.header,
-          justifyContent: 'space-evenly',
-          position: 'absolute',
-          bottom: hp('-7%'),
-        }}>
-        <AdaptiveButton
-          onPress={() => {
-            Alert.alert('Are you sure you want to accept the order', '', [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-              },
-              {
-                text: 'OK',
-                onPress: () =>
-                  updateOrderStatus({
-                    stauts: OrderStatus.ACCEPTED,
-                    uuid: order.reference_number,
-                  }),
-              },
-            ]);
-          }}
-          buttonStyle={{width: wp('40%')}}
-          title="Accept"
-        />
-        <Spacer width={wp(10)} />
-        <AdaptiveButton
-          onPress={() => {
-            Alert.alert('Are you sure you want to reject the order', '', [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-              },
-              {
-                text: 'OK',
-                onPress: () =>
-                  updateOrderStatus({
-                    stauts: OrderStatus.REJECTED,
-                    uuid: order.reference_number,
-                  }),
-              },
-            ]);
-          }}
-          textStyle={{color: 'red'}}
-          type="text"
-          buttonStyle={{
-            width: wp('40%'),
-            borderColor: Colors.red,
-            borderWidth: 1,
-            borderRadius: 10,
-          }}
-          title="Reject"
-        />
+
+      <View>
+        {orderStatus === OrderStatus.DENIED ? (
+          <View>
+            <GaInputValidationMessage message="You have rejected the order" />
+          </View>
+        ) : (
+          <View
+            style={{
+              ...styles.header,
+              justifyContent: 'space-evenly',
+              position: 'absolute',
+              bottom: hp('-7%'),
+            }}>
+            <AdaptiveButton
+              onPress={() => {
+                Alert.alert('Are you sure you want to accept the order', '', [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () =>
+                      updateOrderStatus({
+                        stauts: OrderStatus.ACCEPTED,
+                        uuid: order.reference_number,
+                      }),
+                  },
+                ]);
+              }}
+              buttonStyle={{width: wp('40%')}}
+              title="Accept"
+            />
+            <Spacer width={wp(10)} />
+            <AdaptiveButton
+              onPress={() => {
+                Alert.alert('Are you sure you want to reject the order', '', [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () =>
+                      updateOrderStatus({
+                        stauts: OrderStatus.REJECTED,
+                        uuid: order.reference_number,
+                      }),
+                  },
+                ]);
+              }}
+              textStyle={{color: 'red'}}
+              type="text"
+              buttonStyle={{
+                width: wp('40%'),
+                borderColor: Colors.red,
+                borderWidth: 1,
+                borderRadius: 10,
+              }}
+              title="Reject"
+            />
+          </View>
+        )}
       </View>
     </View>
   );

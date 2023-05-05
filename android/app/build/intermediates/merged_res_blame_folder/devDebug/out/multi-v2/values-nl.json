@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-nl/values-nl.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-39:/values-nl/values-nl.xml",
             "map": [
                 {
                     "source": "/Users/kt/Documents/GitHub/channel-paisa-react-native-app/node_modules/react-native-date-picker/android/build/intermediates/packaged_res/debug/values-nl/values-nl.xml",

@@ -27,6 +27,7 @@ const ApiEndpoints = {
   CHANNEL_PARTNER_TYPES: '/channel-partners/types',
   FETCH_DIVISIONS: '/organizations',
   ORDERS_SUMMARY: '/orders/list/for-customer',
+  SAVE_DEVICE_INFO: '/devices/token/save',
 };
 
 export default ApiEndpoints;

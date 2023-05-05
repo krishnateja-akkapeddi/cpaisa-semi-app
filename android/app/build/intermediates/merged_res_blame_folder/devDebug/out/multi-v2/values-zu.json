@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-zu/values-zu.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-39:/values-zu/values-zu.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/07d178f35a6797509457225426cd3e83/transformed/appcompat-1.4.1/res/values-zu/values-zu.xml",

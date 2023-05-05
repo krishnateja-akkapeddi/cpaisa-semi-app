@@ -13,6 +13,7 @@ import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import GaCaughtUp from '../GaCaughtUp';
+import SVGIcon from '../../utility/svg/SVGIcon';
 
 type Props = {organisation: ClientEntity};
 
@@ -109,6 +110,18 @@ const Stockist = (props: Props) => {
             ) : (
               <View />
             )}
+            {!loadingStockists && stockists.length === 0 && (
+              <>
+                <SVGIcon
+                  style={{marginLeft: wp(15)}}
+                  size={wp(60)}
+                  name={'no-data-found-art'}
+                />
+                <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                  No Stockists Found
+                </Text>
+              </>
+            )}
           </View>
         }
         onEndReached={() => {
@@ -125,6 +138,7 @@ const Stockist = (props: Props) => {
               // image={item}
               isVisible={expandIndex == index}
               onPress={() => dropDownHandler(index)}
+              gstNo={item.gst_number}
             />
             <Spacer height={hp(2)} />
           </>

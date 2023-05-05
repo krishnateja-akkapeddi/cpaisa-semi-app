@@ -147,7 +147,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                   <SkeletonPlaceholder.Item
                     borderRadius={10}
                     width={wp('30%')}
-                    height={hp('20%')}
+                    height={hp('24%')}
                     marginLeft={val === 1 ? wp(1) : wp(2)}
                   />
                 </SkeletonPlaceholder>
@@ -155,10 +155,12 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
             })}
           </Animated.View>
         ) : (
-          <OrdersStatusCardList
-            loading={!orderSummaryLoading}
-            ordersMonthlyStatus={ordersSummary}
-          />
+          ordersSummary.length > 0 && (
+            <OrdersStatusCardList
+              loading={!orderSummaryLoading}
+              ordersMonthlyStatus={ordersSummary}
+            />
+          )
         )}
         <OrdersFilterView
           filterCount={filterCount()}
@@ -166,7 +168,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
         />
         <View style={styles.topView}>
           <SearchBar
-            keyboardType="decimal-pad"
+            keyboardType="default"
             onChange={setQuery}
             value={query}
             hideButton={true}
@@ -279,6 +281,8 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
           if (scrolled) {
             setOrdersList(oldData => [...oldData, ...result?.orders[0]?.data]);
           } else {
+            console.log('DUMCHIK_EOD', result?.orders[0]?.data);
+
             setOrdersList(result?.orders[0]?.data);
           }
         }
@@ -296,11 +300,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
           )
           .unwrap();
         if (result.success) {
-          setLastPage(
-            result.orders[0].next_page_url === null
-              ? currentPage
-              : currentPage + 2,
-          );
+          setLastPage(result.orders[0].last_page);
           await debounce(2000);
           if (scrolled) {
             setOrderServiceList(oldData => [
@@ -347,6 +347,10 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
 
     [ordersList, ordersListLoading, ordersListParams, resetFilterLoading],
   );
+
+  const hasMore = () => {
+    return lastPage !== currentPage;
+  };
 
   const renderOrderServiceItem = useCallback(
     ({item}: ListRenderItemInfo<OrderServiceItemEntity>) => {
@@ -443,8 +447,8 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
             onEndReached={() => {
               setCurrentPage(prev => prev + 1);
               {
-                lastPage &&
-                  currentPage !== lastPage &&
+                hasMore() &&
+                  !ordersListLoading &&
                   getOrdersList(
                     {status: selectedOrderStatus},
                     currentPage,
@@ -462,11 +466,15 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                   ListHeaderComponent={
                     <>
                       <View>
-                        <View style={styles.invoiceContainer}>
-                          <Text>{AppLocalizedStrings.orders.overview}</Text>
+                        <View
+                          style={
+                            ordersSummary.length > 0 && styles.invoiceContainer
+                          }>
+                          {ordersSummary.length > 0 && (
+                            <Text>{AppLocalizedStrings.orders.overview}</Text>
+                          )}
                         </View>
                       </View>
-
                       {listHeaderComponent()}
                     </>
                   }
@@ -475,7 +483,8 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                 />
 
                 <View>
-                  {selectedOrderStatus === OrderStatus.ON_HOLD ? (
+                  {selectedOrderStatus === OrderStatus.ON_HOLD ||
+                  selectedOrderStatus === OrderStatus.DENIED ? (
                     <FlatList
                       ItemSeparatorComponent={() => (
                         <View style={{height: hp('2%')}} />
@@ -499,15 +508,16 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                       <OrderSkeletonCard />
                       <Spacer height={hp('2%')} />
                     </View>
-                  ) : selectedOrderStatus === OrderStatus.ON_HOLD ? (
+                  ) : selectedOrderStatus === OrderStatus.ON_HOLD ||
+                    OrderStatus.DENIED ? (
                     ordersList.length === 0 &&
                     !refreshing && (
                       <View
                         style={{alignContent: 'center', alignItems: 'center'}}>
-                        <SVGIcon name="no_orders_svg" size={wp('60%')} />
+                        <SVGIcon name="no_orders_svg" size={wp('50%')} />
                         <Spacer height={hp(3)} />
 
-                        <Text style={{fontWeight: '500', color: Colors.grey}}>
+                        <Text style={{fontWeight: 'bold'}}>
                           No Orders Found
                         </Text>
                         <Spacer height={hp(10)} />

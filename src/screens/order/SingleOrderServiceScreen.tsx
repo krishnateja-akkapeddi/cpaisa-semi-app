@@ -131,7 +131,7 @@ const SingleOrderServiceScreen: React.FC<
               stepCount={orderLog?.length}
               currentPosition={-1}
               renderLabel={item => {
-                const fineOne = orderLog?.find(val => val.title === item.label);
+                const index = item.position;
                 return (
                   <View
                     style={{
@@ -141,16 +141,16 @@ const SingleOrderServiceScreen: React.FC<
                     }}>
                     <View>
                       <Text style={{fontWeight: '700'}}>
-                        {Convert.capitalize(fineOne?.title ?? '')}
+                        {Convert.capitalize(orderLog[index]?.title ?? '')}
                       </Text>
                     </View>
                     <View>
-                      <Text>{fineOne?.date}</Text>
+                      <Text>{orderLog[index]?.date}</Text>
                     </View>
                     <Spacer height={4} />
                     <View>
                       <Text style={{color: Colors.grey}}>
-                        {fineOne?.comment}
+                        {orderLog[index]?.comment}
                       </Text>
                     </View>
                   </View>

@@ -1,5 +1,14 @@
 import React from 'react';
-import {Modal, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import OutsidePressHandler, {EventProvider} from 'react-native-outside-press';
+
 import Style from '../../constants/Style';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import Colors from '../../theme/Colors';
@@ -15,7 +24,7 @@ interface PopupContainerProps {
   showHeader?: boolean;
   onDismiss?: () => void;
   animationType?: 'fade' | 'slide';
-  onOutsidePress?: Function;
+  onOutsidePress?: () => void; // Change the type to function with no arguments
   type?: 'error' | 'success';
 }
 
@@ -31,27 +40,42 @@ const PopupContainer: React.FC<PopupContainerProps> = props => {
     type,
   } = props;
   return (
-    <Modal transparent animationType={animationType} onRequestClose={() => {}}>
-      <View style={styles.container}>
-        <View style={styles.subContainer}>
-          {showHeader && (
-            <View style={styles.header}>
-              <Text style={styles.headerTitle}>{title}</Text>
-              {showDismiss && (
-                <TouchableOpacity onPress={onDismiss}>
-                  <Text style={styles.dimiss}>
-                    {AppLocalizedStrings.dimiss}
-                  </Text>
-                </TouchableOpacity>
-              )}
+    <EventProvider style={{flex: 1}}>
+      <Modal
+        transparent
+        animationType={animationType}
+        onRequestClose={() => {}}>
+        <View style={styles.container}>
+          <OutsidePressHandler
+            onOutsidePress={() => {
+              props.onOutsidePress && props.onOutsidePress();
+            }}
+            disabled={false}>
+            <View style={styles.subContainer}>
+              <View>
+                <View>
+                  {showHeader && (
+                    <View style={styles.header}>
+                      <Text style={styles.headerTitle}>{title}</Text>
+                      {showDismiss && (
+                        <TouchableOpacity onPress={onDismiss}>
+                          <Text style={styles.dimiss}>
+                            {AppLocalizedStrings.dimiss}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  )}
+                  {showLine && showHeader && <View style={styles.lineView} />}
+                  {showLine && <Spacer height={kPadding} />}
+                  <View style={styles.contentContainer}>{children}</View>
+                </View>
+              </View>
             </View>
-          )}
-          {showLine && showHeader && <View style={styles.lineView} />}
-          {showLine && <Spacer height={kPadding} />}
-          <View style={styles.contentContainer}>{children}</View>
+          </OutsidePressHandler>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </EventProvider>
   );
 };
 
@@ -67,9 +91,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: kScreenPadding,
     paddingBottom: kScreenPadding,
+    width: wp(100),
+    height: hp(100),
   },
   subContainer: {
-    width: '100%',
+    width: wp(90),
     backgroundColor: Colors.white,
     borderRadius: Style.kBorderRadius,
   },

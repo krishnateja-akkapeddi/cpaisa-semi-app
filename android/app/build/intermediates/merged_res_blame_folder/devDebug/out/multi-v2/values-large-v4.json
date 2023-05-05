@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-large-v4/values-large-v4.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-39:/values-large-v4/values-large-v4.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/0ba19b00c96e3fedc9ff9ae2f25e75f9/transformed/material-1.1.0/res/values-large-v4/values-large-v4.xml",

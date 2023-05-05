@@ -13,6 +13,7 @@ export interface Stockists {
 
 export interface StockistEntity {
   firm_name: string;
+  gst_number: string;
   organizations: StockistOrganizationEntity[];
   contacts: StockistContactEntity[];
 }

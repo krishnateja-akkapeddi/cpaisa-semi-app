@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-zh/values-zh.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-39:/values-zh/values-zh.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/c779b5810284a73f013fb4c21ad5edcb/transformed/jetified-ucrop-2.2.6-native/res/values-zh/values-zh.xml",

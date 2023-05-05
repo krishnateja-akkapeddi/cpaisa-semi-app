@@ -21,8 +21,8 @@ const InvoiceDetailFooter = (props: {
         <Text style={styles.textStyle}>Total Points</Text>
         <Text style={styles.textStyle}>
           {invoice?.invoice_items?.length > 0
-            ? invoice.total_amount
-              ? invoice.total_amount
+            ? invoice.total_points
+              ? invoice.total_points
               : AppLocalizedStrings.noData
             : AppLocalizedStrings.notYetProcessed}
         </Text>

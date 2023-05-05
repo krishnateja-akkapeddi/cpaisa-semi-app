@@ -77,7 +77,7 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
                     : AppLocalizedStrings.na}
                 </Text>
                 <Spacer height={hp(1)} />
-                <Text style={{color: Colors.black}}>
+                <Text style={{color: Colors.black, width: wp('50%')}}>
                   Shop:
                   {item.delivery_address
                     ? ' ' +
@@ -92,14 +92,11 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
               <View style={styles.leftSection}>
                 <TouchableOpacity
                   onPress={() => {
-                    if (item.order_status === OrderStatus.ON_HOLD) {
-                      RootNavigation.navigate('SingleOrderScreen', {
-                        orderInfo: item,
-                        isLogin: true,
-                      });
-                    } else {
-                      return;
-                    }
+                    RootNavigation.navigate('SingleOrderScreen', {
+                      orderInfo: item,
+                      isLogin: true,
+                      orderStatus: OrderStatus.DENIED,
+                    });
                   }}>
                   <View
                     style={{
@@ -116,9 +113,11 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
                         color: Colors.white,
                         fontSize: Fonts.getFontSize('headline3'),
                       }}>
-                      {item.order_status === OrderStatus.ON_HOLD
+                      {/* {item.order_status === OrderStatus.ON_HOLD ||
+                      item.order_status === OrderStatus.DENIED
                         ? 'View More'
-                        : 'Dispatch'}
+                        : 'Dispatch'} */}
+                      View More
                     </Text>
                   </View>
                 </TouchableOpacity>

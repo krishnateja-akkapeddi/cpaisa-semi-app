@@ -19,10 +19,12 @@ import {updateContactInfo} from '../../store/thunks/ApiThunks';
 import AppLoader from '../../components/indicator/AppLoader';
 import {UpdateContactParams} from '../../domain/usages/UpdateContact';
 import {useDispatch} from 'react-redux';
-import {appSlice, clearAppSlice} from '../../store/slices/AppSlice';
+import {appSlice, clearAppSlice, openPopup} from '../../store/slices/AppSlice';
 import {Timer, TimerType} from '../../utility/timer/TimerClass';
 import {clearAuthSlice} from '../../store/slices/AuthSlice';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
+import {Convert} from '../../utility/converter/Convert';
+import {pickMessageFromErrors} from '../../utility/ErrorPicker';
 
 const EnterUpdateContactOtpScreen: React.FC<
   AuthStackScreenProps<'EnterUpdateContactOtpScreen'>
@@ -105,11 +107,19 @@ const EnterUpdateContactOtpScreen: React.FC<
           };
         }, 1000);
       } else {
-        Snackbar.show({
-          text:
-            updatedContact.errors?.message ??
-            AppLocalizedStrings.somethingWrong,
-        });
+        store.dispatch(
+          openPopup({
+            title: 'Otp',
+            type: 'error',
+            message: updatedContact?.errors
+              ? pickMessageFromErrors(updatedContact.errors)
+              : AppLocalizedStrings.otpSent,
+            onSubmit: () => {
+              return RootNavigation.navigate('ProfileScreen');
+            },
+          }),
+        );
+
         setVerifyOtpLoading(false);
         setClearInput(true);
         setTimeout(() => {

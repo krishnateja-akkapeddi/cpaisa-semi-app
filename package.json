@@ -2,6 +2,7 @@
   "name": "ChannelPaisa",
   "version": "2",
   "private": true,
+  "bundleId": "com.example.myapp",
   "scripts": {
     "asset-link": "npx react-native-asset",
     "start": "react-native start",
@@ -13,12 +14,14 @@
     "ios:qat": "react-native run-ios --scheme \"QAT\" --simulator=\"iPhone 14 Pro Max\"",
     "ios:uat": "react-native run-ios --scheme \"UAT\" --simulator=\"iPhone 14 Pro Max\"",
     "ios:prod": "react-native run-ios --scheme \"Production\" --simulator=\"iPhone 14 Pro Max\"",
-    "android:dev": "react-native run-android --active-arch-only --variant=devDebug --appIdSuffix=dev",
+    "android:dev": "npx react-native run-android --active-arch-only --variant=devDebug --appIdSuffix=dev",
     "android:qat": "react-native run-android --active-arch-only --variant=qatDebug --appIdSuffix=qat",
     "android:uat": "react-native run-android --active-arch-only --variant=uatDebug --appIdSuffix=uat",
     "android:prod": "react-native run-android --active-arch-only --variant=prodDebug",
+    "android:prodBundle": "react-native run-android --variant=prodrelease",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "bundleApp": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@miblanchard/react-native-slider": "^2.1.0",
@@ -46,6 +49,7 @@
     "i": "^0.3.7",
     "indent-string": "^5.0.0",
     "lodash": "^4.17.21",
+    "lottie-react-native": "^5.1.5",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-icomoon": "^2.5.4",
@@ -54,6 +58,7 @@
     "react-native-alert-notification": "^0.3.4",
     "react-native-config": "^1.4.5",
     "react-native-date-picker": "^4.2.10",
+    "react-native-device-info": "^10.6.0",
     "react-native-element-textinput": "^2.2.0",
     "react-native-fast-image": "^8.6.1",
     "react-native-gesture-handler": "^2.6.2",
@@ -63,6 +68,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-localization": "^2.3.1",
+    "react-native-outside-press": "^1.1.0",
     "react-native-page-control": "^1.1.2",
     "react-native-permissions": "^3.6.1",
     "react-native-reanimated": "^2.12.0",

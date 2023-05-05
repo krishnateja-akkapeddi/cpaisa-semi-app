@@ -493,6 +493,24 @@ attr listPreferredItemPaddingRight
 attr listPreferredItemPaddingStart
 attr logo
 attr logoDescription
+attr lottieAnimationViewStyle
+attr lottie_autoPlay
+attr lottie_cacheComposition
+attr lottie_clipToCompositionBounds
+attr lottie_colorFilter
+attr lottie_enableMergePathsForKitKatAndAbove
+attr lottie_fallbackRes
+attr lottie_fileName
+attr lottie_ignoreDisabledSystemAnimations
+attr lottie_imageAssetsFolder
+attr lottie_loop
+attr lottie_progress
+attr lottie_rawRes
+attr lottie_renderMode
+attr lottie_repeatCount
+attr lottie_repeatMode
+attr lottie_speed
+attr lottie_url
 attr materialAlertDialogBodyTextStyle
 attr materialAlertDialogTheme
 attr materialAlertDialogTitleIconStyle
@@ -1677,18 +1695,6 @@ drawable mtrl_popupmenu_background
 drawable mtrl_popupmenu_background_dark
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
-drawable node_modules_reactnative_libraries_newappscreen_components_logo
-drawable node_modules_reactnativealertnotification_src_assets_danger
-drawable node_modules_reactnativealertnotification_src_assets_success
-drawable node_modules_reactnativealertnotification_src_assets_warning
-drawable node_modules_reactnativeelementtextinput_src_autocomplete_icon_close
-drawable node_modules_reactnativeelementtextinput_src_hashtaginput_icon_close
-drawable node_modules_reactnativeelementtextinput_src_textinput_icon_close
-drawable node_modules_reactnativeelementtextinput_src_textinput_icon_eye
-drawable node_modules_reactnativeelementtextinput_src_textinput_icon_uneye
-drawable node_modules_reactnavigation_drawer_src_views_assets_toggledrawericon
-drawable node_modules_reactnavigation_elements_src_assets_backicon
-drawable node_modules_reactnavigation_elements_src_assets_backiconmask
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -1705,15 +1711,6 @@ drawable overlay
 drawable redbox_top_border_background
 drawable rn_edit_text_material
 drawable spinner_dropdown_background
-drawable src_assets_images_invoiceart
-drawable src_assets_images_no_invoices_art
-drawable src_assets_images_nonotificationsart
-drawable src_assets_images_nooffersart
-drawable src_assets_images_pfizer
-drawable src_assets_images_placeholder
-drawable src_assets_images_successicon
-drawable src_assets_images_swipericon
-drawable src_assets_videos_channel_paisa_splash_screen
 drawable test_custom_background
 drawable test_level_drawable
 drawable tile
@@ -1822,6 +1819,7 @@ id autofill_inline_suggestion_end_icon
 id autofill_inline_suggestion_start_icon
 id autofill_inline_suggestion_subtitle
 id autofill_inline_suggestion_title
+id automatic
 id beginning
 id blocking
 id bottom
@@ -1906,6 +1904,7 @@ id ghost_view
 id ghost_view_holder
 id glide_custom_view_target_tag
 id group_divider
+id hardware
 id hideable
 id home
 id homeAsUp
@@ -1939,6 +1938,7 @@ id line1
 id line3
 id listMode
 id list_item
+id lottie_layer_name
 id masked
 id menu_crop
 id menu_loader
@@ -2005,6 +2005,8 @@ id progress_circular
 id progress_horizontal
 id radio
 id react_test_id
+id restart
+id reverse
 id right
 id right_icon
 id right_side
@@ -2052,6 +2054,7 @@ id snackbar_action
 id snackbar_text
 id snap
 id snapMargins
+id software
 id spacer
 id special_effects_controller_view_tag
 id split_action_bar
@@ -2289,8 +2292,7 @@ layout ucrop_view
 menu example_menu
 menu example_menu2
 menu ucrop_menu_activity
-mipmap ic_launcher
-mipmap ic_launcher_round
+mipmap appicon
 plurals mtrl_badge_content_description
 raw firebase_common_keep
 string APP_ID
@@ -3275,6 +3277,7 @@ styleable LinearLayoutCompat android_gravity android_orientation android_baselin
 styleable LinearLayoutCompat_Layout android_layout_gravity android_layout_width android_layout_height android_layout_weight
 styleable ListPopupWindow android_dropDownHorizontalOffset android_dropDownVerticalOffset
 styleable LoadingImageView circleCrop imageAspectRatio imageAspectRatioAdjust
+styleable LottieAnimationView lottie_autoPlay lottie_cacheComposition lottie_clipToCompositionBounds lottie_colorFilter lottie_enableMergePathsForKitKatAndAbove lottie_fallbackRes lottie_fileName lottie_ignoreDisabledSystemAnimations lottie_imageAssetsFolder lottie_loop lottie_progress lottie_rawRes lottie_renderMode lottie_repeatCount lottie_repeatMode lottie_speed lottie_url
 styleable MaterialAlertDialog backgroundInsetBottom backgroundInsetEnd backgroundInsetStart backgroundInsetTop
 styleable MaterialAlertDialogTheme materialAlertDialogBodyTextStyle materialAlertDialogTheme materialAlertDialogTitleIconStyle materialAlertDialogTitlePanelStyle materialAlertDialogTitleTextStyle
 styleable MaterialButton android_insetLeft android_insetRight android_insetTop android_insetBottom android_checkable backgroundTint backgroundTintMode cornerRadius elevation icon iconGravity iconPadding iconSize iconTint iconTintMode rippleColor shapeAppearance shapeAppearanceOverlay strokeColor strokeWidth

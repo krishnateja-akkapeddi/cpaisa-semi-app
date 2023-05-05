@@ -54,6 +54,7 @@ import WalletDivisionPicker, {
   WalletDivisionPickerProps,
 } from '../../components/app/wallet/WalletDivisionPicker';
 import {WalletStackScreenProps} from '../../navigation/stack/WalletStackNavigator';
+import SVGIcon from '../../utility/svg/SVGIcon';
 
 export enum WalletMode {
   Transaction,
@@ -691,6 +692,18 @@ const WalletScreen: React.FC<
 
               {currentPage === lastPage && rewardRequestList.length > 0 && (
                 <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
+              )}
+              {!rewardRequestListLoading && rewardRequestList.length === 0 && (
+                <>
+                  <SVGIcon
+                    style={{marginLeft: wp(20)}}
+                    name={'no-coupon-found-art'}
+                    size={wp(60)}
+                  />
+                  <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                    No Coupons Found
+                  </Text>
+                </>
               )}
             </View>
           </View>

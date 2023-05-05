@@ -39,6 +39,7 @@ const GaScrollView: React.FC<Props> = ({
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       refreshControl={onRefresh}
       onScrollToTop={() => setScrollingTop(true)}
       ref={scrollViewRef}

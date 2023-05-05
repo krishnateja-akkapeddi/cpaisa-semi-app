@@ -20,6 +20,7 @@ import {ProfileStackScreenProps} from '../../navigation/stack/ProfileStackNaviga
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {Convert} from '../../utility/converter/Convert';
 import Spacer from '../../components/layout/Spacer';
+import {notificationHelper} from '../../utility/NotificationHelper';
 
 enum ProfileMode {
   Personal,
@@ -91,7 +92,8 @@ const ProfileScreen: React.FC<
             />
           )}
           <Text style={styles.appVersion}>
-            {AppLocalizedStrings?.profile?.appVersion + 'v2.6'}
+            {AppLocalizedStrings?.profile?.appVersion +
+              notificationHelper.getDeviceInfo().app_version}
           </Text>
         </View>
       </KeyboardAvoidingView>

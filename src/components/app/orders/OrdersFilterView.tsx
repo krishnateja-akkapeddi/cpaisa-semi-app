@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
   invoiceListText: {
     fontFamily: Fonts.medium,
     fontSize: Fonts.getFontSize('headline4'),
-    color: '#B2B2B2',
   },
   filterContainer: {
     flexDirection: 'row',

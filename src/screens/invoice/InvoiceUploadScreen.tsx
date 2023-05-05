@@ -118,25 +118,28 @@ const InvoiceUploadScreen = () => {
   };
 
   const uploadDocumentHandler = async (id?: number) => {
-    await PermissionManager.checkPermissions(PermissionType.MEDIA).then(
-      async response => {
-        if (response === false) {
-          await PermissionManager.getPermission(PermissionType.MEDIA);
-        }
-      },
-    );
-    await PermissionManager.checkPermissions(PermissionType.CAMERA).then(
-      async res => {
-        console.log('RES_RR', res);
+    if (id === 1) {
+      await PermissionManager.checkPermissions(PermissionType.MEDIA).then(
+        async response => {
+          if (response === false) {
+            await PermissionManager.getPermission(PermissionType.MEDIA);
+          }
+        },
+      );
+    } else if (id === 0) {
+      await PermissionManager.checkPermissions(PermissionType.CAMERA).then(
+        async res => {
+          console.log('RES_RR', res);
 
-        if (res === false) {
-          const result = await PermissionManager.getPermission(
-            PermissionType.CAMERA,
-          );
-          console.log('REQ_PERM', result);
-        }
-      },
-    );
+          if (res === false) {
+            const result = await PermissionManager.getPermission(
+              PermissionType.CAMERA,
+            );
+            console.log('REQ_PERM', result);
+          }
+        },
+      );
+    }
     console.log('FROM_IDEs', id === 0);
 
     if (id === 0 || id === 1) {
@@ -154,6 +157,7 @@ const InvoiceUploadScreen = () => {
                 cropping: true,
                 enableRotationGesture: false,
                 showCropGuidelines: true,
+                compressImageQuality: 1,
               }).then(async imageResult => {
                 return imageResult;
               });
@@ -173,8 +177,16 @@ const InvoiceUploadScreen = () => {
           }, 50);
         }
       } catch (err) {
-        console.log(err);
-        PermissionManager.getPermission(PermissionType.CAMERA);
+        console.log('Android_Upload_Error', err);
+        if (id === 0) {
+          const permission = await PermissionManager.checkPermissions(
+            PermissionType.CAMERA,
+          );
+        } else if (id === 1) {
+          const permission = await PermissionManager.checkPermissions(
+            PermissionType.MEDIA,
+          );
+        }
       }
     } else {
       ActionSheetIOS.showActionSheetWithOptions(
@@ -195,14 +207,15 @@ const InvoiceUploadScreen = () => {
                   })
                 : await ImageCropPicker.openPicker({
                     cropping: true,
-                    enableRotationGesture: false,
-                    showCropGuidelines: true,
+                    freeStyleCropEnabled: true,
+                    forceJpg: false,
+                    compressImageQuality: 1,
+                    width: wp('100%'),
                   }).then(async invResult => {
                     return invResult;
                   });
 
             setUploadedFile(result);
-
             const invoiceData: any = {};
             invoiceData.docName = result?.filename ?? 'Invoice';
             invoiceData.mime = result?.mime;
@@ -215,12 +228,22 @@ const InvoiceUploadScreen = () => {
                 setInvoiceState(updateState());
               }, 50);
             }
-          } catch (err) {
-            const permission = await PermissionManager.checkPermissions(
-              PermissionType.MEDIA,
-            );
-
-            console.log('UPLOAD_FILE', err);
+          } catch (err: any) {
+            console.log('Ios_Upload_Error', err);
+            const errMsg: [] = err.toString().split(' ');
+            if (err.includes['cancelled']) {
+              console.log('User cancelled invoice upload');
+              return;
+            }
+            if (selected === 0) {
+              const permission = await PermissionManager.checkPermissions(
+                PermissionType.CAMERA,
+              );
+            } else if (selected === 1) {
+              const permission = await PermissionManager.checkPermissions(
+                PermissionType.MEDIA,
+              );
+            }
           }
         },
       );

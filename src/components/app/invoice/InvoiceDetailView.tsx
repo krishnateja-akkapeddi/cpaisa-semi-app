@@ -70,6 +70,9 @@ const InvoiceDetailView: React.FC<InvoiceDetailViewProps> = props => {
         /> */}
           {openReason && (
             <PopupContainer
+              onOutsidePress={() => {
+                setOpenReason(false);
+              }}
               onDismiss={() => {
                 setOpenReason(false);
               }}

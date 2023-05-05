@@ -13,6 +13,7 @@ export type initialPopupState = {
   type: 'success' | 'error' | 'danger' | 'plain';
   showDismiss?: boolean;
   showHeader?: boolean;
+  buttonText?: string;
 };
 
 export interface AppSliceState {

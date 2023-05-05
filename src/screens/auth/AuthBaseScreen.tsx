@@ -6,6 +6,7 @@ import Style from '../../constants/Style';
 import Colors from '../../theme/Colors';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import SVGIcon from '../../utility/svg/SVGIcon';
+import {AppLocalizedStrings} from '../../localization/Localization';
 
 type AuthBaseScreenProps = {
   children: React.ReactNode;
@@ -19,7 +20,14 @@ const AuthBaseScreen: React.FC<AuthBaseScreenProps> = props => {
       <KeyboardAvoidingView style={styles.keyboard}>
         <View style={styles.container}>
           {props.iconName != null && (
-            <SVGIcon name={props.iconName} size={hp('30%')} />
+            <SVGIcon
+              name={props.iconName}
+              size={
+                props.title === AppLocalizedStrings.auth.additionalDetails
+                  ? hp('28%')
+                  : hp('30%')
+              }
+            />
           )}
           {props.iconName != null && <Spacer height={hp('1.5%')} />}
           <Text style={styles.lblTitle}>{props.title}</Text>

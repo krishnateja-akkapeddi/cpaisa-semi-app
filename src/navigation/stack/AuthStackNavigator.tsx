@@ -11,7 +11,7 @@ import EnterDetailsScreen from '../../screens/auth/EnterDetailsScreen';
 import DocumentUploadScreen from '../../screens/auth/DocumentUploadScreen';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import ChooseOrganisationScreen from '../../screens/auth/ChooseOrganisationScreen';
-import {CompositeScreenProps} from '@react-navigation/native';
+import {CompositeScreenProps, NavigationProp} from '@react-navigation/native';
 import {RootStackParamList} from '../navigator/AppNavigator';
 import CompleteKYCScreen from '../../screens/auth/CompleteKYCScreen';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
@@ -22,6 +22,8 @@ import LoginHelpScreen from '../../screens/auth/LoginHelpScreen';
 import {OptionRegisterParams} from '../../domain/usages/RegisterUser';
 import EnterAdditionalDetails from '../../screens/auth/EnterAdditionalDetails';
 import ChooseUserTypeScreen from '../../screens/auth/ChooseUserTypeScreen';
+import HeaderElements from '../../utility/navigation/HeaderElements';
+import NavigationOptionProps from '../../models/interfaces/NavigationOptionProps';
 
 export type AuthStackParamList = {
   SplashScreen: RouteParamList;
@@ -95,7 +97,11 @@ const AuthStackNavigator = () => {
         component={SplashScreen}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="LoginScreen"
+        component={LoginScreen}
+      />
       <Stack.Screen name="MobileScreen" component={MobileScreen} />
       <Stack.Screen name="EnterOTPScreen" component={EnterOTPScreen} />
       <Stack.Screen

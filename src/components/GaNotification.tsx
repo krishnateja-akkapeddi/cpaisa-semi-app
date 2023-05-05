@@ -61,7 +61,7 @@ const GaNotification = () => {
               }}
               type="light"
               buttonStyle={{width: wp('70%')}}
-              title="Done"></AdaptiveButton>
+              title={popup.buttonText ?? 'Done'}></AdaptiveButton>
           </View>
         </PopupContainer>
       )}

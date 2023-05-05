@@ -1,4 +1,5 @@
 import RNSInfo from 'react-native-sensitive-info';
+import {Convert} from '../utility/converter/Convert';
 
 export const kSharedKeys = {
   userDetails: 'userDetails',
@@ -49,7 +50,8 @@ class SharedPreference {
   };
 
   getFcmToken = async () => {
-    return RNSInfo.getItem(kSharedKeys.fcmToken, options);
+    const raw = await RNSInfo.getItem(kSharedKeys.fcmToken, options);
+    return raw;
   };
 }
 

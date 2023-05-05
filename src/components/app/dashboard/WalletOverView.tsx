@@ -13,6 +13,7 @@ import Fonts from '../../../theme/Fonts';
 import RootNavigation from '../../../navigation/RootNavigation';
 import {WalletSummary} from '../../../models/interfaces/WalletSummary';
 import AppLoader from '../../indicator/AppLoader';
+import DashboardInvoiceUpload from './DashboardInvoiceUpload';
 
 type Props = {
   walletSummary?: WalletSummary;
@@ -22,6 +23,9 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
   const goToWalletHandler = () => {
     RootNavigation.navigate('WalletStack');
   };
+  const shouldUploadInvoice = () =>
+    walletSummary?.last_month_earning === '0.00' &&
+    walletSummary?.current_month_earning === '0.00';
 
   return (
     <View>
@@ -68,22 +72,31 @@ const WalletOverView: React.FC<Props> = ({walletSummary, loading}) => {
           onPress={() => {}}
         />
       </View>
-      <EarningDetailSectionView
-        currentMonthEarning={
-          loading ? (
-            <AppLoader type="none" loading />
-          ) : (
-            walletSummary?.current_month_earning
-          )
-        }
-        lastMonthEarning={
-          loading ? (
-            <AppLoader type="none" loading />
-          ) : (
-            walletSummary?.last_month_earning
-          )
-        }
-      />
+
+      {!shouldUploadInvoice() ? (
+        <EarningDetailSectionView
+          currentMonthEarning={
+            loading ? (
+              <AppLoader type="none" loading />
+            ) : (
+              walletSummary?.current_month_earning
+            )
+          }
+          lastMonthEarning={
+            loading ? (
+              <AppLoader type="none" loading />
+            ) : (
+              walletSummary?.last_month_earning
+            )
+          }
+        />
+      ) : (
+        <View>
+          <Spacer height={hp(3)} />
+          <DashboardInvoiceUpload />
+          <Spacer height={hp(2)} />
+        </View>
+      )}
       {/* <DashboardSectionHeader
         headerTitle={AppLocalizedStrings.dashboard.target}
       /> */}

@@ -17,6 +17,7 @@ import {
   fetchInvoiceSummary,
   fetchWalletSummary,
 } from '../../store/thunks/ApiThunks';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 import {Convert} from '../../utility/converter/Convert';
 import Icon from 'react-native-vector-icons/AntDesign';
 import PriceChipView from '../../components/app/wallet/PriceChipView';
@@ -88,18 +89,14 @@ const BrandsScreen: React.FC<HomeStackScreenProps<'BrandsScreen'>> = props => {
     getWalletSummary();
   }, []);
 
-  useLayoutEffect(() => {
-    store.dispatch(
-      setRouteName(
-        Convert.toTitleCase(organisation.short_code) + ' Organisation',
-      ),
-    );
+  useEffect(() => {
+    store.dispatch(setRouteName(Convert.toTitleCase(organisation.short_code)));
   }, []);
 
   return (
     <View>
       <View style={styles.brandsContainer}>
-        <View style={{...styles.orgInfoContainer, ...styles.flexBox}}>
+        {/* <View style={{...styles.orgInfoContainer, ...styles.flexBox}}>
           <View>
             <Icon size={wp(7)} color={Colors.lightOrange} name="infocirlce" />
           </View>
@@ -110,8 +107,8 @@ const BrandsScreen: React.FC<HomeStackScreenProps<'BrandsScreen'>> = props => {
                 'No description available at the moment'}
             </Text>
           </View>
-        </View>
-        <Spacer height={hp(3)} />
+        </View> */}
+        {/* <Spacer height={hp(3)} /> */}
         <Text style={{fontWeight: '500'}}>Summary</Text>
         <Spacer height={hp(2)} />
 

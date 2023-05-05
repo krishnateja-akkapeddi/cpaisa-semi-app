@@ -28,6 +28,9 @@ import {AuthStackScreenProps} from '../../navigation/stack/AuthStackNavigator';
 import {ChannelPartnerType} from '../../models/enum/ChannelPartnerType';
 import GaInputField from '../../components/GaInputField';
 import {pickMessageFromErrors} from '../../utility/ErrorPicker';
+import {PermissionManager} from '../../utility/permissions/PermissionManager';
+import {PermissionType} from '../../utility/permissions/PermissionsList';
+import {requestManualPermission} from '../../utility/permissions/PermissionWorkers';
 
 const EnterGSTScreen: React.FC<
   AuthStackScreenProps<'EnterGSTScreen'>
@@ -122,7 +125,9 @@ const EnterGSTScreen: React.FC<
     if (gstInfo?.name && panInfo?.name) {
       return null;
     }
+
     const locationInfo = await getLocation();
+
     if (locationInfo) {
       if (state === IdenitifcationType.GST) {
         if (gstInfo) {
@@ -157,15 +162,7 @@ const EnterGSTScreen: React.FC<
         return;
       }
     } else {
-      store.dispatch(
-        openPopup({
-          message:
-            'Locations permissions are required to continue the registration',
-          type: 'error',
-          title: 'Registration Flow',
-          showDismiss: false,
-        }),
-      );
+      requestManualPermission(PermissionType.LOCATION);
     }
   }
 

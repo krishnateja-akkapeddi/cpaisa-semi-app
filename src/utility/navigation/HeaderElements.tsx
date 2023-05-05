@@ -6,15 +6,15 @@ import RootNavigation from '../../navigation/RootNavigation';
 import {DrawerActions} from '@react-navigation/native';
 import Colors from '../../theme/Colors';
 import {wp} from '../responsive/ScreenResponsive';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 
 const isHeaderVisible = (routeName: string): boolean => {
   const name = routeName as keyof RootAllMixedParamList;
   switch (name) {
     case 'LoginScreen':
-    case 'LocationPermissionScreen':
       return false;
+    case 'LocationPermissionScreen':
     default:
       return true;
   }
@@ -35,6 +35,15 @@ const getHeaderRight = (
     case 'DocumentUploadScreen':
     case 'ChooseOrganisationScreen':
     case 'CompleteKYCScreen':
+    case 'LocationPermissionScreen':
+      return (
+        <HeaderRightView
+          showOffers={false}
+          showHelp={false}
+          showQRCode={false}
+          showBell={false}
+        />
+      );
     case 'NotificationScreen':
       return undefined;
     case 'CouponScreen':
@@ -119,6 +128,16 @@ const getHeaderRight = (
         />
       );
     case 'ContactSupport':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+
+    case 'EnterAdditionalDetails':
       return (
         <HeaderRightView
           showBell={false}

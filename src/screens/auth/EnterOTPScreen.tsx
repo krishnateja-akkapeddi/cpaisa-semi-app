@@ -24,6 +24,7 @@ import {fromPairs} from 'lodash';
 import AppLoader from '../../components/indicator/AppLoader';
 import {openPopup} from '../../store/slices/AppSlice';
 import {Timer, TimerType} from '../../utility/timer/TimerClass';
+import {pickMessageFromErrors} from '../../utility/ErrorPicker';
 
 const EnterOTPScreen: React.FC<
   AuthStackScreenProps<'EnterOTPScreen'>
@@ -108,20 +109,19 @@ const EnterOTPScreen: React.FC<
               registerMobile: mobile,
             });
           }
-          dispatch(
-            openPopup({
-              title: 'OTP',
-              type: 'success',
-              message: data?.data?.message,
-            }),
-          );
+          Snackbar.show({
+            text: data?.data?.message,
+            textColor: Colors.white,
+            backgroundColor: Colors.green,
+          });
         } else {
           dispatch(
             openPopup({
               title: 'OTP',
               type: 'error',
-              message:
-                data?.errors?.message ?? AppLocalizedStrings.somethingWrong,
+              message: data.errors?.message
+                ? pickMessageFromErrors(data.errors)
+                : AppLocalizedStrings.somethingWrong,
             }),
           );
         }

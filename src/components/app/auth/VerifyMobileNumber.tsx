@@ -75,25 +75,16 @@ const VerifyMobileNumber = ({mobile, onVerified}: Props) => {
       />
       <Spacer height={hp(5)} />
       <AdaptiveButton
+        loading={verifyOtpLoading}
         isDisable={otp.length < 4 || verifyOtpLoading}
-        title={
-          verifyOtpLoading ? (
-            <AppLoader loading type="none" />
-          ) : (
-            AppLocalizedStrings.submit
-          )
-        }
+        title={AppLocalizedStrings.submit}
         onPress={async () => {
+          setVerifyOtpLoading(true);
           const data = await store
             .dispatch(verifyOtp({mobile: mobile.toString(), otp: otp}))
             .unwrap();
 
           if (data.success) {
-            Snackbar.show({
-              text: data.data.message,
-              duration: 3000,
-              backgroundColor: Colors.green,
-            });
             setIsWhatsappVerified(true);
             onVerified();
           }
@@ -104,6 +95,7 @@ const VerifyMobileNumber = ({mobile, onVerified}: Props) => {
               backgroundColor: Colors.red,
             });
           }
+          setVerifyOtpLoading(false);
         }}
       />
     </View>

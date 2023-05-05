@@ -23,12 +23,7 @@ const DashboardOrganisations: React.FC<Props> = ({organizations}) => {
         <View
           key={index.toString()}
           style={{
-            marginLeft:
-              index % 3 !== 0
-                ? Platform.OS === 'ios'
-                  ? wp('12%')
-                  : wp('14%')
-                : 0,
+            marginLeft: index % 3 !== 0 ? wp('12%') : 0,
           }}>
           <DepartmentItem
             isRounded={false}
@@ -49,17 +44,15 @@ const DashboardOrganisations: React.FC<Props> = ({organizations}) => {
     [],
   );
   return (
-    <View>
-      <FlatList
-        ItemSeparatorComponent={() => <Spacer height={hp(2)} />}
-        columnWrapperStyle={{
-          justifyContent: 'flex-start',
-        }}
-        data={organizations}
-        numColumns={3}
-        renderItem={renderItem}
-      />
-    </View>
+    <FlatList
+      ItemSeparatorComponent={() => <Spacer height={hp(2)} />}
+      columnWrapperStyle={{
+        justifyContent: 'flex-start',
+      }}
+      data={organizations}
+      numColumns={3}
+      renderItem={renderItem}
+    />
   );
 };
 

@@ -300,6 +300,7 @@ const StockistScreen = () => {
                 <StockistList
                   organisations={item.organizations}
                   name={item.firm_name}
+                  gstNo={item.gst_number}
                   //Todo: Update it
                   // image={item}
                   isVisible={expandIndex == index}

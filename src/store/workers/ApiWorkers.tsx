@@ -25,6 +25,7 @@ import {RemoteGenerateOtp} from '../../data/usecases/RemoteGenerateOtp';
 import {RemoteGenerateQrCode} from '../../data/usecases/RemoteGenerateQr';
 import {RemoteReedemReward} from '../../data/usecases/RemoteReedemReward';
 import {RemoteRegisterUser} from '../../data/usecases/RemoteRegisterUser';
+import {RemoteStoreDeviceInfo} from '../../data/usecases/RemoteStoreDeviceInfo';
 import {RemoteUpdateContact} from '../../data/usecases/RemoteUpdateContact';
 import {RemoteUploadInvoice} from '../../data/usecases/RemoteUploadInvoice';
 import ApiEndpoints from '../../domain/ApiEndpoints';
@@ -36,24 +37,6 @@ import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 const authClient = AxiosHttpClient.getInstance();
 export const apiClient = AxiosHttpClient.getInstance();
 export const ordersApiClient = new AxiosHttpClient();
-export class ApiWorkers {
-  token: string;
-  instance: ApiWorkers | null = null;
-
-  constructor(token: string) {
-    if (this.instance) {
-      throw new Error('Only one instance allowed');
-    }
-    this.token = token;
-    this.instance = this;
-    if (!this.instance) {
-      this.instance = this;
-    }
-  }
-  getInstance() {
-    return this.instance;
-  }
-}
 
 export async function setClientHeaders() {
   const rawAuthToken: any = await SharedPreference.shared.getItem(
@@ -204,6 +187,11 @@ const registerUserWorker = new RemoteRegisterUser(
   apiClient,
 );
 
+const saveDeviceInfoWorker = new RemoteStoreDeviceInfo(
+  ApiEndpoints.SAVE_DEVICE_INFO,
+  apiClient,
+);
+
 const fetchOrderSummaryWorker = new RemoteFetchOrderSummary(
   ApiEndpoints.ORDERS_SUMMARY,
   ordersApiClient,
@@ -211,6 +199,7 @@ const fetchOrderSummaryWorker = new RemoteFetchOrderSummary(
 
 export {
   fetchInvoiceSummaryWorker,
+  saveDeviceInfoWorker,
   fetchOffersWorker,
   fetchSliderImagesWorker,
   fetchWalletSummaryWorker,

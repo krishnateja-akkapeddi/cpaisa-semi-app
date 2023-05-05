@@ -11,6 +11,9 @@ import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
 import OrganisationScreen from '../../screens/organisations/OrganisationScreen';
 import BrandsScreen from '../../screens/organisations/BrandsScreen';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/Store';
+import {AppSliceState} from '../../store/slices/AppSlice';
 
 export type OrganisationStackParamList = {
   OrganisationsScreen: RouteParamList;
@@ -27,6 +30,9 @@ export type OrganisationStackScreenProps<
 const Stack = createStackNavigator<OrganisationStackParamList>();
 
 const OrganisationStackNavigator = () => {
+  const {routeNames} = useSelector<RootState, AppSliceState>(state => {
+    return state.app;
+  });
   return (
     <Stack.Navigator
       screenOptions={props => {
@@ -42,7 +48,7 @@ const OrganisationStackNavigator = () => {
       <Stack.Screen
         name="BrandsScreen"
         component={BrandsScreen}
-        options={{title: AppLocalizedStrings.Organisations.name}}
+        options={{title: routeNames.BrandsScreen}}
       />
     </Stack.Navigator>
   );

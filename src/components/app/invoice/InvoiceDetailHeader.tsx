@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Modal} from 'react-native';
+import {View, Text, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import SVGIcon from '../../../utility/svg/SVGIcon';
 import Spacer from '../../layout/Spacer';
@@ -11,10 +11,7 @@ import {AppLocalizedStrings} from '../../../localization/Localization';
 import {InvoiceDetail} from '../../../models/interfaces/InvoiceDetailResponse';
 import AppLoader from '../../indicator/AppLoader';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import {
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+
 import PopupContainer from '../../popup/PopupContainer';
 import AdaptiveButton from '../../button/AdaptiveButton';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -149,15 +146,18 @@ const InvoiceDetailHeader = (props: {
                   style={{
                     backgroundColor: Colors.darkBlack,
                     position: 'absolute',
-                    zIndex: 20,
+                    zIndex: 100,
                     top: hp(5),
                     left: wp(5),
                   }}>
                   <TouchableOpacity
                     onPress={() => {
+                      console.log('CLOSE_BUTTON');
                       setOpenFullImage(false);
                     }}>
-                    <Icon color={Colors.white} size={wp(6)} name="close" />
+                    <View>
+                      <Icon color={Colors.white} size={wp(6)} name="close" />
+                    </View>
                   </TouchableOpacity>
                 </View>
 
@@ -166,9 +166,6 @@ const InvoiceDetailHeader = (props: {
                   useNativeDriver
                   enableSwipeDown
                   onSwipeDown={() => {
-                    setOpenFullImage(false);
-                  }}
-                  onDoubleClick={() => {
                     setOpenFullImage(false);
                   }}
                   renderFooter={() => {

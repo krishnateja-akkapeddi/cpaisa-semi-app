@@ -24,6 +24,7 @@ import ImageView from '../../components/image/ImageView';
 import DepartmentItem from '../../components/app/offers/DepartmentItem';
 import {Convert} from '../../utility/converter/Convert';
 import {OrganisationStackScreenProps} from '../../navigation/stack/OrganisationStackNavigator';
+import RootNavigation from '../../navigation/RootNavigation';
 
 type Props = {};
 const kScreenPadding = wp(5);
@@ -38,10 +39,8 @@ const OrganisationScreen = (
 
   const getClients = useCallback(async () => {
     setLoadingOrganisations(true);
-    let params = {
-      active_wallet_clients: 1,
-    } as ClientListParams.params;
-    const data = await store.dispatch(fetchClients(params)).unwrap();
+
+    const data = await store.dispatch(fetchClients({})).unwrap();
     if (data.success) {
       data.clients.data.unshift({} as ClientEntity);
       setOrganizations(data.clients.data);
@@ -66,14 +65,14 @@ const OrganisationScreen = (
       <Spacer height={hp(2)} />
       <View>
         <FlatList
-          style={{height: hp('100%')}}
+          style={{height: hp('80%')}}
           data={organizations}
           renderItem={val => {
             if (val.index !== 0) {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    props.navigation.navigate('BrandsScreen', {
+                    RootNavigation.navigate('BrandsScreen', {
                       organisation: val.item,
                       isLogin: true,
                     });
@@ -89,7 +88,6 @@ const OrganisationScreen = (
                       borderRadius: 20,
                       paddingLeft: wp(2),
                       paddingRight: wp(2),
-
                       alignItems: 'center',
                     }}>
                     <View>

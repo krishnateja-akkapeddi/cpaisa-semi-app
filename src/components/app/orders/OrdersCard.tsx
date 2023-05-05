@@ -4,6 +4,7 @@ import Fonts from '../../../theme/Fonts';
 import Colors from '../../../theme/Colors';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Spacer from '../../layout/Spacer';
+import {AppLocalizedStrings} from '../../../localization/Localization';
 
 interface ButtonStyle {
   buttonStyle: ViewStyle;
@@ -28,14 +29,24 @@ const OrderCard: React.FC<CardProps> = props => {
 
   return (
     <View style={btnStyle.buttonStyle}>
-      <Text style={styles.commonTextStyle}>{props.status}</Text>
+      <Text style={styles.commonTextStyle}>
+        {props.status ?? AppLocalizedStrings.na}
+      </Text>
       <Spacer height={10} />
-      <Text style={styles.totalInvoiceText}>{props.totalInvoice}</Text>
-      <Text style={styles.invoiceText}>{props.invoiceText}</Text>
+      <Text style={styles.totalInvoiceText}>
+        {props.totalInvoice ?? AppLocalizedStrings.na}
+      </Text>
+      <Text style={styles.invoiceText}>
+        {props.invoiceText ?? AppLocalizedStrings.na}
+      </Text>
       <Spacer height={10} />
 
-      <Text style={styles.commonTextStyle}>{props.rupees}</Text>
-      <Text style={styles.rewardPoint}>{props.rewardPointText}</Text>
+      <Text style={styles.commonTextStyle}>
+        {props.rupees ?? AppLocalizedStrings.na}
+      </Text>
+      <Text style={styles.rewardPoint}>
+        {props.rewardPointText ?? AppLocalizedStrings.na}
+      </Text>
     </View>
   );
 };

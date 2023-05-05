@@ -12,6 +12,8 @@ import RootNavigation from '../../navigation/RootNavigation';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import RegistrationSuccessPopup from '../../components/popup/RegistrationSuccessPopup';
 import {AuthStackScreenProps} from '../../navigation/stack/AuthStackNavigator';
+import GaInputField from '../../components/GaInputField';
+import Spacer from '../../components/layout/Spacer';
 
 const CompleteKYCScreen: React.FC<
   AuthStackScreenProps<'CompleteKYCScreen'>
@@ -21,7 +23,7 @@ const CompleteKYCScreen: React.FC<
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const onContinueHandler = async () => {
-    RootNavigation.navigate('ChooseOrganisationScreen', {
+    RootNavigation.navigate('EnterAdditionalDetails', {
       ...infoFromAdditionalDetails,
       dl_no: licenseNo,
     });
@@ -43,13 +45,13 @@ const CompleteKYCScreen: React.FC<
     <AuthBaseScreen
       title={AppLocalizedStrings.auth.enterDLNo}
       iconName="complete_kyc">
-      <AdaptiveTextInput
-        autoCapitalize="characters"
+      <GaInputField
         value={licenseNo}
         onChangeText={setLicenseNo}
+        label={AppLocalizedStrings.auth.enterLicenseNumber}
         placeholder={AppLocalizedStrings.auth.enterLicenseNumber}
-        style={styles.input}
       />
+      <Spacer height={hp(4)} />
       <AdaptiveButton
         isDisable={!Validator.isValidLicenseNo(licenseNo)}
         title={AppLocalizedStrings.continue}

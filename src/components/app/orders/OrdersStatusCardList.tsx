@@ -69,7 +69,11 @@ const OrdersStatusCardList: React.FC<Props> = ({
                   )}
                   totalInvoice={item.order_count}
                   invoiceText={'Orders'}
-                  rupees={Convert.convertToRupeesFormat(item.total_amount)}
+                  rupees={
+                    item.total_amount
+                      ? Convert.convertToRupeesFormat(item.total_amount)
+                      : AppLocalizedStrings.na
+                  }
                   rewardPointText={'Approx. Amt.'}
                   buttonStyle={{
                     backgroundColor:
@@ -80,8 +84,8 @@ const OrdersStatusCardList: React.FC<Props> = ({
                         : item.status === OrderStatus.REJECTED
                         ? Colors.red
                         : item.status === OrderStatus.DELIVERED
-                        ? Colors.green
-                        : Colors.black,
+                        ? '#88BF88'
+                        : Colors.white,
                   }}
                 />
               </View>
@@ -100,8 +104,6 @@ const styles = StyleSheet.create({
     marginTop: hp('2%'),
   },
   container: {
-    marginTop: hp('2%'),
-
     alignItems: 'center', // ignore this - we'll come back to it
     justifyContent: 'center', // ignore this - we'll come back to it
     flexDirection: 'row',

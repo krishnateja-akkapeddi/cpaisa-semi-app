@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     ...Style.getTextStyle(
       Fonts.getFontSize('headline4'),
       'Medium',
-      Colors.placeholder,
+      Colors.black,
     ),
   },
   btn: {

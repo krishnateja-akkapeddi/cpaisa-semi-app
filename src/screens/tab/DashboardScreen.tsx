@@ -28,6 +28,7 @@ import {
   fetchClients,
   fetchSliderImages,
   fetchWalletSummary,
+  saveDeviceInfo,
 } from '../../store/thunks/ApiThunks';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -37,11 +38,14 @@ import Spacer from '../../components/layout/Spacer';
 import Snackbar from 'react-native-snackbar';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
-import {FlatList} from 'react-native-gesture-handler';
-import DepartmentItem from '../../components/app/offers/DepartmentItem';
-import {Convert} from '../../utility/converter/Convert';
-import RootNavigation from '../../navigation/RootNavigation';
 import DashboardOrganisations from '../../components/drawer/dashboard/DashboardOrganisations';
+import {
+  NotificationListener,
+  NotificationHelper,
+  notificationHelper,
+} from '../../utility/NotificationHelper';
+import {SectionList} from 'react-native';
+import {openPopup} from '../../store/slices/AppSlice';
 
 const DashboardScreen: React.FC<
   BottomTabScreenProps<'DashboardScreen'>
@@ -125,7 +129,19 @@ const DashboardScreen: React.FC<
     }, 2000);
   }, []);
 
+  async function notificationHandler() {
+    const token = await notificationHelper.getFcmTokenFromLocal();
+
+    if (!token) {
+      notificationHelper.requestFcmToken();
+    } else {
+      console.log('TOKEN_ALREADY_AVAILABLE', token);
+    }
+  }
+
   React.useEffect(() => {
+    notificationHandler();
+    NotificationListener();
     fetchImages();
     getWalletSummary();
     getClients();

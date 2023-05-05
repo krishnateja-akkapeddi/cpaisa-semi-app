@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-38:/values-tr/values-tr.xml",
+            "outputFile": "com.channelpaisa.channelpaisa.app-mergeDevDebugResources-39:/values-tr/values-tr.xml",
             "map": [
                 {
                     "source": "/Users/kt/.gradle/caches/transforms-3/987e79bbf77731e030be5ad6acb23fa4/transformed/jetified-play-services-base-18.0.1/res/values-tr/values.xml",

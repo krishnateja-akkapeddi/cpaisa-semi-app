@@ -16,7 +16,7 @@ interface ImageViewProps {
 const ImageView: React.FC<ImageViewProps> = props => {
   return (
     <FastImage
-      defaultSource={require('../../assets/images/placeholder.jpeg')}
+      defaultSource={require('../../assets/images/placeholder.svg')}
       style={props.style}
       source={
         typeof props.source == 'string'

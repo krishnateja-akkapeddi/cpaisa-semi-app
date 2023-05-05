@@ -8,9 +8,10 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-element-textinput';
 import Colors from '../theme/Colors';
-import {hp} from '../utility/responsive/ScreenResponsive';
+import {hp, wp} from '../utility/responsive/ScreenResponsive';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import AdaptiveButton from './button/AdaptiveButton';
 
 type Props = {
   label: string;
@@ -52,13 +53,24 @@ const GaInputField: React.FC<Props> = ({
             {isVerified ? (
               <Icon name="check-circle" size={20} color={Colors.green} />
             ) : (
-              <TouchableOpacity onPress={() => onIconPresss && onIconPresss()}>
-                <Icon
-                  size={20}
-                  color={Colors.yellow}
-                  name="information-outline"
-                />
-              </TouchableOpacity>
+              // <TouchableOpacity onPress={() => onIconPresss && onIconPresss()}>
+              //   <Icon
+              //     size={20}
+              //     color={Colors.yellow}
+              //     name="information-outline"
+              //   />
+              // </TouchableOpacity>
+              <AdaptiveButton
+                onPress={() => onIconPresss && onIconPresss()}
+                buttonStyle={{
+                  width: wp('20%'),
+                  height: hp(4),
+                  marginHorizontal: 1,
+                  backgroundColor: Colors.red,
+                }}
+                textStyle={{fontSize: wp(3)}}
+                title={'Verify'}
+              />
             )}
           </View>
         );

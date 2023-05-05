@@ -11,6 +11,8 @@ import {Convert} from '../../../utility/converter/Convert';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Spacer from '../../layout/Spacer';
 import ProgressBar from './ProgressBar';
+import Icon from 'react-native-vector-icons/AntDesign';
+import TaxtInfo from './TaxtInfo';
 
 interface CouponCardProps {
   item: RewardTransactionEntity;
@@ -21,7 +23,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
   console.log('COUP_ITEM', item);
 
   const [isVisible, setisVisible] = useState(true);
-
+  const [showTaxInfo, setShowTaxInfo] = useState(false);
   const onViewCouponHandler = () => {
     RootNavigation.navigate('CouponScreen', {
       isLogin: true,
@@ -33,6 +35,12 @@ const CouponCard: React.FC<CouponCardProps> = props => {
 
   return (
     <View style={styles.mainContainer}>
+      {showTaxInfo && (
+        <View
+          style={{position: 'absolute', right: wp(1), zIndex: 20, top: hp(5)}}>
+          <TaxtInfo item={props.item} />
+        </View>
+      )}
       <View
         style={{
           display: 'flex',
@@ -40,24 +48,61 @@ const CouponCard: React.FC<CouponCardProps> = props => {
           justifyContent: 'space-between',
           alignContent: 'center',
           alignItems: 'center',
-          marginBottom: hp(2),
+          marginBottom: hp(1),
         }}>
-        <View style={styles.transactionName}>
-          <Text style={styles.transactionText}>{item.organization_name}</Text>
+        <View>
+          <View style={styles.transactionName}>
+            <Text style={styles.transactionText}>{item.organization_name}</Text>
+          </View>
+          <Spacer height={hp(1)} />
+          <View>
+            <Text>Points Redeemed | Flipkart </Text>
+          </View>
         </View>
+
         {/* <View style={styles.transactionName}>
           <Text style={styles.transactionText}>{item.tax_amount}</Text>
         </View>
         <View style={styles.transactionName}>
           <Text style={styles.transactionText}>{item.tax_percentage}</Text>
         </View> */}
-        <View style={styles.nameStyle}>
-          <Text style={styles.titleText}></Text>
-          <Text style={[styles.priceText]}>{item.points}</Text>
+
+        <View style={{paddingRight: wp(1)}}>
+          <TouchableOpacity
+            onPress={() => {
+              setShowTaxInfo(prev => !prev);
+            }}>
+            <Text
+              style={{
+                paddingTop: hp(1),
+                color: Colors.primary,
+                fontWeight: '600',
+              }}>
+              <Icon
+                style={{fontWeight: '600'}}
+                name="infocirlceo"
+                color={Colors.primary}
+              />{' '}
+              Tax Info
+            </Text>
+          </TouchableOpacity>
+
+          <Spacer height={hp(1)} />
+
+          <View>
+            <Text
+              style={{
+                color: Colors.primary,
+                textAlign: 'right',
+              }}>
+              {item.points}
+            </Text>
+          </View>
         </View>
       </View>
+
       <View style={styles.subContainer}>
-        <Spacer height={15} />
+        <Spacer height={hp(3)} />
         <ProgressBar
           items={[
             {
@@ -114,8 +159,9 @@ export default CouponCard;
 
 const styles = StyleSheet.create({
   nameStyle: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
+    alignSelf: 'center',
   },
 
   bottomCard: {

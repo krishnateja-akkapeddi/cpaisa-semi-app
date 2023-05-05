@@ -40,7 +40,7 @@ const EnterDetailsScreen: React.FC<
         },
       }),
     );
-    RootNavigation.navigate('EnterAdditionalDetails', {
+    RootNavigation.navigate('CompleteKYCScreen', {
       ...infoFromIdentity,
       firm_name: shopName,
       address: {
