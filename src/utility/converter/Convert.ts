@@ -75,6 +75,9 @@ export class Convert {
     const words = sentence?.toLowerCase().split(' ');
     if (words) {
       for (let i = 0; i < words?.length; i++) {
+        if (words[i] === ' ') {
+          continue;
+        }
         words[i] = words[i][0]?.toUpperCase() + words[i].slice(1);
       }
       return words.join(' ');

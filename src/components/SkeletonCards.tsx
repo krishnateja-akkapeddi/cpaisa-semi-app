@@ -444,7 +444,7 @@ export const OrderSkeletonCard = () => {
     <View>
       {[1, 2, 3].map(val => {
         return (
-          <View>
+          <View key={val.toString()}>
             {val !== 1 && <Spacer height={hp('2%')} />}
 
             <View

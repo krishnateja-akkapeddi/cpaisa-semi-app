@@ -2,10 +2,18 @@ import {Alert, Platform, Linking} from 'react-native';
 import {check, request} from 'react-native-permissions';
 import {PermissionsList, PermissionType, PlatformType} from './PermissionsList';
 
+export enum PermissionResponse {
+  GRANTED = 'granted',
+  BLOCKED = 'blocked',
+  DENIED = 'denied',
+  UNAVAILABLE = 'unavailable',
+}
+
 export async function Permission(
   permissionType: PermissionType,
   platform: PlatformType,
   job: 'get' | 'check',
+  callbackOnDenied?: Function,
 ) {
   let result;
 
@@ -15,9 +23,14 @@ export async function Permission(
     result = await request(PermissionsList[platform][permissionType]);
   }
   console.log('UREDER_', result);
-  if (result === 'granted') {
+  if (result === PermissionResponse.GRANTED) {
     return true;
-  } else if (result === 'blocked' || 'denied' || 'unavailable') {
+  } else if (
+    result === PermissionResponse.BLOCKED ||
+    PermissionResponse.DENIED ||
+    PermissionResponse.UNAVAILABLE
+  ) {
+    callbackOnDenied && callbackOnDenied(result);
     return false;
   } else {
     return false;

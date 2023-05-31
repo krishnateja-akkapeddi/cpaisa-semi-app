@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   Platform,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 import DatePicker from 'react-native-date-picker';
@@ -194,7 +195,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
               borderColor: Colors.primary,
               width: wp('35%'),
             }}
-            onPress={onEndDatePress}
+            onPress={() => setShowEndDatePicker(true)}
             title={
               endDate
                 ? Convert.dateFormatter(null, 'DD, MMM yyyy', endDate)
@@ -219,7 +220,8 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
             }}
           />
         </View>
-        <View>
+
+        <View style={{flexDirection: 'column', display: 'flex'}}>
           <DatePicker
             open={showEndDatePicker}
             modal
@@ -227,6 +229,18 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
             date={endDate ?? new Date()}
             onDateChange={onEndDateChange}
             onConfirm={date => {
+              if (!startDate) {
+                Alert.alert('Please select the start date first');
+                setEndDate(null);
+                setShowEndDatePicker(false);
+                return;
+              }
+              if (moment(date).isBefore(startDate)) {
+                Alert.alert('End date cannot be lesser than start date');
+                setEndDate(null);
+                setShowEndDatePicker(false);
+                return;
+              }
               setEndDate(date);
               setShowEndDatePicker(false);
             }}

@@ -15,7 +15,6 @@ import Colors from '../../theme/Colors';
 import Fonts from '../../theme/Fonts';
 import AuthBaseScreen from './AuthBaseScreen';
 import {hp} from '../../utility/responsive/ScreenResponsive';
-import useTimer from '../../utility/timer/Timer';
 import {store} from '../../store/Store';
 import {updateContactInfo, verifyOtp} from '../../store/thunks/ApiThunks';
 import {setClientHeaders} from '../../store/workers/ApiWorkers';
@@ -47,12 +46,12 @@ const EnterOTPScreen: React.FC<
     });
   }
 
-  const onSubmitHandler = async () => {
+  const onSubmitHandler = async (s: string) => {
     setVerifyOtpLoading(true);
     try {
       let params = {
         mobile: mobile,
-        otp: otp,
+        otp: s,
       };
 
       if (forUpdateContact) {
@@ -124,6 +123,7 @@ const EnterOTPScreen: React.FC<
                 : AppLocalizedStrings.somethingWrong,
             }),
           );
+          setOtp('');
         }
       } else {
         setVerifyOtpLoading(false);
@@ -156,6 +156,7 @@ const EnterOTPScreen: React.FC<
           : AppLocalizedStrings.auth.enterOTP
       }
       iconName="enter_otp">
+      {verifyOtpLoading && <AppLoader loading type="window" />}
       {forUpdateContact && (
         <View style={styles.resendOTPContainer}>
           <Text style={styles.resendOTP}>
@@ -167,9 +168,13 @@ const EnterOTPScreen: React.FC<
       )}
       {forUpdateContact && <Spacer height={hp('5%')} />}
       {fromNewContact ? (
-        <OTPView code={newContactOtp} onSelect={setNewContactOtp} />
+        <OTPView
+          code={newContactOtp}
+          onSelect={setNewContactOtp}
+          onComplete={onSubmitHandler}
+        />
       ) : (
-        <OTPView code={otp} onSelect={setOtp} />
+        <OTPView code={otp} onSelect={setOtp} onComplete={onSubmitHandler} />
       )}
       <Spacer height={hp('3')} />
       {timer.seconds > 0 ? (
@@ -214,7 +219,7 @@ const EnterOTPScreen: React.FC<
             AppLocalizedStrings.submit
           )
         }
-        onPress={onSubmitHandler}
+        onPress={() => onSubmitHandler(otp)}
         buttonStyle={styles.btnSubmit}
       />
     </AuthBaseScreen>

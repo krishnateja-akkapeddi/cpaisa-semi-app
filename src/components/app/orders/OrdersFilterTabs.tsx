@@ -11,11 +11,9 @@ import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Colors from '../../../theme/Colors';
 import {OrderStatus} from '../../../models/enum/OrderStatusEnum';
 import Animated, {
-  withSpring,
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  withSequence,
   Easing,
 } from 'react-native-reanimated';
 
@@ -24,6 +22,7 @@ type Props = {
   selectedOrderStatus: string;
 };
 
+const animDuration = {};
 export type OrderStatusFilterType = {label: string; value: OrderStatus};
 
 const OrdersFilterTabs: React.FC<Props> = ({
@@ -63,19 +62,19 @@ const OrdersFilterTabs: React.FC<Props> = ({
 
   useEffect(() => {
     if (selectedOrderStatus === OrderStatus.ON_HOLD) {
-      animatedBackgroundView.value = withTiming(wp('0%'));
+      animatedBackgroundView.value = withTiming(wp('0%'), animDuration);
       verticalBounce();
     } else if (selectedOrderStatus === OrderStatus.CREATED) {
-      animatedBackgroundView.value = withTiming(wp('25%'));
+      animatedBackgroundView.value = withTiming(wp('25%'), animDuration);
       verticalBounce();
     } else if (selectedOrderStatus === OrderStatus.DISPATCHED) {
-      animatedBackgroundView.value = withTiming(wp('50%'));
+      animatedBackgroundView.value = withTiming(wp('50%'), animDuration);
       verticalBounce();
     } else if (selectedOrderStatus === OrderStatus.REJECTED) {
-      animatedBackgroundView.value = withTiming(wp('75%'));
+      animatedBackgroundView.value = withTiming(wp('75%'), animDuration);
       verticalBounce();
     } else if (selectedOrderStatus === OrderStatus.DENIED) {
-      animatedBackgroundView.value = withTiming(wp('100%'));
+      animatedBackgroundView.value = withTiming(wp('100%'), animDuration);
       verticalBounce();
     }
   }, [selectedOrderStatus]);

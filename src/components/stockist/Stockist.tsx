@@ -15,7 +15,7 @@ import {AppLocalizedStrings} from '../../localization/Localization';
 import GaCaughtUp from '../GaCaughtUp';
 import SVGIcon from '../../utility/svg/SVGIcon';
 
-type Props = {organisation: ClientEntity};
+type Props = {organisation: ClientEntity; areOffersThere: boolean};
 
 const Stockist = (props: Props) => {
   const [expandIndex, setExpandIndex] = useState(-1);
@@ -86,12 +86,16 @@ const Stockist = (props: Props) => {
     setTimeout(() => getStockistsList({}, 1, false));
   }, []);
   return (
-    <View style={{paddingHorizontal: wp('5%'), height: hp('55%')}}>
+    <View
+      style={{
+        height: hp('63%'),
+      }}>
       <Spacer height={hp(3)} />
+
       <FlatList
         ListFooterComponent={
           <View>
-            {loadingStockists ? (
+            {props.areOffersThere && loadingStockists ? (
               [1, 2, 3, 4, 5, 6].map((val, ind) => {
                 return (
                   <View key={ind.toString()}>
@@ -113,11 +117,18 @@ const Stockist = (props: Props) => {
             {!loadingStockists && stockists.length === 0 && (
               <>
                 <SVGIcon
-                  style={{marginLeft: wp(15)}}
+                  style={{
+                    marginLeft: wp('15%'),
+                  }}
                   size={wp(60)}
                   name={'no-data-found-art'}
                 />
-                <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    paddingLeft: wp('15%'),
+                  }}>
                   No Stockists Found
                 </Text>
               </>
@@ -130,7 +141,7 @@ const Stockist = (props: Props) => {
             getStockistsList({}, currentPage, true).then(() => {});
         }}
         renderItem={({item, index}) => (
-          <>
+          <View>
             <StockistList
               organisations={item.organizations}
               name={item.firm_name}
@@ -141,7 +152,7 @@ const Stockist = (props: Props) => {
               gstNo={item.gst_number}
             />
             <Spacer height={hp(2)} />
-          </>
+          </View>
         )}
         data={stockists}
       />

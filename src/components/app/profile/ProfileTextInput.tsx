@@ -71,7 +71,7 @@ const ProfileTextInput: React.FC<ProfileTextInputProps> = props => {
       </View>
       <TextInput
         multiline
-        value={Convert.toTitleCase(value)}
+        value={value}
         editable={editable}
         style={styles.input}
         placeholder={placeholder}

@@ -27,6 +27,7 @@ type Props = {
   isVerified?: boolean;
   showVerificationStatus?: boolean;
   onIconPresss?: Function;
+  autoCapitalize?: boolean;
 };
 
 const GaInputField: React.FC<Props> = ({
@@ -43,6 +44,7 @@ const GaInputField: React.FC<Props> = ({
   showVerificationStatus = false,
   isVerified,
   onIconPresss,
+  autoCapitalize,
 }) => {
   return (
     <TextInput
@@ -75,6 +77,7 @@ const GaInputField: React.FC<Props> = ({
           </View>
         );
       }}
+      autoCapitalize={autoCapitalize ? 'characters' : 'none'}
       returnKeyType="done"
       showIcon={showVerificationStatus}
       editable={!isNotEditable}

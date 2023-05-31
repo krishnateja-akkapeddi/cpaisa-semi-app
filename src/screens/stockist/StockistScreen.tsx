@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, View, FlatList} from 'react-native';
+import {SafeAreaView, StyleSheet, View, FlatList, Text} from 'react-native';
 import React, {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 import OrganisationList from '../../components/app/offers/OrganisationList';
 import {AppLocalizedStrings} from '../../localization/Localization';
@@ -29,6 +29,8 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import GaCaughtUp from '../../components/GaCaughtUp';
 import {OrganisationSkeletonItem} from '../../components/SkeletonCards';
 import RootNavigation from '../../navigation/RootNavigation';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
+import SVGIcon from '../../utility/svg/SVGIcon';
 
 export type getStockistsListParams = {
   fromFilter?: boolean;
@@ -59,7 +61,7 @@ const StockistScreen = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [loadingStockists, setLoadingStockists] = useState(false);
+  const [loadingStockists, setLoadingStockists] = useState(true);
   const [resetFilterLoading, setResetFilterLoading] = useState(false);
   const dropDownHandler = (index: number) => {
     setExpandIndex(index == expandIndex ? -1 : index);
@@ -211,13 +213,15 @@ const StockistScreen = () => {
           ) : (
             <View>
               <OrganisationList
-                style={{paddingLeft: wp('5'), paddingRight: wp('5')}}
+                style={styles.flatList}
+                contentContainerStyle={styles.flatListContent}
                 selectedIds={selectedIds}
                 horizontal={true}
                 showAll={true}
                 data={organizations}
                 onSelect={ids => {
                   setSelectedIds(ids);
+                  setExpandIndex(-1);
                   const orgId = organizations && organizations[ids[0]]?.id;
                   if (orgId) {
                     setStockists([]);
@@ -238,6 +242,7 @@ const StockistScreen = () => {
           )}
         </View>
       </View>
+
       <View style={styles.bottomContainer}>
         <View style={styles.searchContainer}>
           <View style={{flex: 1}}>
@@ -248,6 +253,7 @@ const StockistScreen = () => {
               placeholder={AppLocalizedStrings.search.enterName}
             />
           </View>
+
           {
             // Todo: Under review
             /* <AdaptiveButton
@@ -285,10 +291,26 @@ const StockistScreen = () => {
                       </View>
                     );
                   })
-                ) : !isNextPageThere ? (
+                ) : stockists.length > 0 && !isNextPageThere ? (
                   <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
                 ) : (
                   <View />
+                )}
+                {!loadingStockists && stockists.length === 0 && (
+                  <>
+                    <SVGIcon
+                      style={{marginLeft: wp(15)}}
+                      size={wp(60)}
+                      name={'no-data-found-art'}
+                    />
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                      }}>
+                      No Stockists Found
+                    </Text>
+                  </>
                 )}
               </View>
             }
@@ -330,6 +352,7 @@ const styles = StyleSheet.create({
   topContainer: {
     shadowColor: '#000',
     backgroundColor: '#fff',
+
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 5,
@@ -365,5 +388,11 @@ const styles = StyleSheet.create({
   },
   bottomFlatListContainer: {
     flex: 1,
+  },
+  flatList: {
+    marginBottom: hp(1.5),
+  },
+  flatListContent: {
+    paddingHorizontal: wp(2),
   },
 });

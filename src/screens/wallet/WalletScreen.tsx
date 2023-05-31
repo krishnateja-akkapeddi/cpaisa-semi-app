@@ -55,6 +55,8 @@ import WalletDivisionPicker, {
 } from '../../components/app/wallet/WalletDivisionPicker';
 import {WalletStackScreenProps} from '../../navigation/stack/WalletStackNavigator';
 import SVGIcon from '../../utility/svg/SVGIcon';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
+import {EventProvider} from 'react-native-outside-press';
 
 export enum WalletMode {
   Transaction,
@@ -95,7 +97,7 @@ const WalletScreen: React.FC<
     Transactions as Transaction[],
   );
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const [showTaxInfo, setShowTaxInfo] = useState(false);
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [selectedIds, setSelectedIds] = useState<number[]>([0]);
   const [mode, setMode] = useState(WalletMode.Transaction);
@@ -359,14 +361,18 @@ const WalletScreen: React.FC<
     setShowFilter(false);
   };
 
-  const getClients = useCallback(async () => {
+  const getClients = async () => {
     setLoadingOrganisations(true);
     let params = {
       active_wallet_clients: 1,
     } as ClientListParams.params;
     const data = await store.dispatch(fetchClients(params)).unwrap();
     if (data.success) {
-      data.clients.data.unshift({} as ClientEntity);
+      if (data.clients === null) {
+        setLoadingOrganisations(false);
+        return;
+      }
+      data?.clients?.data?.unshift({} as ClientEntity);
       setOrganizations(data.clients.data);
     } else {
       Snackbar.show({
@@ -378,7 +384,7 @@ const WalletScreen: React.FC<
       });
     }
     setLoadingOrganisations(false);
-  }, []);
+  };
 
   const PickerView = useCallback(() => {
     return (
@@ -394,7 +400,10 @@ const WalletScreen: React.FC<
             </>
           ) : (
             <View>
-              {selectedWallet && walletSummaries && walletSummary ? (
+              {organizations &&
+              selectedWallet &&
+              walletSummaries &&
+              walletSummary ? (
                 <WalletDivisionPicker
                   organizations={organizations}
                   walletSummaries={walletSummaries}
@@ -540,18 +549,23 @@ const WalletScreen: React.FC<
   const keyExtractor = (item: RewardTransactionEntity, index: number) =>
     index.toString();
 
-  const renderItem = ({item}: {item: RewardTransactionEntity}) => {
-    return (
-      <View style={styles.listItem}>
-        {transactionMode == TransactionMode.AllTransaction ? (
-          // <TransactionCard item={item} />
-          <View></View>
-        ) : (
-          <CouponCard item={item} />
-        )}
-      </View>
-    );
-  };
+  const renderItem = useCallback(
+    ({item}: {item: RewardTransactionEntity}) => {
+      return (
+        <View style={styles.listItem}>
+          {transactionMode == TransactionMode.AllTransaction ? (
+            // <TransactionCard item={item} />
+            <View></View>
+          ) : (
+            <EventProvider>
+              <CouponCard showTaxInfo={showTaxInfo} item={item} />
+            </EventProvider>
+          )}
+        </View>
+      );
+    },
+    [showTaxInfo],
+  );
 
   const fetchScreenData = useCallback(() => {
     getClients();
@@ -607,148 +621,154 @@ const WalletScreen: React.FC<
     }
   }, [selectedWallet]);
 
+  React.useEffect(() => {
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      setShowTaxInfo(prev => !prev);
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [props.navigation]);
+
   return (
     <SafeAreaView>
-      <GaScrollView
-        onRefresh={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        hasMore={currentPage < (lastPage ? lastPage : 1)}
-        onEndReached={async () => {
-          !rewardRequestListLoading &&
-            (await getRewardRequestList({}, currentPage + 1, true));
-        }}
-        data={
-          <View>
-            <FlatList
-              onEndReachedThreshold={2}
-              extraData={rewardRequestList}
-              windowSize={21}
-              initialNumToRender={10}
-              maxToRenderPerBatch={rewardRequestList.length}
-              ListHeaderComponent={
-                <>
-                  <View style={styles.topContainer}>
-                    {loadingOrganisations ? (
-                      <View style={styles.flatList}>
-                        <Spacer height={hp('1%')} />
-                        <View style={{paddingLeft: wp('5%')}}>
-                          <OrganisationSkeletonItem />
-                        </View>
-                        <Spacer height={hp('3%')} />
-                      </View>
-                    ) : (
-                      <OrganisationList
-                        loading={!organizations}
-                        style={styles.flatList}
-                        contentContainerStyle={styles.flatListContent}
-                        selectedIds={selectedIds}
-                        horizontal={true}
-                        showAll={true}
-                        data={organizations}
-                        onSelect={ids => {
-                          setSelectedIds(ids);
-                          setSelectedWallet(null);
-                          setRewardRequestListParams({});
-                          const orgId =
-                            organizations && organizations[ids[0]]?.id;
-                          if (orgId) {
-                            setSelectedOrg(orgId);
-                            getRewardRequestList({
-                              client_id: orgId,
-                              paramsPage: 1,
-                              organization_id: -1,
-                            });
-                            getWalletSummary(orgId);
-                          } else {
-                            setSelectedOrg(null);
-                            getRewardRequestList({
-                              client_id: -1,
-                              paramsPage: 1,
-                              organization_id: -1,
-                            });
-                            getWalletSummary();
-                          }
-                        }}
-                      />
-                    )}
-                  </View>
-                  {listHeaderComponent()}
-                </>
-              }
-              data={[]}
-              ItemSeparatorComponent={itemSeparatorComponent}
-              renderItem={renderItem}
-              keyExtractor={keyExtractor}
-            />
-
-            <View>
-              <FlatList renderItem={renderItem} data={rewardRequestList} />
-              {rewardRequestListLoading && (
-                <View style={{marginVertical: 40, marginBottom: hp(10)}}>
-                  <AppLoader type="none" loading={true} />
-                </View>
-              )}
-
-              {currentPage === lastPage && rewardRequestList.length > 0 && (
-                <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
-              )}
-              {!rewardRequestListLoading && rewardRequestList.length === 0 && (
-                <>
-                  <SVGIcon
-                    style={{marginLeft: wp(20)}}
-                    name={'no-coupon-found-art'}
-                    size={wp(60)}
-                  />
-                  <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                    No Coupons Found
-                  </Text>
-                </>
-              )}
-            </View>
-          </View>
-        }
-      />
-      {showFilter && (
-        <TransactionFilterPopup
-          enablePoints={false}
-          setEndDate={setEndDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          startDate={startDate}
-          setQuarter={setQuarter}
-          applyLoading={rewardRequestListLoading}
-          resetFilterLoading={resetFilterLoading}
-          quarter={quarter}
-          setYear={setYear}
-          year={year}
-          params={rewardRequestListParams}
-          setParams={setRewardRequestListParams}
-          pointsRangeTitle={
-            transactionMode === TransactionMode.AllTransaction
-              ? AppLocalizedStrings.filter.approvedPointsRange
-              : AppLocalizedStrings.filter.rewardPointsRange
+      <GaNoInternetFound>
+        <GaScrollView
+          onRefresh={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          showRange={transactionMode == TransactionMode.AllTransaction}
-          showInvoiceStatus={transactionMode == TransactionMode.AllTransaction}
-          showTransaxtion={transactionMode == TransactionMode.AllTransaction}
-          showReedem={transactionMode == TransactionMode.CouponCode}
-          onApply={onApplyHandler}
-          onClear={onClearHandler}
-          onDismiss={onDismissHandler}
+          hasMore={currentPage < (lastPage ? lastPage : 1)}
+          onEndReached={async () => {
+            !rewardRequestListLoading &&
+              (await getRewardRequestList({}, currentPage + 1, true));
+          }}
+          data={
+            <View>
+              <FlatList
+                onEndReachedThreshold={2}
+                extraData={rewardRequestList}
+                windowSize={21}
+                initialNumToRender={10}
+                maxToRenderPerBatch={rewardRequestList.length}
+                ListHeaderComponent={
+                  <>
+                    <View style={styles.topContainer}>
+                      {loadingOrganisations ? (
+                        <View style={styles.flatList}>
+                          <Spacer height={hp('1%')} />
+                          <View style={{paddingLeft: wp('5%')}}>
+                            {loadingOrganisations && (
+                              <OrganisationSkeletonItem />
+                            )}
+                          </View>
+                          <Spacer height={hp('3%')} />
+                        </View>
+                      ) : (
+                        <OrganisationList
+                          style={styles.flatList}
+                          contentContainerStyle={styles.flatListContent}
+                          selectedIds={selectedIds}
+                          horizontal={true}
+                          showAll={true}
+                          data={organizations}
+                          onSelect={ids => {
+                            setSelectedIds(ids);
+                            setSelectedWallet(null);
+                            setRewardRequestListParams({});
+                            const orgId =
+                              organizations && organizations[ids[0]]?.id;
+                            if (orgId) {
+                              setSelectedOrg(orgId);
+                              getRewardRequestList({
+                                client_id: orgId,
+                                paramsPage: 1,
+                                organization_id: -1,
+                              });
+                              getWalletSummary(orgId);
+                            } else {
+                              setSelectedOrg(null);
+                              getRewardRequestList({
+                                client_id: -1,
+                                paramsPage: 1,
+                                organization_id: -1,
+                              });
+                              getWalletSummary();
+                            }
+                          }}
+                        />
+                      )}
+                    </View>
+                    {listHeaderComponent()}
+                  </>
+                }
+                data={[]}
+                ItemSeparatorComponent={itemSeparatorComponent}
+                renderItem={renderItem}
+                keyExtractor={keyExtractor}
+              />
+
+              <View>
+                <FlatList renderItem={renderItem} data={rewardRequestList} />
+                {rewardRequestListLoading && (
+                  <View style={{marginVertical: 40, marginBottom: hp(10)}}>
+                    <AppLoader type="none" loading={true} />
+                  </View>
+                )}
+
+                {currentPage === lastPage && rewardRequestList.length > 0 && (
+                  <GaCaughtUp message={AppLocalizedStrings.caughtUp} />
+                )}
+                {!rewardRequestListLoading &&
+                  rewardRequestList.length === 0 && (
+                    <>
+                      <SVGIcon
+                        style={{marginLeft: wp(20)}}
+                        name={'no-coupon-found-art'}
+                        size={wp(60)}
+                      />
+                      <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                        No Coupons Found
+                      </Text>
+                    </>
+                  )}
+              </View>
+            </View>
+          }
         />
-      )}
-      {rewardRequestList.length === 0 && !rewardRequestListLoading && (
-        <View style={styles.noDataContainer}>
-          <Text
-            style={{
-              ...styles.noDataText,
-              color: Colors.primary,
-            }}>
-            No Coupons Found
-          </Text>
-        </View>
-      )}
+        {showFilter && (
+          <TransactionFilterPopup
+            enablePoints={false}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            startDate={startDate}
+            setQuarter={setQuarter}
+            applyLoading={rewardRequestListLoading}
+            resetFilterLoading={resetFilterLoading}
+            quarter={quarter}
+            setYear={setYear}
+            year={year}
+            params={rewardRequestListParams}
+            setParams={setRewardRequestListParams}
+            pointsRangeTitle={
+              transactionMode === TransactionMode.AllTransaction
+                ? AppLocalizedStrings.filter.approvedPointsRange
+                : AppLocalizedStrings.filter.rewardPointsRange
+            }
+            showRange={transactionMode == TransactionMode.AllTransaction}
+            showInvoiceStatus={
+              transactionMode == TransactionMode.AllTransaction
+            }
+            showTransaxtion={transactionMode == TransactionMode.AllTransaction}
+            showReedem={transactionMode == TransactionMode.CouponCode}
+            onApply={onApplyHandler}
+            onClear={onClearHandler}
+            onDismiss={onDismissHandler}
+          />
+        )}
+      </GaNoInternetFound>
     </SafeAreaView>
   );
 };

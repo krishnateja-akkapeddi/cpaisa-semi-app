@@ -1,15 +1,15 @@
 import React, {useCallback} from 'react';
 import {
   Image,
+  Platform,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
+  NativeModules,
   View,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import PriorityNotificationList from '../../components/app/dashboard/PriorityNotificationList';
-import SuggestionList from '../../components/app/dashboard/SuggestionList';
 import WalletOverView from '../../components/app/dashboard/WalletOverView';
 import Carousel from '../../components/carousel/Carousel';
 import ImageView from '../../components/image/ImageView';
@@ -21,19 +21,16 @@ import {
   WalletSummaryResponse,
 } from '../../models/interfaces/WalletSummary';
 import {BottomTabScreenProps} from '../../navigation/navigator/BottomTabNavigator';
-import {RootState, store} from '../../store/Store';
-import OrganisationList from '../../components/app/offers/OrganisationList';
-
+import {store} from '../../store/Store';
 import {
   fetchClients,
   fetchSliderImages,
   fetchWalletSummary,
-  saveDeviceInfo,
 } from '../../store/thunks/ApiThunks';
+
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import Animated, {log} from 'react-native-reanimated';
-import {useDispatch} from 'react-redux';
 import Spacer from '../../components/layout/Spacer';
 import Snackbar from 'react-native-snackbar';
 import {ClientListParams} from '../../domain/usages/FetchClientsList';
@@ -41,28 +38,25 @@ import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
 import DashboardOrganisations from '../../components/drawer/dashboard/DashboardOrganisations';
 import {
   NotificationListener,
-  NotificationHelper,
   notificationHelper,
 } from '../../utility/NotificationHelper';
-import {SectionList} from 'react-native';
-import {openPopup} from '../../store/slices/AppSlice';
+import {PlatformType} from '../../utility/permissions/PermissionsList';
 
 const DashboardScreen: React.FC<
   BottomTabScreenProps<'DashboardScreen'>
 > = props => {
   const [organizations, setOrganizations] = React.useState<ClientEntity[]>([]);
   const [loadingOrganisations, setLoadingOrganisations] = React.useState(true);
-
   const [images, setImages] = React.useState<string[]>();
   const [loading, setLoading] = React.useState(true);
-  const dispatch = useDispatch();
   const [refreshing, setRefreshing] = React.useState(false);
   const [refreshDashboard, setRefreshDashboard] = React.useState(false);
   const [walletSummaryLoading, setWalletSummaryLoading] = React.useState(false);
   const [walletSummary, setWalletSummary] = React.useState<WalletSummary>(
     {} as WalletSummary,
   );
-
+  const or = NativeModules.GoapptivDocumentScanner;
+  console.info(or);
   const fetchImages = async () => {
     setLoading(true);
     let imagesUrl: string[] = [];
@@ -80,6 +74,7 @@ const DashboardScreen: React.FC<
     setImages(imagesUrl);
     setLoading(false);
   };
+
   const getWalletSummary = React.useCallback(async () => {
     setWalletSummaryLoading(true);
     const data: WalletSummaryResponse = await store
@@ -195,6 +190,7 @@ const DashboardScreen: React.FC<
           renderItem={renderItem}
         />
       )}
+
       {/*
       //Todo: Will be implemented next release
        <PriorityNotificationList items={notificatios} /> */}
@@ -213,7 +209,7 @@ const DashboardScreen: React.FC<
         {organizations && (
           <DashboardOrganisations organizations={organizations} />
         )}
-        <Spacer height={hp(5)} />
+        <Spacer height={hp(10)} />
       </View>
     </ScrollView>
   );
@@ -228,10 +224,10 @@ const styles = StyleSheet.create({
   seprator: {width: wp('20%')},
 
   banner: {
-    height: 260,
+    height: Platform.OS === PlatformType.ANDROID ? hp(29) : hp(29),
     alignSelf: 'center',
-    resizeMode: 'cover',
-    width: '100%',
+    resizeMode: Platform.OS === PlatformType.ANDROID ? 'stretch' : 'cover',
+    width: Platform.OS === PlatformType.ANDROID ? wp(90) : wp(92),
     borderRadius: Style.kBorderRadius,
     borderWidth: 1,
     borderColor: Colors.border,

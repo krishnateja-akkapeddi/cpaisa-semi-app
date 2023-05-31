@@ -19,22 +19,24 @@ const CompleteKYCScreen: React.FC<
   AuthStackScreenProps<'CompleteKYCScreen'>
 > = props => {
   const infoFromAdditionalDetails = props?.route?.params;
-  const [licenseNo, setLicenseNo] = useState('');
+  const [licenseNo, setLicenseNo] = useState<null | string>(null);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const onContinueHandler = async () => {
-    RootNavigation.navigate('EnterAdditionalDetails', {
-      ...infoFromAdditionalDetails,
-      dl_no: licenseNo,
-    });
+    licenseNo &&
+      RootNavigation.navigate('EnterAdditionalDetails', {
+        ...infoFromAdditionalDetails,
+        dl_no: licenseNo,
+      });
     // setShowSuccessPopup(true);
   };
 
   const goToHomeHandler = () => {
-    RootNavigation.navigate('ChooseOrganisationScreen', {
-      ...infoFromAdditionalDetails,
-      dl_no: licenseNo,
-    });
+    licenseNo &&
+      RootNavigation.navigate('ChooseOrganisationScreen', {
+        ...infoFromAdditionalDetails,
+        dl_no: licenseNo,
+      });
     // setTimeout(async () => {
     //   await SharedPreference.shared.setItem(kSharedKeys.userDetails, '');
     //   RootNavigation.replace('Drawer');
@@ -46,14 +48,14 @@ const CompleteKYCScreen: React.FC<
       title={AppLocalizedStrings.auth.enterDLNo}
       iconName="complete_kyc">
       <GaInputField
-        value={licenseNo}
+        value={licenseNo ?? ''}
         onChangeText={setLicenseNo}
         label={AppLocalizedStrings.auth.enterLicenseNumber}
         placeholder={AppLocalizedStrings.auth.enterLicenseNumber}
       />
       <Spacer height={hp(4)} />
       <AdaptiveButton
-        isDisable={!Validator.isValidLicenseNo(licenseNo)}
+        isDisable={!licenseNo}
         title={AppLocalizedStrings.continue}
         onPress={onContinueHandler}
         buttonStyle={styles.btnContinue}

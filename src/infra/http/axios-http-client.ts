@@ -48,6 +48,7 @@ export class AxiosHttpClient
           : params.headers,
       });
     } catch (error) {
+      console.log('ACIOS_EIR', error);
       const err = error as AxiosError;
       if (err.response) {
         return err.response;

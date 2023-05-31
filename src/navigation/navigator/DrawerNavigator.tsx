@@ -37,6 +37,10 @@ import WalletScreen from '../../screens/wallet/WalletScreen';
 import WalletStackNavigator, {
   WalletStackParamList,
 } from '../stack/WalletStackNavigator';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
+import {useAnimatedStyle, useSharedValue} from 'react-native-reanimated';
+import {wp} from '../../utility/responsive/ScreenResponsive';
+import RootNavigation from '../RootNavigation';
 
 export type DrawerParamList = {
   HomeStack: NavigatorScreenParams<HomeStackParamList>;
@@ -66,7 +70,9 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      drawerContent={props => <CustomDrawer {...props} />}
+      drawerContent={props => {
+        return <CustomDrawer {...props} />;
+      }}
       screenOptions={NavigationTheme.drawerOptions}>
       <Drawer.Screen
         name="HomeStack"
@@ -77,8 +83,7 @@ const DrawerNavigator = () => {
             icon: 'home',
             props: props,
           })
-        }
-      />
+        }></Drawer.Screen>
       <Drawer.Screen
         name="ProfileStack"
         component={ProfileStackNavigator}
@@ -170,9 +175,3 @@ const styles = StyleSheet.create({
 });
 
 export default DrawerNavigator;
-function dispatch(arg0: {
-  payload: import('../../models/interfaces/AuthResponse').AuthResult;
-  type: string;
-}) {
-  throw new Error('Function not implemented.');
-}

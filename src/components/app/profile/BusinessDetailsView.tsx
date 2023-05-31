@@ -5,6 +5,7 @@ import Spacer from '../../layout/Spacer';
 import {hp} from '../../../utility/responsive/ScreenResponsive';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import {ChannelPartner} from '../../../models/interfaces/AuthResponse';
+import {Convert} from '../../../utility/converter/Convert';
 
 interface BusinessDetailsViewProps {
   style?: ViewStyle;
@@ -28,7 +29,9 @@ const BusinessDetailsView: React.FC<BusinessDetailsViewProps> = ({
       <ProfileTextInput
         isEditable={false}
         title={AppLocalizedStrings.profile.businessName}
-        value={channelPartner?.firm_name ?? AppLocalizedStrings.na}
+        value={Convert.toTitleCase(
+          channelPartner?.firm_name ?? AppLocalizedStrings.na,
+        )}
         onChangeText={setBusinessName}
       />
 
@@ -41,19 +44,19 @@ const BusinessDetailsView: React.FC<BusinessDetailsViewProps> = ({
       />
       {channelPartner?.pan_no && (
         <>
-          {/* <Spacer height={kSpacing} /> */}
+          <Spacer height={kSpacing} />
           <ProfileTextInput
             isEditable={false}
             title={AppLocalizedStrings.profile.panNo}
             value={channelPartner?.pan_no}
             onChangeText={setPAN}
           />
+          <Spacer height={kSpacing} />
         </>
       )}
-      <Spacer height={kSpacing} />
       {channelPartner?.gst_no && (
         <>
-          {/* <Spacer height={kSpacing} /> */}
+          <Spacer height={kSpacing} />
           <ProfileTextInput
             isEditable={false}
             title={AppLocalizedStrings.profile.gstNo}
@@ -65,11 +68,11 @@ const BusinessDetailsView: React.FC<BusinessDetailsViewProps> = ({
       <Spacer height={kSpacing} />
       <ProfileTextInput
         title={AppLocalizedStrings.profile?.address}
-        value={
+        value={Convert.toTitleCase(
           channelPartner?.address
             ? `${channelPartner?.address.line}`
-            : AppLocalizedStrings.na
-        }
+            : AppLocalizedStrings.na,
+        )}
         onChangeText={() => {}}
       />
     </View>

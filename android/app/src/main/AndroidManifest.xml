@@ -5,9 +5,18 @@
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.CALL_PHONE" />
 
+<uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission
+        android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal" />
 
     <application
       android:name=".MainApplication"
@@ -15,7 +24,9 @@
       android:icon="@mipmap/appicon"
       android:usesCleartextTraffic="true"
       android:roundIcon="@mipmap/appicon"
-      android:allowBackup="false"
+      android:allowBackup="true"
+      android:requestLegacyExternalStorage="true"
+      android:largeHeap="true"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
@@ -29,5 +40,20 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <activity
+            android:name="com.channelpaisa.scanner.DocumentScannerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.FullScreen" />
+
+        <provider
+            android:name="com.channelpaisa.scanner.DocumentScannerFileProvider"
+            android:authorities="${applicationId}.DocumentScannerFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 </manifest>

@@ -17,6 +17,7 @@ import Spacer from '../../components/layout/Spacer';
 import PopupContainer from '../../components/popup/PopupContainer';
 import Fonts from '../../theme/Fonts';
 import {store} from '../../store/Store';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {
   fetchDivisions,
   generateOtp,
@@ -50,12 +51,14 @@ const EnterAdditionalDetails: React.FC<
   const [annualRevenue, setAnnualRevenue] = useState('');
   const [divisions, setDivisions] = useState<PickerItem[]>();
   const [selectedDivision, setSelectedDivision] = useState<PickerItem>();
-  const [errorBoundary, setErrorBoundary] = useState({color: Colors.red});
+  const [loading, setLoading] = useState(false);
+  const [isTermsAndCondtionsAgreed, setIsTermsAndCondtionsAgreed] =
+    useState(false);
   const infoFromAdditionalDetails = props?.route?.params;
 
   const onContinueHandler = async () => {
     validator();
-
+    setLoading(true);
     if (infoFromAdditionalDetails) {
       const registerUserParams: RegisterUserParams.params = {
         no_of_customer: customersCount,
@@ -75,35 +78,36 @@ const EnterAdditionalDetails: React.FC<
       if (infoFromAdditionalDetails.pan_no) {
         registerUserParams.pan_no = infoFromAdditionalDetails.pan_no;
       }
-      // const data = await store
-      //   .dispatch(registerUser(registerUserParams))
-      //   .unwrap();
-      // if (data.success) {
-      //   const authResult = convertToAuthResult(data);
-      //   store.dispatch(authSlice.actions.storeAuthResult(authResult));
-      //   const stringData = JSON.stringify(authResult);
-      //   await SharedPreference.shared.setUser(stringData);
-      //   await SharedPreference.shared
-      //     .setToken(authResult?.data?.user.auth_token)
-      //     .then(async () => {
-      //       await setClientHeaders();
-      //     })
-      //     .then(() => {
-      //       RootNavigation.replace('Drawer');
-      //     });
-      // } else {
-      //   if (data.errors) {
-      //     store.dispatch(
-      //       openPopup({
-      //         message: pickMessageFromErrors(data.errors),
-      //         type: 'danger',
-      //         title: 'Registration',
-      //       }),
-      //     );
-      //   }
-      // }
+      const data = await store
+        .dispatch(registerUser(registerUserParams))
+        .unwrap();
+      if (data.success) {
+        const authResult = convertToAuthResult(data);
+        store.dispatch(authSlice.actions.storeAuthResult(authResult));
+        const stringData = JSON.stringify(authResult);
+        await SharedPreference.shared.setUser(stringData);
+        await SharedPreference.shared
+          .setToken(authResult?.data?.user.auth_token)
+          .then(async () => {
+            await setClientHeaders();
+          })
+          .then(() => {
+            RootNavigation.replace('Drawer');
+          });
+      } else {
+        if (data.errors) {
+          store.dispatch(
+            openPopup({
+              message: pickMessageFromErrors(data.errors),
+              type: 'danger',
+              title: 'Registration',
+            }),
+          );
+        }
+      }
       console.log('FINAL_PARAMS', registerUserParams);
     }
+    setLoading(false);
   };
 
   const getOtp = async () => {
@@ -141,6 +145,15 @@ const EnterAdditionalDetails: React.FC<
     if (referredBy === '' || referredBy.length === 0) {
       return false;
     }
+    if (annualRevenue === '' || annualRevenue.length === 0) {
+      return false;
+    }
+    if (!isWhatsappVerified) {
+      return false;
+    }
+    if (!isTermsAndCondtionsAgreed) {
+      return false;
+    }
 
     return true;
   }
@@ -150,6 +163,9 @@ const EnterAdditionalDetails: React.FC<
       referredBy: referredBy ? true : false,
       annualRevenue: annualRevenue ? true : false,
       customersCount: customersCount ? true : false,
+      whatsappNumber: whatsappNumber ? true : false,
+      isTermsAndCondtionsAgreed,
+      isWhatsappVerified,
     };
   };
 
@@ -162,6 +178,7 @@ const EnterAdditionalDetails: React.FC<
           label: Convert.toTitleCase(val.name),
         };
       });
+      orgs.unshift({label: 'Select Division', value: 'select_division'});
       setDivisions(orgs);
     }
   };
@@ -218,9 +235,6 @@ const EnterAdditionalDetails: React.FC<
       />
       <Spacer height={hp('2%')} />
       <GaInputField
-        customInputStyle={{
-          borderColor: !validator().customersCount ? Colors.red : '#DDDDDD',
-        }}
         label="Approx Customer Count"
         value={customersCount}
         onChangeText={setCustomersCount}
@@ -230,9 +244,6 @@ const EnterAdditionalDetails: React.FC<
       <Spacer height={hp('2%')} />
 
       <GaInputField
-        customInputStyle={{
-          borderColor: !validator().annualRevenue ? Colors.red : '#DDDDDD',
-        }}
         label={'Approx Revenue'}
         value={annualRevenue}
         keyboardType="decimal-pad"
@@ -241,9 +252,6 @@ const EnterAdditionalDetails: React.FC<
       />
       <Spacer height={hp('2%')} />
       <GaInputField
-        customInputStyle={{
-          borderColor: !validator().referredBy ? Colors.red : '#DDDDDD',
-        }}
         label={AppLocalizedStrings.auth.referredBy}
         value={referredBy}
         onChangeText={setReferredBy}
@@ -288,11 +296,50 @@ const EnterAdditionalDetails: React.FC<
           />
         </View>
       )}
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignContent: 'center',
+          alignSelf: 'flex-start',
+        }}>
+        <BouncyCheckbox
+          isChecked={isTermsAndCondtionsAgreed}
+          innerIconStyle={{borderRadius: 0}}
+          iconImageStyle={{borderRadius: 0}}
+          iconStyle={{borderRadius: 0}}
+          size={wp(4)}
+          onPress={(isChecked: boolean) => {
+            setIsTermsAndCondtionsAgreed(isChecked);
+          }}
+        />
+        <Text style={{fontSize: wp(3)}}>Please read and accept our </Text>
+
+        <AdaptiveButton
+          onPress={() => {
+            RootNavigation.navigate('TermsConditionsScreen');
+          }}
+          textStyle={{
+            color: Colors.primary,
+            fontSize: wp(3),
+            fontWeight: 'normal',
+          }}
+          type="text"
+          title={'Terms and Conditions'}
+        />
+      </View>
       <Spacer height={hp('2%')} />
       {/* </View> */}
       <View style={styles.viewBottom}>
         <AdaptiveButton
-          isDisable={!checkStatesNotEmpty()}
+          loading={loading}
+          isDisable={
+            !checkStatesNotEmpty() ||
+            loading ||
+            selectedDivision?.value === 'select_division'
+          }
           title={AppLocalizedStrings.submit}
           onPress={onContinueHandler}
           buttonStyle={styles.btnContinue}

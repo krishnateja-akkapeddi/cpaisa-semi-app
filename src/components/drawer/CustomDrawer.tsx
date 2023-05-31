@@ -2,6 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
+  DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import {
@@ -28,6 +29,10 @@ import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
 import {Convert} from '../../utility/converter/Convert';
 import {useDispatch} from 'react-redux';
 import {appSlice} from '../../store/slices/AppSlice';
+import GaNoInternetFound from '../GaNoInternetFound';
+import {Svg} from 'react-native-svg';
+import SVGIcon from '../../utility/svg/SVGIcon';
+import {drawerOptions} from '../../theme/NavigationTheme';
 
 interface BottomViewProps {
   title: string;
@@ -89,6 +94,9 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
   const navigateTo = (screeName: keyof RootAllMixedParamList) => {
     props.navigation.closeDrawer();
     setTimeout(() => {
+      if (screeName === 'TermsConditionsScreen') {
+        RootNavigation.navigate('AuthStack', {screen: 'TermsConditionsScreen'});
+      }
       RootNavigation.navigate(screeName);
     }, 300);
   };
@@ -107,6 +115,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
           props.navigation.closeDrawer();
           await SharedPreference.shared.removeItem(kSharedKeys.userDetails);
           await SharedPreference.shared.removeItem(kSharedKeys.authToken);
+          await SharedPreference.shared.removeItem(kSharedKeys.fcmToken);
           dispatch(appSlice.actions.resetState());
           props.navigation.reset({
             index: 0,
@@ -148,15 +157,37 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
             <Spacer height={5} />
             <Text style={styles.userInfo}>{userData?.user?.mobile}</Text>
           </View>
+
           {/* <TouchableOpacity onPress={onQRCodeHandler}>
             <SVGIcon color={Colors.darkBlack} name="qrcode" size={hp('5%')} />
           </TouchableOpacity> */}
         </View>
         <Spacer style={styles.lineView} />
         <View style={styles.itemList}>
+          {/* <TouchableOpacity
+            onPress={() => {
+              props.navigation.closeDrawer();
+              RootNavigation.navigate('DashboardScreen', {
+                screen: 'DashboardScreen',
+              });
+            }}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <SVGIcon
+              style={{height: hp(2.5), paddingRight: wp(1)}}
+              name="home"
+            />
+            <Spacer width={wp(6)} />
+            <Text style={styles.drawerLabel}>Home</Text>
+          </TouchableOpacity>
+          <Spacer height={hp(1)} /> */}
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
+
       <Spacer style={styles.lineView} />
       <View style={bottomViewStyle}>
         {BOTTOM_VIEW.map((item, index) => {
@@ -174,7 +205,6 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = props => {
           );
         })}
       </View>
-      {/* {showQR && <QRCodePopup onDismiss={() => setShowQR(false)} />} */}
     </View>
   );
 };
@@ -244,5 +274,12 @@ const styles = StyleSheet.create({
     height: 'auto',
     paddingVertical: 8,
     marginRight: wp('2%'),
+  },
+  drawerLabel: {
+    paddingLeft: 0,
+    marginLeft: -18,
+    fontSize: Fonts.getFontSize('headline2'),
+    fontFamily: Fonts.regular,
+    color: Colors.darkBlack,
   },
 });

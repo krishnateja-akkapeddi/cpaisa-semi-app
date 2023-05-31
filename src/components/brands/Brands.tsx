@@ -28,10 +28,19 @@ import {InvoiceOverview} from '../../models/interfaces/InvoiceSummaryResponse';
 import AppLoader from '../indicator/AppLoader';
 import GaCaughtUp from '../GaCaughtUp';
 
-type Props = {organization: ClientEntity};
+type Props = {
+  organization: ClientEntity;
+  loadingBrandOffers: boolean;
+  setLoadingBrandOffers: Function;
+  setAreOffersThere: Function;
+};
 
-const Brands: React.FC<Props> = ({organization}) => {
-  const [loadingBrandOffers, setLoadingBrandOffers] = useState(true);
+const Brands: React.FC<Props> = ({
+  organization,
+  loadingBrandOffers,
+  setLoadingBrandOffers,
+  setAreOffersThere,
+}) => {
   const [brandOffers, setBrandOffers] = useState<BrandOfferEntity[]>([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +90,7 @@ const Brands: React.FC<Props> = ({organization}) => {
         }),
       )
       .unwrap();
+
     setCurrentPage(prev => prev + 1);
     setLastPage(data.offers.last_page);
     setLastPage(data.offers.last_page);
@@ -94,17 +104,24 @@ const Brands: React.FC<Props> = ({organization}) => {
     setLoadingBrandOffers(false);
   };
 
-  useLayoutEffect(() => {
-    setTimeout(() => {
-      setBrandOffers([]);
-      setCurrentPage(1);
-      setLastPage(10);
-      getBrandOffers();
-    }, 1000);
+  useEffect(() => {
+    setBrandOffers([]);
+    setCurrentPage(1);
+    setLastPage(10);
+    organization && getBrandOffers();
   }, [organization]);
 
+  useEffect(() => {
+    if (brandOffers.length > 0) {
+      setAreOffersThere(true);
+    }
+  }, [brandOffers]);
+
   return (
-    <View style={styles.brandsContainer}>
+    <View
+      style={{
+        ...styles.brandsContainer,
+      }}>
       <View style={{paddingHorizontal: wp(1)}}>
         <View>
           <FlatList
@@ -125,12 +142,16 @@ const Brands: React.FC<Props> = ({organization}) => {
                     <AppLoader type="none" loading={loadingBrandOffers} />
                   ) : (
                     <View>
-                      {brandOffers.length > 0 ? (
+                      {brandOffers.length > 0 && !isNextPageAvailable() ? (
                         <GaCaughtUp message={"You're all caught up!"} />
                       ) : (
                         <View style={{marginTop: hp(5)}}>
                           <Image
-                            style={{bottom: hp('1%')}}
+                            style={{
+                              bottom: hp('1%'),
+                              width: wp(80),
+                              marginRight: wp(10),
+                            }}
                             source={require('../../assets/images/NoOffersArt.png')}
                           />
                           <Text
@@ -140,6 +161,7 @@ const Brands: React.FC<Props> = ({organization}) => {
                               textAlign: 'center',
                               color: 'gray',
                               fontWeight: '500',
+                              paddingLeft: wp(1),
                             }}>
                             No Offers Found
                           </Text>
@@ -150,7 +172,7 @@ const Brands: React.FC<Props> = ({organization}) => {
                 </View>
               );
             }}
-            ItemSeparatorComponent={() => <Spacer height={hp(2)} />}
+            ItemSeparatorComponent={() => <Spacer height={hp(0)} />}
             data={brandOffers}
             renderItem={f => {
               return renderItem(f.item);
@@ -178,7 +200,7 @@ const styles = StyleSheet.create({
   brandsContainer: {
     paddingHorizontal: wp(4),
     paddingTop: hp(2),
-    height: hp('60%'),
+    height: hp('68%'),
   },
   flexBox: {
     display: 'flex',

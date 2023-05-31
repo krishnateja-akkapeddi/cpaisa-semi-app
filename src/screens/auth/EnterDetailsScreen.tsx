@@ -16,6 +16,7 @@ import {setRegistrationInfo} from '../../store/slices/AuthSlice';
 import {Convert} from '../../utility/converter/Convert';
 import GaInputField from '../../components/GaInputField';
 import Spacer from '../../components/layout/Spacer';
+import {add} from 'lodash';
 
 const EnterDetailsScreen: React.FC<
   AuthStackScreenProps<'EnterDetailsScreen'>
@@ -86,47 +87,81 @@ const EnterDetailsScreen: React.FC<
 
   return (
     <AuthBaseScreen
-      title={AppLocalizedStrings.auth.confirmYourDetails}
+      title={
+        !infoFromIdentity?.firm_name
+          ? 'Enter your details'
+          : AppLocalizedStrings.auth.confirmYourDetails
+      }
       iconName="enter_details">
       <GaInputField
         customTextStyle={{marginTop: hp(1.5)}}
+        customInputStyle={{
+          height: infoFromIdentity?.firm_name
+            ? hp(
+                `${
+                  infoFromIdentity?.firm_name?.length < 40
+                    ? hp(0.8)
+                    : infoFromIdentity?.firm_name?.length / hp(0.8)
+                }%`,
+              )
+            : hp(7),
+        }}
         isNotEditable={!!infoFromIdentity?.firm_name}
         value={
           infoFromIdentity.firm_name ? Convert.toTitleCase(shopName) : shopName
         }
         multiline
-        customInputStyle={{maxHeight: hp('10%'), minHeight: hp('1%')}}
         onChangeText={setShopName}
         placeholder={AppLocalizedStrings.auth.enterShopName}
         label={'Firm Name'}
       />
-      <Spacer height={hp(4)} />
 
-      <GaInputField
-        customTextStyle={{marginTop: hp(1.5)}}
-        customInputStyle={{
-          height: Platform.OS === 'ios' ? hp('14%') : hp('20%'),
-        }}
-        isNotEditable={!!infoFromIdentity?.address?.line}
-        value={
-          infoFromIdentity.firm_name
-            ? address
-                .split(',')
-                .map(val => ' ' + Convert.capitalize(val))
-                .join()
-            : address
-        }
-        multiline
-        onChangeText={setAddress}
-        placeholder={AppLocalizedStrings.auth.enterAddress}
-        label={'Address'}
-      />
+      <Spacer height={hp(3)} />
+
+      {infoFromIdentity.address && infoFromIdentity.address.line.length > 0 ? (
+        <GaInputField
+          customTextStyle={{marginTop: hp(1)}}
+          customInputStyle={{
+            height: infoFromIdentity?.address?.line
+              ? hp(
+                  `${
+                    infoFromIdentity?.address?.line?.length < 40
+                      ? hp(0.7)
+                      : infoFromIdentity?.address?.line?.length / hp(0.6)
+                  }%`,
+                )
+              : hp(7),
+          }}
+          isNotEditable={!!infoFromIdentity?.address?.line}
+          value={
+            infoFromIdentity.address
+              ? address
+                  .split(',')
+                  .map(val => ' ' + Convert.capitalize(val))
+                  .join()
+              : address
+          }
+          multiline
+          onChangeText={setAddress}
+          placeholder={AppLocalizedStrings.auth.enterAddress}
+          label={'Address'}
+        />
+      ) : (
+        <GaInputField
+          value={address}
+          onChangeText={setAddress}
+          label="Enter Address"
+          placeholder="Enter address"
+        />
+      )}
       <Spacer height={hp(2)} />
-      <GaInputValidationMessage
-        message={AppLocalizedStrings.validPin}
-        canShow={isValidPincode()}
-      />
-      <Spacer height={hp(2)} />
+      {pincode.length > 1 && (
+        <GaInputValidationMessage
+          message={AppLocalizedStrings.validPin}
+          canShow={isValidPincode()}
+        />
+      )}
+      <Spacer height={hp(1)} />
       <GaInputField
         keyboardType="decimal-pad"
         isNotEditable={!!infoFromIdentity?.address?.pincode}

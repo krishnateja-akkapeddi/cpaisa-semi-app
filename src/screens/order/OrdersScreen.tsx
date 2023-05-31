@@ -115,13 +115,6 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
     getOrdersList({status: selectedOrderStatus}, 1, false);
   };
 
-  function filterAnItem(refNumber: string) {
-    const filteredData = ordersList.filter(
-      val => val.reference_number !== refNumber,
-    );
-    setOrdersList(filteredData);
-  }
-
   const filterCount = (): number => {
     return startDate || endDate ? 1 : 0;
   };
@@ -213,7 +206,7 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
       fromResetFilter
         ? setResetFilterLoading(true)
         : setOrdersListLoading(true);
-      var orderParams = {length: 10} as FetchOrdersListParams.params;
+      var orderParams = {length: 30} as FetchOrdersListParams.params;
 
       if (startDate) {
         const convertedStartDate = Convert.dateFormatter(
@@ -502,42 +495,47 @@ const OrdersScreen: React.FC<BottomTabScreenProps<'OrdersScreen'>> = props => {
                     />
                   )}
 
-                  {ordersListLoading ? (
+                  {ordersListLoading && (
                     <View style={{marginVertical: 10, marginBottom: hp(7)}}>
                       <Spacer height={hp('1%')} />
                       <OrderSkeletonCard />
                       <Spacer height={hp('2%')} />
                     </View>
-                  ) : selectedOrderStatus === OrderStatus.ON_HOLD ||
-                    OrderStatus.DENIED ? (
-                    ordersList.length === 0 &&
-                    !refreshing && (
-                      <View
-                        style={{alignContent: 'center', alignItems: 'center'}}>
-                        <SVGIcon name="no_orders_svg" size={wp('50%')} />
-                        <Spacer height={hp(3)} />
-
-                        <Text style={{fontWeight: 'bold'}}>
-                          No Orders Found
-                        </Text>
-                        <Spacer height={hp(10)} />
-                      </View>
-                    )
-                  ) : (
-                    orderServiceList.length === 0 &&
-                    !refreshing && (
-                      <View
-                        style={{alignContent: 'center', alignItems: 'center'}}>
-                        <SVGIcon name="no_orders_svg" size={wp('60%')} />
-                        <Spacer height={hp(3)} />
-
-                        <Text style={{fontWeight: '500', color: Colors.grey}}>
-                          No Orders Found
-                        </Text>
-                        <Spacer height={hp(10)} />
-                      </View>
-                    )
                   )}
+                  {selectedOrderStatus === OrderStatus.PENDING ||
+                  selectedOrderStatus === OrderStatus.DENIED
+                    ? !ordersListLoading &&
+                      ordersList.length === 0 && (
+                        <View
+                          style={{
+                            alignContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <SVGIcon name="no_orders_svg" size={wp('60%')} />
+                          <Spacer height={hp(3)} />
+
+                          <Text style={{fontWeight: '500', color: Colors.grey}}>
+                            No Orders Found
+                          </Text>
+                          <Spacer height={hp(10)} />
+                        </View>
+                      )
+                    : !ordersListLoading &&
+                      orderServiceList.length === 0 && (
+                        <View
+                          style={{
+                            alignContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <SVGIcon name="no_orders_svg" size={wp('60%')} />
+                          <Spacer height={hp(3)} />
+
+                          <Text style={{fontWeight: '500', color: Colors.grey}}>
+                            No Orders Found
+                          </Text>
+                          <Spacer height={hp(10)} />
+                        </View>
+                      )}
 
                   {orderServiceList.length > 0 &&
                     lastPage &&

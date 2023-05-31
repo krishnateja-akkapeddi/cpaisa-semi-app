@@ -105,7 +105,7 @@ const ChooseUserTypeScreen: React.FC<
       <Spacer height={hp(9)} />
       <AdaptiveButton
         loading={loading}
-        isDisable={loading}
+        isDisable={loading || !selectedChannelPartnerTypes}
         title={AppLocalizedStrings.continue}
         onPress={onContinueHandler}
         buttonStyle={styles.btnContinue}

@@ -56,7 +56,7 @@ const TaxtInfo = ({item}: Props) => {
       </View>
       <View style={styles.taxInfoContainer}>
         <View>
-          <Text style={styles.taxTitle}>Raised Points:</Text>
+          <Text style={styles.taxTitle}>Redeemed Points:</Text>
         </View>
         <View>
           <Text style={{fontWeight: 'bold'}}>{item.points}</Text>

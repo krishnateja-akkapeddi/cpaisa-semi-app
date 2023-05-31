@@ -29,16 +29,10 @@ import {OfferSkeletonItem} from '../../components/SkeletonCards';
 import Colors from '../../theme/Colors';
 import {HomeStackScreenProps} from '../../navigation/stack/HomeStackNavigator';
 import {debounce} from 'lodash';
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {BottomTabParamList} from '../../navigation/navigator/BottomTabNavigator';
 
-interface Offer {
-  name: string;
-  image: string;
-  pointText: string;
-  percentage: string;
-  minOrder: string;
-}
-
-const OffersScreen = () => {
+const OffersScreen = ({navigation}: {navigation: any}) => {
   const [showCalculator, setShowCalculator] = useState(false);
   const [organizations, setOrganizations] = useState<ClientEntity[]>([]);
   const [offersListLoading, setOffersListLoading] = useState(false);
@@ -116,7 +110,7 @@ const OffersScreen = () => {
       }
       setOffersListLoading(false);
     },
-    [currentPage, nextPage, query],
+    [currentPage, nextPage, query, selectedOrg],
   );
 
   const renderItem: ListRenderItem<OffersListEntity> = useCallback(
@@ -154,6 +148,7 @@ const OffersScreen = () => {
         <OfferHeaderComponent
           loading={loadingOrganisations}
           onSelect={ids => {
+            setQuery('');
             setOffersList([]);
             const orgId = organizations && organizations[ids[0]]?.id;
             if (orgId) {
@@ -192,6 +187,17 @@ const OffersScreen = () => {
       setRefreshOffers(prev => !prev);
     }, 2000);
   }, []);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      setQuery('');
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.screen}>

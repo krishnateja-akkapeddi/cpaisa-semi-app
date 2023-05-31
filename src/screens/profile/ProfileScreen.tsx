@@ -14,13 +14,17 @@ import {AppLocalizedStrings} from '../../localization/Localization';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, store} from '../../store/Store';
 import {AuthResult, Data} from '../../models/interfaces/AuthResponse';
-import {appSlice, AppSliceState} from '../../store/slices/AppSlice';
+import {
+  appSlice,
+  AppSliceState,
+  setOpenQrCode,
+} from '../../store/slices/AppSlice';
 
 import {ProfileStackScreenProps} from '../../navigation/stack/ProfileStackNavigator';
-import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
 import {Convert} from '../../utility/converter/Convert';
 import Spacer from '../../components/layout/Spacer';
 import {notificationHelper} from '../../utility/NotificationHelper';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
 
 enum ProfileMode {
   Personal,
@@ -36,10 +40,10 @@ const ProfileScreen: React.FC<
   );
   const channel_partner = selected?.data?.channel_partner;
   const user = selected?.data?.user;
-  const {isQrCodeExpired, openQrCode, qrExpiry, qrCodeData} = useSelector<
-    RootState,
-    AppSliceState
-  >(state => state.app);
+  const {
+    app: {openQrCode},
+    api: {internetAvailable},
+  } = useSelector<RootState, RootState>(state => state);
   const segmentBarItems = [
     AppLocalizedStrings.profile.personalDetails,
     AppLocalizedStrings.profile.businessDetails,
@@ -49,52 +53,60 @@ const ProfileScreen: React.FC<
     setMode(index);
   };
 
-  useEffect(() => {}, [channel_partner, user, isQrCodeExpired, openQrCode]);
+  useEffect(() => {}, [channel_partner, user, openQrCode]);
 
   return (
     <SafeAreaView style={styles.screen}>
       <KeyboardAvoidingView style={styles.keyboard}>
         <View style={styles.container}>
-          <View style={styles.upperView}>
-            <ImageView
-              style={styles.profilePic}
-              source={'https://picsum.photos/seed/picsum/200/300'}
-            />
-            <Text style={styles.name}>
-              {Convert.toTitleCase(user?.full_name) ?? ''}
-            </Text>
-            <Spacer height={hp(2)} />
-            <SVGIcon
-              onPress={() => {
-                dispatch(appSlice.actions.setOpenQrCode(true));
-              }}
-              name="qrcode"
-              size={wp(25)}
-              color={Colors.black}
-            />
-          </View>
-          <SegmentBar
-            containerStyle={styles.bar}
-            selectedIndex={mode}
-            items={segmentBarItems}
-            onValueChange={onValueChange}
-          />
-          {mode == ProfileMode.Business ? (
-            <BusinessDetailsView
-              channelPartner={channel_partner}
-              style={styles.details}
-            />
+          {internetAvailable ? (
+            <View>
+              {!openQrCode && (
+                <View style={styles.upperView}>
+                  <ImageView
+                    style={styles.profilePic}
+                    source={'https://picsum.photos/seed/picsum/200/300'}
+                  />
+                  <Text style={styles.name}>
+                    {Convert.toTitleCase(user?.full_name) ?? ''}
+                  </Text>
+                  <Spacer height={hp(2)} />
+                  <SVGIcon
+                    onPress={() => {
+                      store.dispatch(setOpenQrCode(true));
+                    }}
+                    name="qrcode"
+                    size={wp(25)}
+                    color={Colors.black}
+                  />
+                </View>
+              )}
+              <SegmentBar
+                containerStyle={styles.bar}
+                selectedIndex={mode}
+                items={segmentBarItems}
+                onValueChange={onValueChange}
+              />
+              {mode == ProfileMode.Business ? (
+                <BusinessDetailsView
+                  channelPartner={channel_partner}
+                  style={styles.details}
+                />
+              ) : (
+                <PersonalDetailsView
+                  user={user}
+                  channelPartner={channel_partner}
+                  style={styles.details}
+                />
+              )}
+              <Text style={styles.appVersion}>
+                {AppLocalizedStrings?.profile?.appVersion +
+                  notificationHelper.getDeviceInfo().app_version}
+              </Text>
+            </View>
           ) : (
-            <PersonalDetailsView
-              user={user}
-              channelPartner={channel_partner}
-              style={styles.details}
-            />
+            <GaNoInternetFound children={<View />} />
           )}
-          <Text style={styles.appVersion}>
-            {AppLocalizedStrings?.profile?.appVersion +
-              notificationHelper.getDeviceInfo().app_version}
-          </Text>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

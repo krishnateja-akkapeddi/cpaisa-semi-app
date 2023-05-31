@@ -10,6 +10,7 @@ import {wp} from '../../../utility/responsive/ScreenResponsive';
 import Colors from '../../../theme/Colors';
 import HeaderElements from '../../../utility/navigation/HeaderElements';
 import {StackHeaderProps} from '@react-navigation/stack';
+import GaNoInternetFound from '../../GaNoInternetFound';
 
 interface HeaderProps {
   backIconColor?: string;
@@ -45,6 +46,7 @@ const Header = (props: HeaderProps) => {
             routeName,
           )}
         </View>
+
         <View style={styles.title}>
           <Text numberOfLines={1} style={HeaderTitleStyle}>
             {navigation.options.title}

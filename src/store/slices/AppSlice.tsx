@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {QrCodeExpiryStatus} from '../../constants/QrCodeExpiryStatus';
 import {Slices} from '../../constants/Slices';
 import {ClientEntity} from '../../models/interfaces/ClientsListResponse';
+import {PopupFunctions} from '../../components/GaNotification';
 
 export type initialPopupState = {
   visible?: boolean;
@@ -14,6 +15,9 @@ export type initialPopupState = {
   showDismiss?: boolean;
   showHeader?: boolean;
   buttonText?: string;
+  onOutSideClick?: Function;
+  closeOnOutsideClick?: boolean;
+  popupFunction?: PopupFunctions;
 };
 
 export interface AppSliceState {
@@ -38,7 +42,6 @@ export interface AppSliceState {
 const initialState: AppSliceState = {
   route: 0,
   isFirstTime: true,
-  isQrCodeExpired: QrCodeExpiryStatus.DEFAULT,
   qrCodeData: '',
   openQrCode: false,
   organisations: [],
@@ -61,10 +64,6 @@ export const appSlice = createSlice({
     changeNavigatorRoute: (state, action: PayloadAction<number>) => {
       state.route = action.payload;
       state.isFirstTime = false;
-    },
-
-    setIsQrCodeExpired: (state, action: PayloadAction<QrCodeExpiryStatus>) => {
-      state.isQrCodeExpired = action.payload;
     },
 
     clearAppSlice: () => initialState,
@@ -94,6 +93,7 @@ export const appSlice = createSlice({
     closePoup: state => {
       state.popup = {} as initialPopupState;
     },
+
     refresh: state => {
       state.refresh = !state.refresh;
     },
@@ -112,15 +112,19 @@ export const appSlice = createSlice({
     resetState: state => {
       state = initialState;
     },
+    setQrCodeLoading: (state, action) => {
+      state.qrLoading = action.payload;
+    },
   },
 });
 
 export const {
+  setQrCodeLoading,
   changeNavigatorRoute,
   clearAppSlice,
-  setIsQrCodeExpired,
   closePoup,
   openPopup,
+  resetState,
   refresh,
   setGenerateQrCode,
   setOpenQrCode,

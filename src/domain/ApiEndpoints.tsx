@@ -17,7 +17,7 @@ const ApiEndpoints = {
   REDEEM_REQUEST: '/reward-requests',
   COUPON_PARTNERS: '/rewards/forOrganization/:id',
   AUTHORIZED_STOCKISTS: '/channel-partners/stockist?page=:pageNumber',
-  NOTIFICATIONS: '/notifications',
+  NOTIFICATIONS: '/notifications?page=:pageNumber',
   ORDERS: '/orders?page=:pageNumber',
   CHANGE_ORDER_STATUS: '/orders/consent/:uuid/:status',
   ORDER_SERVICE: '/orders/service?page=:pageNumber',

@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
 import {wp} from '../utility/responsive/ScreenResponsive';
+import OutsidePressHandler, {EventProvider} from 'react-native-outside-press';
+import Colors from '../theme/Colors';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 type BottomModalProps = {
   visible: boolean;
@@ -21,18 +24,22 @@ const GaBottomModal: React.FC<BottomModalProps> = ({
   };
 
   return (
-    <Modal
-      visible={true}
-      transparent={true}
-      animationType="slide"
-      onRequestClose={handleClose}>
-      <View style={styles.modalContainer}>
-        <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
-        <View style={styles.modalContent}>{children}</View>
-      </View>
-    </Modal>
+    <>
+      <Modal
+        visible={true}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={handleClose}>
+        <View style={styles.modalContainer}>
+          <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
+            <Text style={styles.closeButtonText}>
+              <Icon size={wp(4)} name="close" /> Close
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.modalContent}>{children}</View>
+        </View>
+      </Modal>
+    </>
   );
 };
 
@@ -54,6 +61,7 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: Colors.red,
   },
   modalContent: {
     backgroundColor: 'white',

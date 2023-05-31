@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   FlatList,
   ListRenderItemInfo,
   Platform,
@@ -15,7 +16,7 @@ import {ClientEntity} from '../../../models/interfaces/ClientsListResponse';
 import RootNavigation from '../../../navigation/RootNavigation';
 
 type Props = {organizations: ClientEntity[]};
-
+const {width, height} = Dimensions.get('screen');
 const DashboardOrganisations: React.FC<Props> = ({organizations}) => {
   const renderItem = useCallback(
     ({index, item}: ListRenderItemInfo<ClientEntity>) => {
@@ -23,7 +24,10 @@ const DashboardOrganisations: React.FC<Props> = ({organizations}) => {
         <View
           key={index.toString()}
           style={{
-            marginLeft: index % 3 !== 0 ? wp('12%') : 0,
+            marginLeft:
+              index % 3 !== 0
+                ? wp(Platform.OS === 'android' ? width / 35 : 11)
+                : 0,
           }}>
           <DepartmentItem
             isRounded={false}

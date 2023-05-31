@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Alert} from 'react-native';
-import Snackbar from 'react-native-snackbar';
 import OTPView from '../../components/app/auth/OTPView';
 import ResendOTPMode from '../../components/app/auth/ResendOTPMode';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
@@ -13,7 +12,6 @@ import Colors from '../../theme/Colors';
 import Fonts from '../../theme/Fonts';
 import AuthBaseScreen from './AuthBaseScreen';
 import {hp} from '../../utility/responsive/ScreenResponsive';
-import useTimer from '../../utility/timer/Timer';
 import {store} from '../../store/Store';
 import {updateContactInfo} from '../../store/thunks/ApiThunks';
 import AppLoader from '../../components/indicator/AppLoader';
@@ -21,10 +19,9 @@ import {UpdateContactParams} from '../../domain/usages/UpdateContact';
 import {useDispatch} from 'react-redux';
 import {appSlice, clearAppSlice, openPopup} from '../../store/slices/AppSlice';
 import {Timer, TimerType} from '../../utility/timer/TimerClass';
-import {clearAuthSlice} from '../../store/slices/AuthSlice';
 import SharedPreference, {kSharedKeys} from '../../storage/SharedPreference';
-import {Convert} from '../../utility/converter/Convert';
 import {pickMessageFromErrors} from '../../utility/ErrorPicker';
+import {apiSlice} from '../../store/slices/ApiSlice';
 
 const EnterUpdateContactOtpScreen: React.FC<
   AuthStackScreenProps<'EnterUpdateContactOtpScreen'>
@@ -35,7 +32,6 @@ const EnterUpdateContactOtpScreen: React.FC<
   const [timeLimit, setTimeLimit] = useState(0.5);
   const [timer, setTimer] = useState({minutes: 0, seconds: 0});
   const onRequestHandler = () => {};
-  const [clearInput, setClearInput] = useState(false);
   const mobile = props.route.params?.mobileNumber;
   const contactType = props.route.params?.contactType;
 
@@ -46,34 +42,24 @@ const EnterUpdateContactOtpScreen: React.FC<
     });
   }
 
-  const logoutHandler = () => {
-    Alert.alert('', AppLocalizedStrings.alert.logout, [
-      {
-        text: AppLocalizedStrings.no,
-        style: 'cancel',
-      },
-      {
-        style: 'destructive',
-        text: AppLocalizedStrings.yes,
-        onPress: async () => {
-          await SharedPreference.shared.removeItem(kSharedKeys.userDetails);
-          await SharedPreference.shared.removeItem(kSharedKeys.authToken);
-          dispatch(appSlice.actions.resetState());
-          props.navigation.reset({
-            index: 0,
-            routes: [
-              {
-                name: 'EnterUpdateContactOtpScreen',
-                params: {screen: 'LoginScreen'},
-              },
-            ],
-          });
-        },
-      },
-    ]);
+  const logoutHandler = async () => {
+    await SharedPreference.shared.removeItem(kSharedKeys.userDetails);
+    await SharedPreference.shared.removeItem(kSharedKeys.authToken);
+    await SharedPreference.shared.removeItem(kSharedKeys.fcmToken);
+
+    dispatch(appSlice.actions.resetState());
+    dispatch(apiSlice.actions.resetStore());
+    props.navigation.reset({
+      index: 0,
+      routes: [{name: 'AuthStack', params: {screen: 'LoginScreen'}}],
+    });
   };
 
-  const onSubmitHandler = async () => {
+  function logoutUser() {
+    logoutHandler();
+  }
+
+  const onSubmitHandler = async (s: string) => {
     setVerifyOtpLoading(true);
     try {
       let params: UpdateContactParams.params = {} as UpdateContactParams.params;
@@ -83,29 +69,23 @@ const EnterUpdateContactOtpScreen: React.FC<
       } else {
         params.whatsapp_value = parseInt(mobile);
       }
-      params.otp = parseInt(otp);
+      params.otp = parseInt(s);
 
       const updatedContact = await store
         .dispatch(updateContactInfo(params))
         .unwrap();
+
       if (updatedContact.success) {
         setOtp('');
-        dispatch(
-          appSlice.actions.openPopup({
-            message: updatedContact.message,
-            title: '',
+        store.dispatch(
+          openPopup({
+            message: `${mobile} will be used by ChannelPaisa for communication. You will be logged out as your contact is updated`,
+            title: `Contact Number Updated`,
             type: 'success',
+            closeOnOutsideClick: true,
           }),
         );
-        store.dispatch(clearAppSlice());
-        store.dispatch(clearAuthSlice());
-        logoutHandler();
-        setClearInput(true);
-        setTimeout(() => {
-          () => {
-            setClearInput(false);
-          };
-        }, 1000);
+        logoutUser();
       } else {
         store.dispatch(
           openPopup({
@@ -119,14 +99,8 @@ const EnterUpdateContactOtpScreen: React.FC<
             },
           }),
         );
-
+        setOtp('');
         setVerifyOtpLoading(false);
-        setClearInput(true);
-        setTimeout(() => {
-          () => {
-            setClearInput(false);
-          };
-        }, 1000);
       }
       setOtp('');
       setVerifyOtpLoading(false);
@@ -149,8 +123,8 @@ const EnterUpdateContactOtpScreen: React.FC<
     <AuthBaseScreen
       title={'Enter the otp to update your contact'}
       iconName="enter_otp">
-      <OTPView clearInput={clearInput} code={otp} onSelect={setOtp} />
-
+      <OTPView onComplete={onSubmitHandler} code={otp} onSelect={setOtp} />
+      {verifyOtpLoading && <AppLoader type="window" loading={true} />}
       <Spacer height={hp('3')} />
       {timer.seconds > 0 ? (
         <Text style={styles.resendOTP}>
@@ -192,7 +166,7 @@ const EnterUpdateContactOtpScreen: React.FC<
             'Update Contact'
           )
         }
-        onPress={onSubmitHandler}
+        onPress={() => onSubmitHandler(otp)}
         buttonStyle={styles.btnSubmit}
       />
     </AuthBaseScreen>

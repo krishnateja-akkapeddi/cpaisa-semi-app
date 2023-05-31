@@ -22,8 +22,6 @@ import LoginHelpScreen from '../../screens/auth/LoginHelpScreen';
 import {OptionRegisterParams} from '../../domain/usages/RegisterUser';
 import EnterAdditionalDetails from '../../screens/auth/EnterAdditionalDetails';
 import ChooseUserTypeScreen from '../../screens/auth/ChooseUserTypeScreen';
-import HeaderElements from '../../utility/navigation/HeaderElements';
-import NavigationOptionProps from '../../models/interfaces/NavigationOptionProps';
 
 export type AuthStackParamList = {
   SplashScreen: RouteParamList;
@@ -48,13 +46,13 @@ export type AuthStackParamList = {
   CompleteKYCScreen: RouteParamList & OptionRegisterParams;
   LoginHelpScreen: RouteParamList;
   ChooseUserTypeScreen: RouteParamList & {registerMobile: string};
-  TermsConditionsScreen: RouteParamList;
   EnterUpdateContactOtpScreen: RouteParamList & {
     mobileNumber: string;
     forUpdateContact?: boolean;
     fromNewContact?: boolean;
     contactType: 'whatsapp' | 'mobile';
   };
+  TermsConditionsScreen: RouteParamList;
 };
 
 export type AuthStackScreenProps<T extends keyof AuthStackParamList> =
@@ -71,6 +69,8 @@ const getRouteName = (route: keyof AuthStackParamList): string => {
       return AppLocalizedStrings.auth.documentUpload;
     case 'ChooseOrganisationScreen':
       return AppLocalizedStrings.auth.chooseOrganisation;
+    case 'TermsConditionsScreen':
+      return 'Terms & Conditions';
     default:
       return '';
   }
@@ -115,6 +115,10 @@ const AuthStackNavigator = () => {
         component={ChooseUserTypeScreen}
       />
 
+      <Stack.Screen
+        name="TermsConditionsScreen"
+        component={TermsConditionsScreen}
+      />
       <Stack.Screen name="EnterDetailsScreen" component={EnterDetailsScreen} />
       <Stack.Screen
         name="EnterAdditionalDetails"
@@ -131,10 +135,6 @@ const AuthStackNavigator = () => {
       />
       <Stack.Screen name="LoginHelpScreen" component={LoginHelpScreen} />
       <Stack.Screen name="CompleteKYCScreen" component={CompleteKYCScreen} />
-      <Stack.Screen
-        name="TermsConditionsScreen"
-        component={TermsConditionsScreen}
-      />
     </Stack.Navigator>
   );
 };

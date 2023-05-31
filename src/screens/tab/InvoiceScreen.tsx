@@ -66,7 +66,7 @@ const InvoiceScreen: React.FC<
   const [year, setYear] = useState<number | null>(null);
   const [lastPage, setLastPage] = useState<number>(10);
   const [invoiceSummaryLoading, setInvoiceSummaryLoading] = useState(false);
-  const [invoiceListLoading, setInvoiceListLoading] = useState(false);
+  const [invoiceListLoading, setInvoiceListLoading] = useState(true);
   const [resetFilterLoading, setResetFilterLoading] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
   const [dates, setDates] = React.useState<string[]>([]);
@@ -295,8 +295,6 @@ const InvoiceScreen: React.FC<
   useEffect(() => {
     debounce(2000).then(() => getInvoiceList({}, 1, false));
   }, [refreshInvoices]);
-
-  console.log('FROM_INVL_UPL', fromInvoiceUpload);
 
   useEffect(() => {
     const yearMonthsList = Generator.generateYearMonth(11);

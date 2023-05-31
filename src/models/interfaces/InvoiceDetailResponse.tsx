@@ -18,6 +18,7 @@ export interface InvoiceDetail {
   total_amount: string;
   invoice_items: InvoiceItemEntity[];
   image_url: string;
+  comment?: string;
 }
 
 export interface InvoiceItemEntity {

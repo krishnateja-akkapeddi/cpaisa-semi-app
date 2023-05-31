@@ -1,4 +1,5 @@
 export default {
+  required: 'This field is required',
   validAddress: 'Please enter a valid address',
   validFirmName: 'Please enter a valid firm name',
   validPin: 'Please enter a valid pin number',
@@ -46,15 +47,15 @@ export default {
   profile: {
     appVersion: 'App Version: ',
     profile: 'Profile',
-    businessName: 'Firm Name:',
-    mobileNo: 'Mobile No.:',
-    dlNo: 'D/L No.:',
-    panNo: 'PAN No.:',
-    gstNo: 'GST No.:',
+    businessName: 'Firm Name',
+    mobileNo: 'Mobile No',
+    dlNo: 'D/L No',
+    panNo: 'PAN No',
+    gstNo: 'GST No',
     personalDetails: 'Personal Details',
     businessDetails: 'Business Details',
     emailId: 'Email Id:',
-    whatsAppNo: 'WhatsApp No.:',
+    whatsAppNo: 'WhatsApp No',
     address: 'Address',
     updated: {
       mobile: 'Mobile number successfully updated',

@@ -1,32 +1,40 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
 import Colors from '../../../theme/Colors';
 import Style from '../../../constants/Style';
 import {wp} from '../../../utility/responsive/ScreenResponsive';
 import Fonts from '../../../theme/Fonts';
+import OTPInput from './CustomOtp';
 
 interface OTPViewProps {
-  onSelect?: (arg0: string) => void;
+  onSelect: (arg0: string) => void;
   code: string;
   clearInput?: boolean;
+  onComplete: Function;
 }
 
 const OTPView: React.FC<OTPViewProps> = props => {
+  let otpInput: any = React.useRef(null);
+  const clearText = () => {
+    otpInput.current.clear();
+  };
+  const [otpText, setOtpText] = useState('');
+  const setText = () => {
+    otpInput.current.setValue('1234');
+  };
   useEffect(() => {}, [props.code, props.clearInput]);
   return (
-    <OTPInputView
-      code={props.code}
-      style={styles.otpView}
-      pinCount={4}
-      // clearInputs={props.clearInput}
-      // code={this.state.code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-      onCodeChanged={props.onSelect}
-      autoFocusOnLoad={false}
-      codeInputFieldStyle={styles.underlineStyleBase}
-      codeInputHighlightStyle={styles.underlineStyleHighLighted}
-      onCodeFilled={props.onSelect}
-    />
+    <View>
+      <OTPInput
+        setOTP={props.onSelect}
+        otp={props.code}
+        length={4}
+        onComplete={s => {
+          console.log(s);
+          props.onComplete(s);
+        }}
+      />
+    </View>
   );
 };
 
@@ -48,5 +56,54 @@ const styles = StyleSheet.create({
   },
   underlineStyleHighLighted: {
     borderColor: Colors.primary,
+  },
+});
+
+const otpStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+    padding: 5,
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    fontSize: 22,
+    fontWeight: '500',
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 20,
+  },
+  textInputContainer: {
+    marginBottom: 20,
+  },
+  roundedTextInput: {
+    borderRadius: 10,
+    borderWidth: 4,
+  },
+  buttonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+    width: '60%',
+  },
+  textInput: {
+    height: 40,
+    width: '80%',
+    borderColor: '#000',
+    borderWidth: 1,
+    padding: 10,
+    fontSize: 16,
+    letterSpacing: 5,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  buttonStyle: {
+    marginHorizontal: 20,
   },
 });

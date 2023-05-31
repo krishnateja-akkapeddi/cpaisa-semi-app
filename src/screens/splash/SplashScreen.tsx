@@ -33,7 +33,6 @@ const WelcomeScreen = () => {
 
   return (
     <View style={styles.screen}>
-      {/* <AppLoader loading={loading} /> */}
       <Image
         style={{width: wp('100%'), height: hp('100%')}}
         source={require('../../assets/videos/Channel_Paisa_Splash_Screen.gif')}

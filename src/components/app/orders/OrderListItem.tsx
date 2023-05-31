@@ -40,7 +40,11 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
             isLogin: true,
           });
         } else {
-          return;
+          RootNavigation.navigate('SingleOrderScreen', {
+            orderInfo: item,
+            isLogin: true,
+            orderStatus: OrderStatus.DENIED,
+          });
         }
       }}
       style={{
@@ -90,37 +94,28 @@ const OrderListItem: React.FC<InvoiceProps> = props => {
               <Spacer style={{width: wp('2%')}} />
 
               <View style={styles.leftSection}>
-                <TouchableOpacity
-                  onPress={() => {
-                    RootNavigation.navigate('SingleOrderScreen', {
-                      orderInfo: item,
-                      isLogin: true,
-                      orderStatus: OrderStatus.DENIED,
-                    });
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: Colors.primary,
-                      paddingTop: wp(2),
-                      paddingBottom: wp(2),
-                      paddingLeft: wp(3),
-                      paddingRight: wp(3),
+                <View
+                  style={{
+                    backgroundColor: Colors.primary,
+                    paddingTop: wp(2),
+                    paddingBottom: wp(2),
+                    paddingLeft: wp(3),
+                    paddingRight: wp(3),
 
-                      borderRadius: hp(2),
+                    borderRadius: hp(2),
+                  }}>
+                  <Text
+                    style={{
+                      color: Colors.white,
+                      fontSize: Fonts.getFontSize('headline3'),
                     }}>
-                    <Text
-                      style={{
-                        color: Colors.white,
-                        fontSize: Fonts.getFontSize('headline3'),
-                      }}>
-                      {/* {item.order_status === OrderStatus.ON_HOLD ||
+                    {/* {item.order_status === OrderStatus.ON_HOLD ||
                       item.order_status === OrderStatus.DENIED
                         ? 'View More'
                         : 'Dispatch'} */}
-                      View More
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                    View More
+                  </Text>
+                </View>
               </View>
             </View>
           </View>

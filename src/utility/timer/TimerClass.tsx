@@ -8,6 +8,8 @@ export class Timer {
   private remainingTime: number = 0;
 
   startTimer(minutes: number, callback: (time: TimerType) => void) {
+    this.stopTimer(); // Stop the timer if it's already running
+
     const milliseconds = minutes * 60 * 1000;
     this.remainingTime = milliseconds;
 
@@ -26,6 +28,11 @@ export class Timer {
     }, 1000);
   }
 
+  resetTimer() {
+    this.stopTimer();
+    this.remainingTime = 0;
+  }
+
   stopTimer() {
     if (this.timerId) {
       clearInterval(this.timerId);
@@ -33,3 +40,5 @@ export class Timer {
     }
   }
 }
+
+export const timer = new Timer();

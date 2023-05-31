@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="done_button_inner_circle_color">#D0E4FF</color>
+    <color name="colorPrimaryLight">#42000000</color>
+    <color name="colorPrimary">#73000000</color>
+    <color name="colorPrimaryDark">#DD000000</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="colorTransparent">#00ffffff</color>
+</resources>

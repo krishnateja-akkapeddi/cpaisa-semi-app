@@ -29,7 +29,6 @@ import {
 } from '@react-navigation/stack';
 import InvoiceDetailScreen from '../../screens/invoice/InvoiceDetailScreen';
 import AboutChannelPaisaScreen from '../../screens/drawer/AboutChannelPaisaScreen';
-import TermsConditionsScreen from '../../screens/drawer/TermsConditionsScreen';
 import CouponScreen from '../../screens/wallet/CouponScreen';
 import HelpScreen from '../../screens/invoice/HelpScreen';
 import ContactSupportScreen from '../../screens/invoice/ContactSupportScreen';
@@ -46,6 +45,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../store/Store';
 import {AppSliceState} from '../../store/slices/AppSlice';
 import {OrderStatus} from '../../models/enum/OrderStatusEnum';
+import RootNavigation from '../RootNavigation';
 
 export type HomeStackParamList = {
   TabStack: NavigatorScreenParams<BottomTabParamList>;
@@ -54,7 +54,6 @@ export type HomeStackParamList = {
   NotificationScreen: RouteParamList;
   InvoiceUploadScreen: RouteParamList;
   InvoiceDetailScreen: InvoiceDetailScreenParams;
-  TermsConditionsScreen: RouteParamList;
   AboutUs: RouteParamList;
   CouponScreen: RouteParamList & {goRupiLink: string};
   SingleOrderServiceScreen: RouteParamList & {
@@ -93,12 +92,10 @@ const getHeaderTitle = (
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
-const HomeStackNavigator = () => {
+const HomeStackNavigator = ({navigation}: any) => {
   const {routeNames} = useSelector<RootState, AppSliceState>(state => {
     return state.app;
   });
-
-  useEffect(() => {}, []);
 
   return (
     <Stack.Navigator
@@ -108,6 +105,7 @@ const HomeStackNavigator = () => {
             navOptions: props,
           }),
           title: getHeaderTitle(props.route),
+
           // headerStyleInterpolator: forSlideRight,
         };
       }}>
@@ -152,10 +150,7 @@ const HomeStackNavigator = () => {
           title: AppLocalizedStrings.tab.invoice,
         }}
       />
-      <Stack.Screen
-        name="TermsConditionsScreen"
-        component={TermsConditionsScreen}
-      />
+
       <Stack.Screen
         name="SingleOrderScreen"
         options={{title: 'Order Details'}}

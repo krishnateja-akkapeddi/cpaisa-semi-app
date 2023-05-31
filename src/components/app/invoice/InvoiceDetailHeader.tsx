@@ -145,6 +145,7 @@ const InvoiceDetailHeader = (props: {
                 <View
                   style={{
                     backgroundColor: Colors.darkBlack,
+                    borderRadius: wp(100),
                     position: 'absolute',
                     zIndex: 100,
                     top: hp(5),
@@ -156,13 +157,15 @@ const InvoiceDetailHeader = (props: {
                       setOpenFullImage(false);
                     }}>
                     <View>
-                      <Icon color={Colors.white} size={wp(6)} name="close" />
+                      <Icon
+                        color={Colors.white}
+                        size={wp(6)}
+                        name="arrowleft"
+                      />
                     </View>
                   </TouchableOpacity>
                 </View>
-
                 <ImageViewer
-                  style={{height: hp(10)}}
                   useNativeDriver
                   enableSwipeDown
                   onSwipeDown={() => {
@@ -180,8 +183,7 @@ const InvoiceDetailHeader = (props: {
                   imageUrls={[
                     {
                       url: invoice?.image_url,
-                      height: hp('40%'),
-                      width: wp('100%'),
+                      width: wp('80%'),
                     },
                   ]}
                 />

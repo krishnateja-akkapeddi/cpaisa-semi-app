@@ -1,4 +1,4 @@
-import {View, StyleSheet, SafeAreaView} from 'react-native';
+import {View, StyleSheet, SafeAreaView, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Colors from '../../theme/Colors';
 import {hp} from '../../utility/responsive/ScreenResponsive';
@@ -33,7 +33,15 @@ const InvoiceDetailScreen: React.FC<
   };
 
   const footerComponent = () => {
-    return <InvoiceDetailFooter loading={loading} invoice={invoiceDetail} />;
+    return (
+      <View>
+        <InvoiceDetailFooter
+          loading={loading}
+          mainInvoice={invoiceItem}
+          invoice={invoiceDetail}
+        />
+      </View>
+    );
   };
 
   useEffect(() => {

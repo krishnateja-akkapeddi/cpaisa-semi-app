@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import AdaptiveTextInput from '../../components/input/AdaptiveTextInput';
 import Style from '../../constants/Style';
@@ -23,14 +23,26 @@ import {
   fetchIdentityFromPan,
 } from '../../store/thunks/ApiThunks';
 import getLocation from '../../utility/custom-hooks/GetLocation';
-import {openPopup} from '../../store/slices/AppSlice';
+import {openPopup, setOpenQrCode} from '../../store/slices/AppSlice';
 import {AuthStackScreenProps} from '../../navigation/stack/AuthStackNavigator';
 import {ChannelPartnerType} from '../../models/enum/ChannelPartnerType';
 import GaInputField from '../../components/GaInputField';
 import {pickMessageFromErrors} from '../../utility/ErrorPicker';
 import {PermissionManager} from '../../utility/permissions/PermissionManager';
-import {PermissionType} from '../../utility/permissions/PermissionsList';
+import {
+  PermissionType,
+  PlatformType,
+} from '../../utility/permissions/PermissionsList';
 import {requestManualPermission} from '../../utility/permissions/PermissionWorkers';
+import {Convert} from '../../utility/converter/Convert';
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useDerivedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {duration} from 'moment';
+import AppLoader from '../../components/indicator/AppLoader';
 
 const EnterGSTScreen: React.FC<
   AuthStackScreenProps<'EnterGSTScreen'>
@@ -41,9 +53,9 @@ const EnterGSTScreen: React.FC<
 
   const infoFromUserType = props.route.params;
 
-  const [GSTNo, setGSTNo] = useState('22AABCU9603R1ZX');
+  const [GSTNo, setGSTNo] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [locationInfoLoading, setLocationInfoLoading] = useState(false);
   // const onStateChange = () => {
   //   setState(
   //     state == IdenitifcationType.GST
@@ -53,6 +65,21 @@ const EnterGSTScreen: React.FC<
   //   setGSTNo('');
   // };
 
+  const progress = useDerivedValue(() => {
+    return locationInfoLoading
+      ? withTiming(1, {duration: 3000})
+      : withTiming(0, {duration: 3000});
+  }, [locationInfoLoading]);
+
+  const rStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.primary, Colors.lightGreen],
+    );
+    return {backgroundColor};
+  }, []);
+
   const isValidData = (): boolean => {
     if (state == IdenitifcationType.GST) {
       return Validator.isValidGSTNumber(GSTNo);
@@ -61,7 +88,6 @@ const EnterGSTScreen: React.FC<
   };
 
   async function getIdentity() {
-    setLoading(true);
     if (state === IdenitifcationType.GST) {
       const data = await store
         .dispatch(
@@ -72,20 +98,17 @@ const EnterGSTScreen: React.FC<
         )
         .unwrap();
       if (data.success) {
-        setLoading(false);
-
-        return data.gst_details;
+        onContinueHandler({gstInfo: data.gst_details});
       } else {
         store.dispatch(
           openPopup({
-            message:
-              data.errors?.gst_number ?? AppLocalizedStrings.somethingWrong,
+            message: data.errors
+              ? pickMessageFromErrors(data.errors)
+              : AppLocalizedStrings.somethingWrong,
             title: 'GST Validation',
             type: 'error',
           }),
         );
-        setLoading(false);
-        return;
       }
     } else {
       const data = await store
@@ -97,9 +120,7 @@ const EnterGSTScreen: React.FC<
         )
         .unwrap();
       if (data.success) {
-        setLoading(false);
-
-        return data.pan_details;
+        onContinueHandler({panInfo: data.pan_details});
       } else {
         if (data.errors) {
           store.dispatch(
@@ -110,59 +131,73 @@ const EnterGSTScreen: React.FC<
             }),
           );
         }
-        setLoading(false);
-
-        return;
       }
     }
   }
 
-  async function onContinueHandler<T extends GstDetails & PanDetails>(params: {
-    gstInfo?: T;
-    panInfo?: T;
+  async function onContinueHandler({
+    gstInfo,
+    panInfo,
+  }: {
+    gstInfo?: GstDetails | null;
+    panInfo?: PanDetails | null;
   }) {
-    const {gstInfo, panInfo} = params;
-    if (gstInfo?.name && panInfo?.name) {
-      return null;
-    }
+    const locationPermission = await PermissionManager?.checkPermissions(
+      PermissionType.LOCATION,
+    );
 
-    const locationInfo = await getLocation();
+    if (locationPermission) {
+      if (Platform.OS === PlatformType.ANDROID) {
+        const data = await PermissionManager.locationEnabler();
+        if (!data) {
+          store.dispatch(
+            openPopup({
+              title: 'Location Permission',
+              message:
+                'You must enable the location to continue with the registration',
+              type: 'plain',
+            }),
+          );
+        }
+      }
 
-    if (locationInfo) {
-      if (state === IdenitifcationType.GST) {
-        if (gstInfo) {
+      setLocationInfoLoading(true);
+      const locationInfo = await getLocation();
+      setLocationInfoLoading(false);
+      if (locationInfo) {
+        if (state === IdenitifcationType.GST) {
           RootNavigation.navigate('EnterDetailsScreen', {
             ...infoFromUserType,
-            firm_name: gstInfo?.business.legalName,
+            firm_name: Convert.toTitleCase(gstInfo?.business.tradeName),
             gst_no: gstInfo?.gstNumber,
             isLogin: false,
             fromGst: true,
-            pan_no: gstInfo.panNumber,
             address: {
               lat: locationInfo.latitude.toString(),
               long: locationInfo.longitude.toString(),
-              line: gstInfo?.addresses[0].line,
-              pincode: gstInfo.addresses[0].pincode,
+              line: gstInfo?.addresses[0].line ?? '',
+              pincode: gstInfo?.addresses[0].pincode ?? '',
+            },
+          });
+        } else {
+          RootNavigation.navigate('EnterDetailsScreen', {
+            ...infoFromUserType,
+            pan_no: panInfo?.panNumber,
+            isLogin: false,
+            address: {
+              lat: locationInfo.latitude.toString(),
+              long: locationInfo.longitude.toString(),
+              line: '',
+              pincode: '',
             },
           });
         }
-      } else if (panInfo) {
-        RootNavigation.navigate('EnterDetailsScreen', {
-          ...infoFromUserType,
-          pan_no: panInfo?.panNumber,
-          isLogin: false,
-          address: {
-            lat: locationInfo.latitude.toString(),
-            long: locationInfo.longitude.toString(),
-            line: '',
-            pincode: '',
-          },
-        });
+        setLocationInfoLoading(false);
       } else {
-        return;
+        requestManualPermission(PermissionType.LOCATION);
       }
     } else {
-      requestManualPermission(PermissionType.LOCATION);
+      PermissionManager.getPermission(PermissionType.LOCATION);
     }
   }
 
@@ -202,6 +237,7 @@ const EnterGSTScreen: React.FC<
         </View>
       )}
       <GaInputField
+        autoCapitalize
         label={
           state == IdenitifcationType.GST
             ? AppLocalizedStrings.auth.enterGSTNumber
@@ -216,25 +252,35 @@ const EnterGSTScreen: React.FC<
         }
       />
       <Spacer height={hp('3%')} />
-      <AdaptiveButton
-        loading={loading}
-        isDisable={
-          state === IdenitifcationType.GST
-            ? !Validator.isValidGSTNumber(GSTNo)
-            : !Validator.isValidPanNumber(GSTNo)
-        }
-        title={AppLocalizedStrings.continue}
-        onPress={() => {
-          getIdentity().then((data: any) => {
-            if (state === IdenitifcationType.GST) {
-              onContinueHandler<GstDetails & PanDetails>({gstInfo: data});
-            } else {
-              onContinueHandler<GstDetails & PanDetails>({panInfo: data});
-            }
-          });
-        }}
-        buttonStyle={styles.btnContinue}
-      />
+      <Animated.View style={[rStyle, {borderRadius: 10}]}>
+        <AdaptiveButton
+          loading={loading}
+          isDisable={
+            (state === IdenitifcationType.GST
+              ? !Validator.isValidGSTNumber(GSTNo)
+              : !Validator.isValidPanNumber(GSTNo)) || locationInfoLoading
+          }
+          title={
+            locationInfoLoading ? (
+              <AppLoader type="none" loading />
+            ) : (
+              AppLocalizedStrings.continue
+            )
+          }
+          onPress={async () => {
+            setLoading(true);
+            await getIdentity();
+            setLoading(false);
+          }}
+          buttonStyle={{
+            ...styles.btnContinue,
+            backgroundColor: Colors.transparent,
+            // locationInfoLoading
+            //   ? Colors.transparent
+            //   : Colors.primary,
+          }}
+        />
+      </Animated.View>
       {/* <View style={styles.viewBottom}>
         <AdaptiveButton
           buttonStyle={styles.btnGST}

@@ -14,7 +14,7 @@ const DashboardInvoiceUpload = (props: Props) => {
     <View style={styles.uploadInvoiceContianer}>
       <View style={{width: wp('50%')}}>
         <Text style={{color: Colors.black}}>
-          Upload your last month & current month invoice to earn points
+          Upload your current month invoice to earn the points
         </Text>
       </View>
       <View>
@@ -24,7 +24,7 @@ const DashboardInvoiceUpload = (props: Props) => {
           }}
           buttonStyle={{
             width: wp('31%'),
-            height: hp(4),
+
             marginHorizontal: 1,
           }}
           textStyle={{fontSize: wp(3)}}

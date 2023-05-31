@@ -24,13 +24,15 @@ const AuthBaseScreen: React.FC<AuthBaseScreenProps> = props => {
               name={props.iconName}
               size={
                 props.title === AppLocalizedStrings.auth.additionalDetails
-                  ? hp('28%')
+                  ? hp('20%')
                   : hp('30%')
               }
             />
           )}
           {props.iconName != null && <Spacer height={hp('1.5%')} />}
-          <Text style={styles.lblTitle}>{props.title}</Text>
+          {props.title.length !== 0 && (
+            <Text style={styles.lblTitle}>{props.title}</Text>
+          )}
           {props.children}
         </View>
       </KeyboardAvoidingView>

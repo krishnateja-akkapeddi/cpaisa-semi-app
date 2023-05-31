@@ -21,6 +21,9 @@
 		5FECFF2FA12B480DADB12A5B /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FADD23623614E0683D30DF3 /* Fontisto.ttf */; };
 		686CE65412394D6B8C39F44B /* DMSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4190A094EF1A4E26A31A23D9 /* DMSans-Bold.ttf */; };
 		6896A90D29F995C2005D147E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6896A90C29F995C1005D147E /* GoogleService-Info.plist */; };
+		68CF69242A1F7B54008B4BE9 /* GoApptivDocumentScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CF69232A1F7B54008B4BE9 /* GoApptivDocumentScanner.m */; };
+		68CF69272A1F7BA9008B4BE9 /* GaDocumentScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF69262A1F7BA9008B4BE9 /* GaDocumentScanner.swift */; };
+		68CF69292A1F7CB6008B4BE9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CF69282A1F7CB6008B4BE9 /* Utils.swift */; };
 		751BBD3291B1409BB1027D13 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C760674115CD463992E6D27C /* Entypo.ttf */; };
 		7E6F7A78255C8F61A419C9A7 /* libPods-ChannelPaisa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCF65DBB6104845E26AB70A /* libPods-ChannelPaisa.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -78,6 +81,10 @@
 		67A34AE846CB4BF690D96396 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = ../src/assets/fonts/SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		6896A90C29F995C1005D147E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6896A90E29F9997F005D147E /* ChannelPaisa.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ChannelPaisa.entitlements; path = ChannelPaisa/ChannelPaisa.entitlements; sourceTree = "<group>"; };
+		68CF69232A1F7B54008B4BE9 /* GoApptivDocumentScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GoApptivDocumentScanner.m; sourceTree = "<group>"; };
+		68CF69252A1F7BA9008B4BE9 /* ChannelPaisa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChannelPaisa-Bridging-Header.h"; sourceTree = "<group>"; };
+		68CF69262A1F7BA9008B4BE9 /* GaDocumentScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaDocumentScanner.swift; sourceTree = "<group>"; };
+		68CF69282A1F7CB6008B4BE9 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		770E3B094D764CB6A78D94C9 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = ../src/assets/fonts/FontAwesome.ttf; sourceTree = "<group>"; };
 		77B29EA6FEB544968CFBA35D /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../src/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
 		7C0DF02758474C4399CC8F5A /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = ../src/assets/fonts/Feather.ttf; sourceTree = "<group>"; };
@@ -145,6 +152,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				68CF69232A1F7B54008B4BE9 /* GoApptivDocumentScanner.m */,
+				68CF69262A1F7BA9008B4BE9 /* GaDocumentScanner.swift */,
+				68CF69282A1F7CB6008B4BE9 /* Utils.swift */,
+				68CF69252A1F7BA9008B4BE9 /* ChannelPaisa-Bridging-Header.h */,
 			);
 			name = ChannelPaisa;
 			sourceTree = "<group>";
@@ -332,7 +343,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1420;
 					};
 				};
 			};
@@ -572,8 +583,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68CF69292A1F7CB6008B4BE9 /* Utils.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				68CF69242A1F7B54008B4BE9 /* GoApptivDocumentScanner.m in Sources */,
+				68CF69272A1F7BA9008B4BE9 /* GaDocumentScanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +606,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-ChannelPaisa-ChannelPaisaTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -619,6 +634,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-ChannelPaisa-ChannelPaisaTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ChannelPaisaTests/Info.plist;
@@ -665,6 +681,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.goapptiv.channelpaisa;
 				PRODUCT_NAME = ChannelPaisa;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChannelPaisa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -697,6 +714,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.goapptiv.channelpaisa;
 				PRODUCT_NAME = ChannelPaisa;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "ChannelPaisa-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

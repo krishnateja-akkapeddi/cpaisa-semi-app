@@ -1,14 +1,13 @@
 import {ActionReducerMapBuilder, createSlice} from '@reduxjs/toolkit';
 import {fetchInvoiceSummary, generateQrCode} from '../thunks/ApiThunks';
-
-export interface ApiSliceState {
-  fetchingInvoicesLoading: boolean;
-  fetchingQRCode: boolean;
-}
+import InternetManager from '../../network/InternetManager';
+import {ApiSliceState} from '../../models/interfaces/ApiStoreInterface';
 
 const initialState: ApiSliceState = {
   fetchingInvoicesLoading: false,
   fetchingQRCode: false,
+  internetAvailable: true,
+  isApiCalled: false,
 };
 
 export const apiSlice = createSlice({
@@ -16,6 +15,10 @@ export const apiSlice = createSlice({
   initialState,
   reducers: {
     resetStore: () => initialState,
+
+    setIsInternetAvailable: (state, data) => {
+      state.internetAvailable = data.payload;
+    },
   },
   extraReducers: (builder: ActionReducerMapBuilder<ApiSliceState>) => {
     //invoice summary
@@ -33,7 +36,9 @@ export const apiSlice = createSlice({
     builder.addCase(generateQrCode.fulfilled, state => {
       state.fetchingQRCode = false;
     });
+    builder.addDefaultCase(state => {
+      state.isApiCalled = !state.isApiCalled;
+    });
   },
 });
-
 export default apiSlice.reducer;

@@ -8,6 +8,7 @@ import ProfileScreen from '../../screens/profile/ProfileScreen';
 import {AppLocalizedStrings} from '../../localization/Localization';
 import NotificationScreen from '../../screens/notification/NotificationScreen';
 import {createStackNavigator, StackScreenProps} from '@react-navigation/stack';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
 
 export type ProfileStackParamList = {
   ProfileScreen: RouteParamList & {contactUpdated: boolean};

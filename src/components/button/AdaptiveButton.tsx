@@ -74,6 +74,7 @@ const AdaptiveButton: React.FC<AdaptiveButtonProps> = props => {
 
   return (
     <TouchableOpacity
+      activeOpacity={isDisable ? 0.5 : 1}
       style={btnStyle.buttonStyle}
       onPress={!isDisable ? onPress : undefined}>
       <View

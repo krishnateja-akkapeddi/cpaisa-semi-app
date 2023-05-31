@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, View, ViewStyle} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import ImageView from '../../image/ImageView';
 import AdaptiveButton from '../../button/AdaptiveButton';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
@@ -11,17 +11,21 @@ import ReviewStatus, {
   getReviewStatusInfo,
 } from '../../../models/enum/ReviewStatus';
 import RootNavigation from '../../../navigation/RootNavigation';
+import GaImageEditor from '../../GaImageEditor';
 
 interface InvoiceUploadListItemProps {
   width: number;
   item: InvoiceUploadItem;
   deleteImage: Function;
+  setUploadedFileInfo: React.Dispatch<
+    React.SetStateAction<InvoiceUploadItem | null | undefined>
+  >;
 }
 
 const InvoiceUploadListItem = (props: InvoiceUploadListItemProps) => {
-  const {width, item} = props;
+  const {width, item, setUploadedFileInfo} = props;
   const containerStyles = useMemo(
-    () => [styles.container, {width: width}],
+    () => [styles.container, {width: wp(58)}],
     [width],
   );
 
@@ -43,11 +47,12 @@ const InvoiceUploadListItem = (props: InvoiceUploadListItemProps) => {
       <Image
         source={{uri: item.url}}
         style={{
-          width: wp('70%'),
-          height: wp('75%'),
+          width: wp(70),
+          height: hp(50),
           resizeMode: 'contain',
         }}
       />
+
       <View style={styles.btnContainer}>
         {!showDownload && (
           <AdaptiveButton
@@ -74,12 +79,10 @@ const InvoiceUploadListItem = (props: InvoiceUploadListItemProps) => {
       <Text numberOfLines={1} style={styles.docName}>
         {item.docName}
       </Text>
-      <Text numberOfLines={1} style={styles.fileName}>
-        {item.docName}
-      </Text>
-      <View style={tagViewStyle}>
+
+      {/* <View style={tagViewStyle}>
         <Text style={styles.tagText}>{statusInfo.title}</Text>
-      </View>
+      </View> */}
     </View>
   );
 };

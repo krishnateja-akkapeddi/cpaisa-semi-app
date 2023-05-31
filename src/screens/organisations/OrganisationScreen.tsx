@@ -25,6 +25,8 @@ import DepartmentItem from '../../components/app/offers/DepartmentItem';
 import {Convert} from '../../utility/converter/Convert';
 import {OrganisationStackScreenProps} from '../../navigation/stack/OrganisationStackNavigator';
 import RootNavigation from '../../navigation/RootNavigation';
+import {OrderSkeletonCard} from '../../components/SkeletonCards';
+import GaNoInternetFound from '../../components/GaNoInternetFound';
 
 type Props = {};
 const kScreenPadding = wp(5);
@@ -63,61 +65,71 @@ const OrganisationScreen = (
   return (
     <View>
       <Spacer height={hp(2)} />
-      <View>
-        <FlatList
-          style={{height: hp('80%')}}
-          data={organizations}
-          renderItem={val => {
-            if (val.index !== 0) {
+      <GaNoInternetFound>
+        <View>
+          <FlatList
+            ListFooterComponent={() => {
               return (
-                <TouchableOpacity
-                  onPress={() => {
-                    RootNavigation.navigate('BrandsScreen', {
-                      organisation: val.item,
-                      isLogin: true,
-                    });
-                  }}>
-                  <View
-                    style={{
-                      width: '95%',
-                      margin: 10,
-                      flex: 1,
-                      alignSelf: 'center',
-                      flexDirection: 'row',
-                      backgroundColor: Colors.lightGrey,
-                      borderRadius: 20,
-                      paddingLeft: wp(2),
-                      paddingRight: wp(2),
-                      alignItems: 'center',
-                    }}>
-                    <View>
-                      <ImageView
-                        resizeMode="contain"
-                        style={styles.logo}
-                        source={val.item.logo_link}
-                      />
-                    </View>
-                    <Spacer width={wp(7)} />
-                    <View>
-                      <Text style={styles.title}>
-                        {Convert.capitalize(val.item.name)}
-                      </Text>
-                    </View>
-
-                    <View style={{position: 'absolute', right: wp('5%')}}>
-                      <Text style={{color: Colors.primary, textAlign: 'right'}}>
-                        View Details
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
+                <View style={{marginLeft: wp(4)}}>
+                  {loadingOrganisations && <OrderSkeletonCard />}
+                </View>
               );
-            } else {
-              return <View />;
-            }
-          }}
-        />
-      </View>
+            }}
+            style={{height: hp('80%')}}
+            data={organizations}
+            renderItem={val => {
+              if (val.index !== 0) {
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      RootNavigation.navigate('BrandsScreen', {
+                        organisation: val.item,
+                        isLogin: true,
+                      });
+                    }}>
+                    <View
+                      style={{
+                        width: '95%',
+                        margin: 10,
+                        flex: 1,
+                        alignSelf: 'center',
+                        flexDirection: 'row',
+                        backgroundColor: Colors.lightGrey,
+                        borderRadius: 20,
+                        paddingLeft: wp(2),
+                        paddingRight: wp(2),
+                        alignItems: 'center',
+                      }}>
+                      <View>
+                        <ImageView
+                          resizeMode="contain"
+                          style={styles.logo}
+                          source={val.item.logo_link}
+                        />
+                      </View>
+                      <Spacer width={wp(7)} />
+                      <View>
+                        <Text style={styles.title}>
+                          {Convert.capitalize(val.item.name)}
+                        </Text>
+                      </View>
+
+                      <View style={{position: 'absolute', right: wp('5%')}}>
+                        <Text
+                          style={{color: Colors.primary, textAlign: 'right'}}>
+                          View Details
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              } else {
+                return <View />;
+              }
+            }}
+          />
+        </View>
+      </GaNoInternetFound>
     </View>
   );
 };

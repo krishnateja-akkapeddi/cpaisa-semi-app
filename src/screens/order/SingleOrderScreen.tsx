@@ -75,9 +75,25 @@ const SingleOrderScreen: React.FC<
         <View>
           <View style={{...styles.bottomLine, marginTop: hp(-1)}} />
           <Spacer height={hp(2)} />
-          <Text style={styles.heading}>Creator Name</Text>
-          <Spacer height={hp(1)} />
-          <Text style={{paddingLeft: wp(1)}}>{order.creator_name}</Text>
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.heading}>Creator Name</Text>
+              <Spacer height={hp(1)} />
+              <Text style={{paddingLeft: wp(1)}}>{order.creator_name}</Text>
+            </View>
+            <View>
+              <Text style={styles.heading}>Order Date</Text>
+              <Spacer height={hp(1)} />
+
+              <Text>
+                {Convert.dateFormatter(
+                  null,
+                  'DD MMM y, HH:mm',
+                  order.order_date,
+                )}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.bottomLine} />
         <Spacer height={hp(3)} />

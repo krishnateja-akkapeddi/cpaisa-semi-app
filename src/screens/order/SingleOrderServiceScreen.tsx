@@ -21,6 +21,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Animated from 'react-native-reanimated';
 import {OrderStatus} from '../../models/enum/OrderStatusEnum';
 import {AppLocalizedStrings} from '../../localization/Localization';
+import {EventProvider} from 'react-native-outside-press';
 
 const SingleOrderServiceScreen: React.FC<
   HomeStackScreenProps<'SingleOrderServiceScreen'>
@@ -166,9 +167,28 @@ const SingleOrderServiceScreen: React.FC<
         style={{overflow: 'scroll', height: hp('72%')}}>
         <View>
           <Spacer height={hp(2)} />
-          <Text style={styles.heading}>Creator Name</Text>
+          {/* <Text style={styles.heading}>Creator Name</Text>
           <Spacer height={hp(1)} />
-          <Text style={{paddingLeft: wp(1)}}>{order.creator_name}</Text>
+          <Text style={{paddingLeft: wp(1)}}>{order.creator_name}</Text> */}
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.heading}>Creator Name</Text>
+              <Spacer height={hp(1)} />
+              <Text style={{paddingLeft: wp(1)}}>{order.creator_name}</Text>
+            </View>
+            <View>
+              <Text style={styles.heading}>Order Date</Text>
+              <Spacer height={hp(1)} />
+
+              <Text>
+                {Convert.dateFormatter(
+                  null,
+                  'DD MMM y, HH:mm',
+                  order.order_date,
+                )}
+              </Text>
+            </View>
+          </View>
         </View>
         <View style={styles.bottomLine} />
         <Spacer height={hp(3)} />
@@ -274,7 +294,10 @@ const SingleOrderServiceScreen: React.FC<
                             </View>
                             <Spacer width={wp(5)} />
                             <Text
-                              style={{color: Colors.black, fontWeight: '700'}}>
+                              style={{
+                                color: Colors.black,
+                                fontWeight: '700',
+                              }}>
                               {Convert.capitalize(val.name)}
                             </Text>
                           </View>
@@ -304,6 +327,8 @@ const SingleOrderServiceScreen: React.FC<
               subOrderId: order.sub_order_id,
             })
           }
+          isDisable={updatingOrderStatus}
+          loading={updatingOrderStatus}
           buttonStyle={{width: wp('88%')}}
           title="Track Order"
         />

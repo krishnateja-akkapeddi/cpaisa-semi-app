@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, NativeModules} from 'react-native';
 import AdaptiveButton from '../../components/button/AdaptiveButton';
 import AdaptiveTextInput from '../../components/input/AdaptiveTextInput';
 import Style from '../../constants/Style';
@@ -26,9 +26,7 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
   const forUpdateContact = props.route?.params?.forUpdateContact;
   const contactType = props.route?.params?.contactType;
   const dispatch = useDispatch();
-  const [mobileNo, setMobileNo] = useState(
-    forUpdateContact ? '' : '7396730681',
-  );
+  const [mobileNo, setMobileNo] = useState('');
   const [loading, setLoading] = useState(false);
 
   const loginHandler = async () => {
@@ -48,15 +46,6 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
         .unwrap();
 
       if (data?.success) {
-        dispatch(
-          openPopup({
-            title: 'Otp',
-            type: 'success',
-            message:
-              Convert.capitalize(data?.otp) ?? AppLocalizedStrings.otpSent,
-          }),
-        );
-        console.log('djs');
       } else {
         dispatch(
           openPopup({
@@ -69,7 +58,6 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
           }),
         );
       }
-
       if (forUpdateContact) {
         setLoading(false);
         RootNavigation.navigate('EnterUpdateContactOtpScreen', {
@@ -89,7 +77,6 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
       console.log('FROM_LOGOM', error);
     }
     setLoading(false);
-    // RootNavigation.navigate('EnterOTPScreen');
   };
 
   const termsHandler = () => {
@@ -176,14 +163,6 @@ const LoginScreen: React.FC<AuthStackScreenProps<'LoginScreen'>> = props => {
         <View style={styles.viewBottom}>
           {!forUpdateContact && (
             <AdaptiveButton
-              textStyle={styles.btnCondition}
-              type="text"
-              title={AppLocalizedStrings.auth.termsAndConditions}
-              onPress={termsHandler}
-            />
-          )}
-          {!forUpdateContact && (
-            <AdaptiveButton
               icon="info"
               iconColor={Colors.black}
               iconSize={wp(3)}
@@ -215,6 +194,7 @@ const styles = StyleSheet.create({
     paddingTop: hp(1),
     flex: 1,
     justifyContent: 'space-between',
+    top: hp(27),
   },
   line: {
     backgroundColor: Colors.lightPurple,

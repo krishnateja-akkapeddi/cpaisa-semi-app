@@ -80,6 +80,15 @@ const getHeaderRight = (
           showHelp={false}
         />
       );
+    case 'Help':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
     case 'AboutUs':
       return (
         <HeaderRightView
@@ -99,6 +108,7 @@ const getHeaderRight = (
           showHelp={false}
         />
       );
+
     case 'SingleOrderServiceScreen':
       return (
         <HeaderRightView
@@ -175,6 +185,25 @@ const getHeaderRight = (
         />
       );
     case 'OffersScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+
+    case 'TermsConditionsScreen':
+      return (
+        <HeaderRightView
+          showBell={false}
+          showQRCode={false}
+          showOffers={false}
+          showHelp={false}
+        />
+      );
+    case 'EnterUpdateContactOtpScreen':
       return (
         <HeaderRightView
           showBell={false}

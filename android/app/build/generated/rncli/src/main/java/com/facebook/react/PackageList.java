@@ -27,22 +27,34 @@ import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 import org.reactnative.maskedview.RNCMaskedViewPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
+// jail-monkey
+import com.gantix.JailMonkey.JailMonkeyPackage;
 // lottie-react-native
 import com.airbnb.android.react.lottie.LottiePackage;
+// react-native-android-location-enabler
+import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
+// react-native-background-timer
+import com.ocetnik.timer.BackgroundTimerPackage;
 // react-native-config
 import com.lugg.RNCConfig.RNCConfigPackage;
 // react-native-date-picker
 import com.henninghall.date_picker.DatePickerPackage;
 // react-native-device-info
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+// react-native-document-scanner-plugin
+import com.reactnativedocumentscanner.DocumentScannerPackage;
 // react-native-fast-image
 import com.dylanvann.fastimage.FastImageViewPackage;
+// react-native-fs
+import com.rnfs.RNFSPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 // react-native-get-location
 import com.github.douglasjunior.reactNativeGetLocation.ReactNativeGetLocationPackage;
 // react-native-image-crop-picker
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
+// react-native-image-picker
+import com.imagepicker.ImagePickerPackage;
 // react-native-linear-gradient
 import com.BV.LinearGradient.LinearGradientPackage;
 // react-native-localization
@@ -51,6 +63,8 @@ import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 import com.zoontek.rnpermissions.RNPermissionsPackage;
 // react-native-reanimated
 import com.swmansion.reanimated.ReanimatedPackage;
+// react-native-restart
+import com.reactnativerestart.RestartPackage;
 // react-native-safe-area-context
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
@@ -116,18 +130,25 @@ public class PackageList {
       new ReactNativeFirebaseMessagingPackage(),
       new RNCMaskedViewPackage(),
       new RNCPickerPackage(),
+      new JailMonkeyPackage(),
       new LottiePackage(),
+      new RNAndroidLocationEnablerPackage(),
+      new BackgroundTimerPackage(),
       new RNCConfigPackage(),
       new DatePickerPackage(),
       new RNDeviceInfo(),
+      new DocumentScannerPackage(),
       new FastImageViewPackage(),
+      new RNFSPackage(),
       new RNGestureHandlerPackage(),
       new ReactNativeGetLocationPackage(),
       new PickerPackage(),
+      new ImagePickerPackage(),
       new LinearGradientPackage(),
       new ReactNativeLocalizationPackage(),
       new RNPermissionsPackage(),
       new ReanimatedPackage(),
+      new RestartPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
       new RNSensitiveInfoPackage(),

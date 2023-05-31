@@ -6,6 +6,7 @@ import {
   TextStyle,
   Image,
 } from 'react-native';
+
 import React, {useEffect, useMemo} from 'react';
 import ImageView from './image/ImageView';
 import {hp, wp} from '../utility/responsive/ScreenResponsive';
@@ -16,6 +17,8 @@ import {OfferEntity} from '../models/interfaces/OffersResponse';
 import AppLoader from './indicator/AppLoader';
 import {BrandOfferEntity} from '../models/interfaces/BrandOffersResponse';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Spacer from './layout/Spacer';
+import Validator from '../utility/validation/Validator';
 
 interface SubscribeCardProps {
   leftTitle: string;
@@ -63,9 +66,14 @@ const SubscribeCard = (props: SubscribeCardProps) => {
     <View style={{...styles.bottomContainer}}>
       {offer ? (
         <Image
-          resizeMode="cover"
-          style={{height: hp('28%'), width: wp('92%')}}
-          source={{uri: offer?.path}}
+          resizeMode="stretch"
+          style={{
+            height: hp(32),
+            width: wp('90%'),
+            borderBottomLeftRadius: wp(3),
+            borderBottomRightRadius: wp(3),
+          }}
+          source={{uri: offer.path}}
         />
       ) : (
         <View style={{width: wp('90%'), height: hp('30%')}}>
@@ -78,6 +86,8 @@ const SubscribeCard = (props: SubscribeCardProps) => {
             in your district
           </Text>
       </View> */}
+      <Spacer height={hp(4)} />
+      {offer?.show_upload_button && <Spacer height={hp(4)} />}
       <View style={styles.buttonContainer}>
         {offer?.show_upload_button && (
           <AdaptiveButton
@@ -87,16 +97,19 @@ const SubscribeCard = (props: SubscribeCardProps) => {
             onPress={onPressLeft}
           />
         )}
-
-        {offer?.show_upload_button && (
-          <AdaptiveButton
-            icon={rightIcon}
-            title={<Text>Call</Text>}
-            buttonStyle={rightBtnViewStyle}
-            textStyle={rightBtnText}
-            onPress={onPressRight}
-          />
-        )}
+        {offer?.show_upload_button &&
+          offer?.representative_details?.mobile &&
+          Validator.isValidMobileNumber(
+            offer?.representative_details?.mobile,
+          ) && (
+            <AdaptiveButton
+              icon={rightIcon}
+              title={<Text>Call</Text>}
+              buttonStyle={rightBtnViewStyle}
+              textStyle={rightBtnText}
+              onPress={onPressRight}
+            />
+          )}
       </View>
     </View>
   );
@@ -106,9 +119,10 @@ export default SubscribeCard;
 
 const styles = StyleSheet.create({
   imageStyle: {
-    height: 275,
+    // height: 300,
     resizeMode: 'cover',
     width: '100%',
+    borderRadius: 10,
   },
   offerText: {
     fontSize: Fonts.getFontSize('headline6'),
@@ -123,6 +137,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    position: 'absolute',
+    top: hp('31%'),
   },
   leftBtnView: {
     flex: 1,

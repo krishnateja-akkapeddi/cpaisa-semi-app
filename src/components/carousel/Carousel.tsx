@@ -10,7 +10,7 @@ import {
 import React, {useMemo, useState} from 'react';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import Colors from '../../theme/Colors';
-import {wp} from '../../utility/responsive/ScreenResponsive';
+import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import Spacer from '../layout/Spacer';
 import AppLoader from '../indicator/AppLoader';
 import {useCallback} from 'react';
@@ -117,7 +117,7 @@ export default Carousel;
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    height: 290,
+    height: hp(33),
   },
   paginationStyle: {
     bottom: -15,

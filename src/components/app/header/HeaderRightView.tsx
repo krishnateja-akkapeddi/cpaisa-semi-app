@@ -5,22 +5,18 @@ import Colors from '../../../theme/Colors';
 import Spacer from '../../layout/Spacer';
 import {wp} from '../../../utility/responsive/ScreenResponsive';
 import RootNavigation from '../../../navigation/RootNavigation';
-import QRCodePopup from '../../popup/QRCodePopup';
 import AdaptiveButton from '../../button/AdaptiveButton';
 import {AppLocalizedStrings} from '../../../localization/Localization';
 import Fonts from '../../../theme/Fonts';
 import {RootState} from '../../../store/Store';
-
-import {PermissionManager} from '../../../utility/permissions/PermissionManager';
-import {Convert} from '../../../utility/converter/Convert';
 import {store} from '../../../store/Store';
-import {generateQrCode} from '../../../store/thunks/ApiThunks';
-import getLocation from '../../../utility/custom-hooks/GetLocation';
 import {useDispatch, useSelector} from 'react-redux';
-import {appSlice, AppSliceState} from '../../../store/slices/AppSlice';
-import {QrCodeExpiryStatus} from '../../../constants/QrCodeExpiryStatus';
+import {
+  appSlice,
+  AppSliceState,
+  setOpenQrCode,
+} from '../../../store/slices/AppSlice';
 import AppLoader from '../../indicator/AppLoader';
-import {PermissionType} from '../../../utility/permissions/PermissionsList';
 
 interface HeaderRightViewProps {
   showQRCode?: boolean;
@@ -50,51 +46,6 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
     });
   };
 
-  const onQRCodeHandler = async (fromRegenerate?: boolean) => {
-    setQrLoading(true);
-    // if (fromRegenerate) {
-    //   dispatch(appSlice.actions.setOpenQrCode(true));
-    // }
-    if (isQrCodeExpired !== QrCodeExpiryStatus.ACTIVE) {
-      const locationPermission = await PermissionManager?.checkPermissions(
-        PermissionType.LOCATION,
-      );
-      if (!locationPermission) {
-        dispatch(appSlice.actions.setOpenQrCode(false));
-        setQrLoading(false);
-        RootNavigation.navigate('LocationPermissionScreen', {
-          fromQrCodeHeader: true,
-          isLogin: true,
-        });
-      } else {
-        const locationInfo = await getLocation();
-
-        const params = {
-          lat: locationInfo?.latitude,
-          long: locationInfo?.longitude,
-        };
-        const data = await store.dispatch(generateQrCode(params)).unwrap();
-        dispatch(
-          appSlice.actions.setQrCodeData(
-            Convert.base64ToFileConverter(data.qr_code.image),
-          ),
-        );
-        dispatch(
-          appSlice.actions.setQrExpiryDate(parseInt(data.qr_code.expiry)),
-        );
-        dispatch(appSlice.actions.setQrMessage(data.qr_code.message));
-        setQrMessage(data.qr_code.message);
-        dispatch(
-          appSlice.actions.setIsQrCodeExpired(QrCodeExpiryStatus.ACTIVE),
-        );
-        dispatch(appSlice.actions.setOpenQrCode(true));
-      }
-    } else {
-      dispatch(appSlice.actions.setOpenQrCode(true));
-    }
-    setQrLoading(false);
-  };
-
   const onBellHandler = () => {
     RootNavigation.navigate('NotificationScreen');
   };
@@ -108,7 +59,6 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
   React.useEffect(() => {
     if (trigger) {
       setQrLoading(true);
-      onQRCodeHandler();
       setQrLoading(false);
       dispatch(appSlice.actions.triggerQrCode(false));
     }
@@ -153,7 +103,7 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
               type="text"
               iconSize={wp('6.5%')}
               buttonStyle={styles.qrcode}
-              onPress={onQRCodeHandler}
+              onPress={() => store.dispatch(setOpenQrCode(true))}
             />
           ))}
         {showBell && (showOffers || showQRCode) && <Spacer width={10} />}
@@ -168,13 +118,6 @@ const HeaderRightView: React.FC<HeaderRightViewProps> = props => {
           />
         )}
       </View>
-      {openQrCode && (
-        <QRCodePopup
-          loadingQr={qrLoading}
-          onQRCodeHandler={onQRCodeHandler}
-          qrMessage={qrMessage}
-        />
-      )}
     </View>
   );
 };

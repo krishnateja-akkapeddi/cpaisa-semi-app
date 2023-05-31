@@ -5,6 +5,8 @@ import {
   StyleSheet,
   Platform,
   ActionSheetIOS,
+  Modal,
+  Image,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import MyUploads from '../../components/app/invoice/MyUploads';
@@ -21,7 +23,7 @@ import {AuthResult} from '../../models/interfaces/AuthResponse';
 import {uploadInvoice} from '../../store/thunks/ApiThunks';
 import RootNavigation from '../../navigation/RootNavigation';
 import AppLoader from '../../components/indicator/AppLoader';
-import ImageCropPicker from 'react-native-image-crop-picker';
+import ImageCropPicker, {ImageOrVideo} from 'react-native-image-crop-picker';
 import {Dialog, ALERT_TYPE} from 'react-native-alert-notification';
 import {appSlice} from '../../store/slices/AppSlice';
 import {PermissionManager} from '../../utility/permissions/PermissionManager';
@@ -31,6 +33,11 @@ import VectorIcon from '../../components/button/VectorIcon';
 import GaTextIcon from '../../components/GaTextIcon';
 import {PermissionType} from '../../utility/permissions/PermissionsList';
 import {pickMessageFromErrors} from '../../utility/ErrorPicker';
+import CropView from '../../components/GaImageEditor';
+import GaDocumentScannerAndroid from '../../components/GaDocumentScannerAndroid';
+import GaDocumentScannerIos from '../../components/GaDocumentScannerIos';
+import {formToJSON} from 'axios';
+import {ImageType} from '../../models/enum/ImageType';
 interface FileInfo {
   state: UploadState;
   progress: number;
@@ -40,13 +47,17 @@ enum UploadState {
   uploading,
   finished,
 }
+const formData = new FormData();
 const InvoiceUploadScreen = () => {
   const data = useSelector<RootState, AuthResult>(state => {
     return state?.auth?.authResult;
   });
+  const [editorSource, setEditorSource] = useState<null | 'gallery' | 'camera'>(
+    null,
+  );
   const channel_partner = data?.data?.channel_partner;
   const [hasInvoice, setHasInvoce] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<any>();
+  const [uploadedFile, setUploadedFile] = useState<string>('');
   const [uploadingInvoice, setUploadingInvoice] = useState(false);
   const [uploadedFileInfo, setUploadedFileInfo] =
     useState<InvoiceUploadItem | null>();
@@ -65,21 +76,19 @@ const InvoiceUploadScreen = () => {
   const dispatch = useDispatch();
 
   const onUploadHandler = async (fromUpload?: boolean) => {
-    !fromUpload && showActionSheet();
     try {
       setUploadingInvoice(true);
-      const formData = new FormData();
-      delete uploadedFile.cropRect;
 
       formData.append('image', {
         uri: uploadedFileInfo?.url,
         type: uploadedFileInfo?.mime,
-        name: uploadedFileInfo?.docName?.split('/').pop(),
+        name: uploadedFileInfo?.docName,
       });
-      formData.append('channel_partner_id', channel_partner.id);
 
+      formData.append('channel_partner_id', channel_partner.id);
       const result = await store.dispatch(uploadInvoice(formData)).unwrap();
-      console.log('RESULT_RASIK', result);
+
+      console.log('RESULT_RASIK', formData);
 
       if (result.success) {
         dispatch(
@@ -107,7 +116,7 @@ const InvoiceUploadScreen = () => {
         );
       }
     } catch (err) {
-      console.log('DSJF', err);
+      console.log('CODE_OGIR', err);
     }
 
     setUploadingInvoice(false);
@@ -115,7 +124,18 @@ const InvoiceUploadScreen = () => {
 
   const deleteImage = () => {
     setUploadedFileInfo(null);
+    setEditorSource(null);
   };
+
+  function setImageInfo(imageUrl: string) {
+    const invoiceData: any = {};
+    invoiceData.docName = 'Invoice_' + new Date().getTime();
+    invoiceData.mime = ImageType.JPG;
+    invoiceData.status = ReviewStatus?.Pending;
+    invoiceData.url = imageUrl;
+    setUploadedFileInfo(invoiceData);
+    setHasInvoce(true);
+  }
 
   const uploadDocumentHandler = async (id?: number) => {
     if (id === 1) {
@@ -140,135 +160,60 @@ const InvoiceUploadScreen = () => {
         },
       );
     }
-    console.log('FROM_IDEs', id === 0);
 
     if (id === 0 || id === 1) {
-      try {
-        const result =
-          id === 0
-            ? await ImageCropPicker.openCamera({
-                cropping: true,
-                enableRotationGesture: false,
-                showCropGuidelines: true,
-              }).then(async croppedResult => {
-                return croppedResult;
-              })
-            : await ImageCropPicker.openPicker({
-                cropping: true,
-                enableRotationGesture: false,
-                showCropGuidelines: true,
-                compressImageQuality: 1,
-              }).then(async imageResult => {
-                return imageResult;
-              });
-
-        setUploadedFile(result);
-
-        const invoiceData: any = {};
-        invoiceData.docName = result?.filename ?? 'Invoice';
-        invoiceData.mime = result?.mime;
-        invoiceData.status = ReviewStatus?.Pending;
-        invoiceData.url = result?.path ?? '';
-        setUploadedFileInfo(invoiceData);
-
-        if (invoiceState.state == UploadState.idle) {
-          timer.current = setInterval(() => {
-            setInvoiceState(updateState());
-          }, 50);
-        }
-      } catch (err) {
-        console.log('Android_Upload_Error', err);
-        if (id === 0) {
-          const permission = await PermissionManager.checkPermissions(
-            PermissionType.CAMERA,
-          );
-        } else if (id === 1) {
-          const permission = await PermissionManager.checkPermissions(
-            PermissionType.MEDIA,
-          );
-        }
-      }
+      id === 0 ? setEditorSource('camera') : setEditorSource('gallery');
     } else {
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: ['📷 Camera', '📁 Gallery'],
+          options: ['📷 Camera', '📁 Gallery', 'Cancel'],
           title: 'Select',
+          cancelButtonIndex: 2,
+          destructiveButtonIndex: 2,
         },
+
         async selected => {
-          try {
-            const result =
-              selected === 0
-                ? await ImageCropPicker.openCamera({
-                    cropping: true,
-                    enableRotationGesture: false,
-                    showCropGuidelines: true,
-                  }).then(async cropResult => {
-                    return cropResult;
-                  })
-                : await ImageCropPicker.openPicker({
-                    cropping: true,
-                    freeStyleCropEnabled: true,
-                    forceJpg: false,
-                    compressImageQuality: 1,
-                    width: wp('100%'),
-                  }).then(async invResult => {
-                    return invResult;
-                  });
+          if (selected === 2) return;
 
-            setUploadedFile(result);
-            const invoiceData: any = {};
-            invoiceData.docName = result?.filename ?? 'Invoice';
-            invoiceData.mime = result?.mime;
-            invoiceData.status = ReviewStatus?.Pending;
-            invoiceData.url = result?.path ?? '';
-            setUploadedFileInfo(invoiceData);
-
-            if (invoiceState.state === UploadState.idle) {
-              timer.current = setInterval(() => {
-                setInvoiceState(updateState());
-              }, 50);
-            }
-          } catch (err: any) {
-            console.log('Ios_Upload_Error', err);
-            const errMsg: [] = err.toString().split(' ');
-            if (err.includes['cancelled']) {
-              console.log('User cancelled invoice upload');
-              return;
-            }
-            if (selected === 0) {
-              const permission = await PermissionManager.checkPermissions(
-                PermissionType.CAMERA,
-              );
-            } else if (selected === 1) {
-              const permission = await PermissionManager.checkPermissions(
-                PermissionType.MEDIA,
-              );
-            }
-          }
+          selected === 0
+            ? setEditorSource('camera')
+            : setEditorSource('gallery');
         },
       );
     }
   };
 
   console.log('UID', uploadedFileInfo);
-  const updateState = (): FileInfo => {
-    let newState = invoiceState;
-    const newProgress = newState.progress + 1;
-    const newUploadState =
-      newProgress == 100 ? UploadState.finished : UploadState.uploading;
-    newState.progress = newProgress;
-    newState.state = newUploadState;
-    if (newUploadState == UploadState.finished) {
-      clearInterval(timer.current);
-      setHasInvoce(true);
-    }
-    return {...newState};
-  };
 
   useEffect(() => {}, [channel_partner, uploadedFile, uploadedFileInfo]);
 
   return (
     <SafeAreaView style={styles.screen}>
+      {/* <CropView /> */}
+      {editorSource &&
+        (Platform.OS === 'android' ? (
+          <GaDocumentScannerAndroid
+            setImageUri={uri => {
+              setImageInfo(uri);
+            }}
+            source={editorSource}
+          />
+        ) : (
+          <GaDocumentScannerIos
+            setImageUri={uri => {
+              setImageInfo(uri);
+            }}
+            source={editorSource}
+          />
+        ))}
+      {uploadingInvoice && (
+        <Modal>
+          <Image
+            style={{width: wp('100%'), height: hp('100%')}}
+            source={require('../../assets/videos/Channel_Paisa_Loading.gif')}
+          />
+        </Modal>
+      )}
       <AuthBaseScreen
         iconName={hasInvoice ? null : 'invoice_upload'}
         title={''}>
@@ -319,20 +264,25 @@ const InvoiceUploadScreen = () => {
               }}
             />
 
-            <UploadDocument
-              title={AppLocalizedStrings.auth.attachFile}
-              subTitle={AppLocalizedStrings.auth.choosePaymentReceipts}
-              percentage={invoiceState.progress}
-              isUploading={invoiceState.state == UploadState.uploading}
-              onPress={
-                Platform.OS === 'ios' ? uploadDocumentHandler : showActionSheet
-              }
-            />
+            {!uploadedFileInfo && (
+              <UploadDocument
+                title={AppLocalizedStrings.auth.attachFile}
+                subTitle={AppLocalizedStrings.auth.choosePaymentReceipts}
+                percentage={invoiceState.progress}
+                isUploading={invoiceState.state == UploadState.uploading}
+                onPress={
+                  Platform.OS === 'ios'
+                    ? uploadDocumentHandler
+                    : showActionSheet
+                }
+              />
+            )}
 
             {hasInvoice && uploadedFileInfo && (
               <MyUploads
                 deleteImage={deleteImage}
                 uploadedInvoice={uploadedFileInfo}
+                setUploadedFileInfo={setUploadedFileInfo}
               />
             )}
           </View>
@@ -347,9 +297,7 @@ const InvoiceUploadScreen = () => {
             onPress={() => {
               onUploadHandler(true);
             }}
-            isDisable={
-              !(invoiceState.state == UploadState.finished) || uploadingInvoice
-            }
+            isDisable={!uploadedFileInfo || uploadingInvoice}
             buttonStyle={styles.uploadBtn}
           />
         </View>

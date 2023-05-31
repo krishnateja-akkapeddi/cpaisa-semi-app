@@ -13,17 +13,19 @@ import Spacer from '../../layout/Spacer';
 import ProgressBar from './ProgressBar';
 import Icon from 'react-native-vector-icons/AntDesign';
 import TaxtInfo from './TaxtInfo';
+import OutsidePressHandler from 'react-native-outside-press';
 
 interface CouponCardProps {
   item: RewardTransactionEntity;
+  showTaxInfo: boolean;
 }
 
 const CouponCard: React.FC<CouponCardProps> = props => {
   const {item} = props;
   console.log('COUP_ITEM', item);
 
-  const [isVisible, setisVisible] = useState(true);
   const [showTaxInfo, setShowTaxInfo] = useState(false);
+
   const onViewCouponHandler = () => {
     RootNavigation.navigate('CouponScreen', {
       isLogin: true,
@@ -31,14 +33,27 @@ const CouponCard: React.FC<CouponCardProps> = props => {
     });
   };
 
-  useEffect(() => {}, [item]);
+  useEffect(() => {
+    setShowTaxInfo(false);
+  }, [props.showTaxInfo]);
 
   return (
     <View style={styles.mainContainer}>
       {showTaxInfo && (
         <View
-          style={{position: 'absolute', right: wp(1), zIndex: 20, top: hp(5)}}>
-          <TaxtInfo item={props.item} />
+          style={{
+            position: 'absolute',
+            right: wp(1),
+            zIndex: 20,
+            top: hp(5),
+          }}>
+          <OutsidePressHandler
+            disabled={false}
+            onOutsidePress={() => {
+              setShowTaxInfo(false);
+            }}>
+            <TaxtInfo item={props.item} />
+          </OutsidePressHandler>
         </View>
       )}
       <View
@@ -56,7 +71,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
           </View>
           <Spacer height={hp(1)} />
           <View>
-            <Text>Points Redeemed | Flipkart </Text>
+            <Text>Points Redeemed | {item.coupon_partner ?? ''} </Text>
           </View>
         </View>
 
@@ -82,7 +97,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
                 style={{fontWeight: '600'}}
                 name="infocirlceo"
                 color={Colors.primary}
-              />{' '}
+              />
               Tax Info
             </Text>
           </TouchableOpacity>
@@ -95,7 +110,7 @@ const CouponCard: React.FC<CouponCardProps> = props => {
                 color: Colors.primary,
                 textAlign: 'right',
               }}>
-              {item.points}
+              {item.net_amount}
             </Text>
           </View>
         </View>

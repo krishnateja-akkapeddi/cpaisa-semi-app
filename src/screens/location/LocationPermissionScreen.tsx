@@ -11,21 +11,28 @@ import RootNavigation from '../../navigation/RootNavigation';
 import {PermissionManager} from '../../utility/permissions/PermissionManager';
 import {HomeStackScreenProps} from '../../navigation/stack/HomeStackNavigator';
 import {useDispatch} from 'react-redux';
-import {appSlice} from '../../store/slices/AppSlice';
+import {appSlice, setOpenQrCode} from '../../store/slices/AppSlice';
 import {PermissionType} from '../../utility/permissions/PermissionsList';
+import Spacer from '../../components/layout/Spacer';
+import {store} from '../../store/Store';
+import {requestManualPermission} from '../../utility/permissions/PermissionWorkers';
 
 const LocationPermissionScreen: React.FC<
   HomeStackScreenProps<'LocationPermissionScreen'>
 > = props => {
-  const dispatch = useDispatch();
   const fromQrCodeHeader = props.route.params.fromQrCodeHeader;
+
+  function onPermissionBlocked() {
+    requestManualPermission(PermissionType.LOCATION);
+  }
+
   const onLocationHandler = async () => {
     const isLocationPermissionThere = await PermissionManager.getPermission(
       PermissionType.LOCATION,
     );
     if (isLocationPermissionThere) {
       if (fromQrCodeHeader) {
-        dispatch(appSlice.actions.triggerQrCode(true));
+        store.dispatch(setOpenQrCode(true));
         RootNavigation.navigation.goBack();
       } else {
         // RootNavigation.navigation.goBack();
@@ -36,13 +43,14 @@ const LocationPermissionScreen: React.FC<
       // RootNavigation.navigation.goBack();
       const checkPermission = await PermissionManager.checkPermissions(
         PermissionType.LOCATION,
+        onPermissionBlocked,
       );
-      console.log('IS_LOFEE', checkPermission);
-      return;
+      if (checkPermission) return;
     }
 
     return;
   };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
@@ -59,6 +67,7 @@ const LocationPermissionScreen: React.FC<
         buttonStyle={styles.btn}
         onPress={onLocationHandler}
       />
+      <Spacer height={hp(2)} />
     </SafeAreaView>
   );
 };

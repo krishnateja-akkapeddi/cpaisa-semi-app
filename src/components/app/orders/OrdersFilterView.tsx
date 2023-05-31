@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Platform} from 'react-native';
 import React from 'react';
 import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Fonts from '../../../theme/Fonts';
@@ -8,6 +8,7 @@ import {AppLocalizedStrings} from '../../../localization/Localization';
 import Style from '../../../constants/Style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spacer from '../../layout/Spacer';
+import {PlatformType} from '../../../utility/permissions/PermissionsList';
 interface OrdersFilterViewProps {
   onFilterHandler: () => void;
   filterChecked?: boolean;
@@ -83,6 +84,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     zIndex: 1,
     paddingTop: 1,
+    paddingLeft: Platform.OS === PlatformType.ANDROID ? wp(1) : wp(0),
+    paddingBottom: wp(1),
   },
   filterBadgeText: {
     color: Colors.white,

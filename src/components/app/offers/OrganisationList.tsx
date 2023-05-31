@@ -5,7 +5,6 @@ import {hp, wp} from '../../../utility/responsive/ScreenResponsive';
 import Spacer from '../../layout/Spacer';
 import {ClientEntity} from '../../../models/interfaces/ClientsListResponse';
 import {Convert} from '../../../utility/converter/Convert';
-import {OrganisationSkeletonItem} from '../../SkeletonCards';
 
 export interface Organisation {
   name: string;
@@ -25,7 +24,6 @@ interface OrganisationListProps {
   contentContainerStyle?: ViewStyle;
   onSelect?: (arg0: number[]) => void;
   fromRedeemPoints?: boolean;
-  loading?: boolean;
 }
 
 const OrganisationList: React.FC<OrganisationListProps> = props => {
@@ -68,7 +66,7 @@ const OrganisationList: React.FC<OrganisationListProps> = props => {
   return (
     <FlatList
       onLayout={e => setListWidth(e.nativeEvent.layout.width)}
-      style={props.style}
+      style={{...props.style}}
       contentContainerStyle={props.contentContainerStyle}
       numColumns={numColumns}
       data={props.fromRedeemPoints ? reedemPointsData : props.data}

@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp('4%'),
     borderRadius: 10,
     backgroundColor: '#F3F3F3',
+    width: wp('90'),
   },
   listContainer: {
     flexDirection: 'row',

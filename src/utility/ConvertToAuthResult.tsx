@@ -24,6 +24,7 @@ export function convertToAuthResult(
       master_coupon_link_code: response.user.master_coupon_link_code ?? '',
     },
     channel_partner: {
+      universal_id: response?.channel_partner?.universal_id,
       id: response.channel_partner.id,
       firm_name: response.channel_partner.firm_name,
       firm_contact: response.channel_partner.firm_contact,

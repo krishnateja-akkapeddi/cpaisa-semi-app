@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   Touchable,
+  RefreshControl,
 } from 'react-native';
 import NotificationItem from '../../components/app/notification/NotificationItem';
 import AppLoader from '../../components/indicator/AppLoader';
@@ -24,6 +25,8 @@ import {debounce} from '../../utility/debounce';
 import {hp, wp} from '../../utility/responsive/ScreenResponsive';
 import ImageView from '../../components/image/ImageView';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import SVGIcon from '../../utility/svg/SVGIcon';
+import AdaptiveButton from '../../components/button/AdaptiveButton';
 
 export interface Notification {
   title: string;
@@ -42,6 +45,7 @@ const NotificationScreen = () => {
     AppLocalizedStrings.notification.MyGoal,
   ];
   const [notificationListLoading, setNotificationListLoading] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const [mode, setMode] = useState(ProfileMode.Personal);
   const [items, setItems] = useState(NotificationData);
@@ -51,7 +55,7 @@ const NotificationScreen = () => {
   const [selectedNotification, setSelectedNotification] =
     useState<NotificationEntity | null>();
 
-  const [lastPage, setLastPage] = useState<number>(10);
+  const [lastPage, setLastPage] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
   const onValueChange = (index: number) => {
@@ -68,22 +72,16 @@ const NotificationScreen = () => {
   );
 
   const getNotifications = useCallback(
-    async (page?: number, scrolled?: boolean) => {
+    async (page: number, scrolled?: boolean) => {
       setNotificationListLoading(true);
-      if (scrolled) {
-        if (page === 1) {
-          page = 2;
-          setCurrentPage(prev => prev + 1);
-        }
-      }
 
       const result = await store
-        .dispatch(fetchNotifications({page: page ? page : 1}))
+        .dispatch(fetchNotifications({page: page}))
         .unwrap();
 
       if (result.success) {
+        setCurrentPage(prev => prev + 1);
         setLastPage(result.last_page);
-        await debounce(2000);
         if (scrolled) {
           setNotificationsList(oldData => [
             ...oldData,
@@ -102,6 +100,19 @@ const NotificationScreen = () => {
   const keyExtractor = useCallback((item: Notification, index: number) => {
     return index.toString();
   }, []);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    setNotificationsList([]);
+    setCurrentPage(1);
+    setLastPage(null);
+    await getNotifications(1, false);
+    setRefreshing(false);
+  };
+
+  const hasMore = () => {
+    return lastPage ? currentPage < lastPage : false;
+  };
 
   useEffect(() => {
     getNotifications(1, false);
@@ -122,9 +133,13 @@ const NotificationScreen = () => {
 
       <View style={styles.topContainer}>
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           onEndReached={() => {
-            setCurrentPage(prev => prev + 1);
-            getNotifications(currentPage, true).then(() => {});
+            !notificationListLoading &&
+              hasMore() &&
+              getNotifications(currentPage, true).then(() => {});
           }}
           ListFooterComponent={
             <View>
@@ -137,19 +152,18 @@ const NotificationScreen = () => {
                 <></>
               ) : (
                 <View>
-                  <Image
-                    style={styles.noNotificationsArt}
-                    source={require('../../assets/images/NoNotificationsArt.jpg')}
-                  />
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      color: Colors.grey,
-                      fontSize: Fonts.getFontSize('headline2'),
-                    }}>
-                    No Notifications at the Moment
-                  </Text>
+                  <View style={{alignContent: 'center', alignItems: 'center'}}>
+                    <SVGIcon
+                      name="no_notifications_scale_1x"
+                      size={wp('55%')}
+                    />
+                    <Spacer height={hp(3)} />
+
+                    <Text style={{fontWeight: 'bold'}}>
+                      No Notifications Found
+                    </Text>
+                    <Spacer height={hp(10)} />
+                  </View>
                 </View>
               )}
             </View>

@@ -39,7 +39,7 @@ const OfferCalculatorPopup = (props: OfferCalculatorPopupProps) => {
   const {onDismiss} = props;
   return (
     <PopupContainer
-      onOutsidePress={this}
+      onOutsidePress={onDismiss}
       showDismiss={true}
       title={AppLocalizedStrings.offer.calculatePoints}
       onDismiss={onDismiss}>
@@ -78,7 +78,8 @@ const OfferCalculatorPopup = (props: OfferCalculatorPopupProps) => {
             type="Foundation"
             name="plus"
             onPress={() => {
-              setQuantity(val => (parseInt(val) + 1).toString());
+              parseInt(quantity) < 1000000 &&
+                setQuantity(val => (parseInt(val) + 1).toString());
             }}
           />
         </View>
@@ -95,8 +96,9 @@ const OfferCalculatorPopup = (props: OfferCalculatorPopupProps) => {
         <View style={styles.lineView} />
         <Text style={styles.lblTotal}>{AppLocalizedStrings.offer.total}</Text>
         {pointsPerUnit && (
-          <Text style={styles.lblTotalPoints}>{`${(
-            parseInt(quantity) * pointsPerUnit
+          <Text style={styles.lblTotalPoints}>{`${(quantity
+            ? parseInt(quantity) * pointsPerUnit
+            : 0
           ).toFixed(2)}\nPoints`}</Text>
         )}
       </View>

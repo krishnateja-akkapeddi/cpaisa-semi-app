@@ -33,6 +33,28 @@ const VerifyMobileNumber = ({mobile, onVerified}: Props) => {
     });
   }
 
+  async function onSubmitHandler(e: string) {
+    setVerifyOtpLoading(true);
+    const data = await store
+      .dispatch(verifyOtp({mobile: mobile.toString(), otp: e}))
+      .unwrap();
+
+    if (data.success) {
+      setIsWhatsappVerified(true);
+      onVerified();
+      setOtp('');
+    }
+    if (!data.success) {
+      Snackbar.show({
+        text: data?.errors?.message ?? AppLocalizedStrings.somethingWrong,
+        duration: 3000,
+        backgroundColor: Colors.red,
+      });
+      setOtp('');
+    }
+    setVerifyOtpLoading(false);
+  }
+
   useEffect(() => {
     const timer = new Timer();
     timer.startTimer(0.5, (time: TimerType) => {
@@ -42,7 +64,8 @@ const VerifyMobileNumber = ({mobile, onVerified}: Props) => {
 
   return (
     <View>
-      <OTPView code={otp} onSelect={setOtp} />
+      {verifyOtpLoading && <AppLoader loading type="window" />}
+      <OTPView onComplete={onSubmitHandler} code={otp} onSelect={setOtp} />
       <Spacer height={hp('2%')} />
 
       {timer.seconds > 0 ? (
@@ -79,23 +102,7 @@ const VerifyMobileNumber = ({mobile, onVerified}: Props) => {
         isDisable={otp.length < 4 || verifyOtpLoading}
         title={AppLocalizedStrings.submit}
         onPress={async () => {
-          setVerifyOtpLoading(true);
-          const data = await store
-            .dispatch(verifyOtp({mobile: mobile.toString(), otp: otp}))
-            .unwrap();
-
-          if (data.success) {
-            setIsWhatsappVerified(true);
-            onVerified();
-          }
-          if (!data.success) {
-            Snackbar.show({
-              text: data?.errors?.message ?? AppLocalizedStrings.somethingWrong,
-              duration: 3000,
-              backgroundColor: Colors.red,
-            });
-          }
-          setVerifyOtpLoading(false);
+          onSubmitHandler(otp);
         }}
       />
     </View>

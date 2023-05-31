@@ -20,9 +20,16 @@ import moment from 'moment';
 export type Props = {
   uploadedInvoice: InvoiceUploadItem;
   deleteImage: Function;
+  setUploadedFileInfo: React.Dispatch<
+    React.SetStateAction<InvoiceUploadItem | null | undefined>
+  >;
 };
 
-const MyUploads: React.FC<Props> = ({uploadedInvoice, deleteImage}) => {
+const MyUploads: React.FC<Props> = ({
+  uploadedInvoice,
+  deleteImage,
+  setUploadedFileInfo,
+}) => {
   const items = InvoiceUploadJson;
   const [width, setWidth] = useState(0);
   const fe: any = createRef();
@@ -30,10 +37,10 @@ const MyUploads: React.FC<Props> = ({uploadedInvoice, deleteImage}) => {
   const renderItem = ({item}: ListRenderItemInfo<InvoiceUploadItem>) => {
     return (
       <InvoiceUploadListItemProps
+        setUploadedFileInfo={setUploadedFileInfo}
         deleteImage={deleteImage}
         item={item}
-        // width={width / 3}
-        width={200}
+        width={width / 3}
       />
     );
   };

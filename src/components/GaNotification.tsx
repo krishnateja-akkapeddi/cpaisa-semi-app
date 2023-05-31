@@ -2,18 +2,27 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Alert, Button, Image, StyleSheet, Text, View} from 'react-native';
 import PopupContainer from './popup/PopupContainer';
-import {RootState} from '../store/Store';
-import {appSlice, AppSliceState} from '../store/slices/AppSlice';
+import {RootState, store} from '../store/Store';
+import {
+  AppSliceState,
+  appSlice,
+  closePoup,
+  resetState,
+} from '../store/slices/AppSlice';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Colors from '../theme/Colors';
 import {hp, wp} from '../utility/responsive/ScreenResponsive';
 import AdaptiveButton from './button/AdaptiveButton';
 import Spacer from './layout/Spacer';
+import SharedPreference, {kSharedKeys} from '../storage/SharedPreference';
+import RootNavigation from '../navigation/RootNavigation';
+
+export enum PopupFunctions {
+  LOGOUT = 'logout',
+}
 
 const GaNotification = () => {
   const {popup} = useSelector<RootState, AppSliceState>(state => state.app);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {}, [popup]);
 
@@ -23,12 +32,13 @@ const GaNotification = () => {
         <PopupContainer
           showHeader={popup.showHeader}
           onOutsidePress={() => {
-            dispatch(appSlice.actions.closePoup());
+            popup.closeOnOutsideClick && store.dispatch(closePoup());
+            popup.onOutSideClick && popup.onOutSideClick();
           }}
           animationType="fade"
           showDismiss={popup.showDismiss}
           onDismiss={() => {
-            dispatch(appSlice.actions.closePoup());
+            store.dispatch(closePoup());
           }}
           title={popup.title}>
           <View style={styles.popupContainer}>
@@ -40,7 +50,7 @@ const GaNotification = () => {
                 <Icon
                   size={wp('20%')}
                   name="exclamationcircleo"
-                  color={Colors.lightYellow}
+                  color={Colors.yellow}
                 />
               </>
             ) : (
@@ -56,8 +66,14 @@ const GaNotification = () => {
             <Spacer height={hp('5%')} />
             <AdaptiveButton
               onPress={() => {
-                dispatch(appSlice.actions.closePoup());
+                store.dispatch(closePoup());
                 popup.onSubmit && popup.onSubmit();
+                if (popup.popupFunction) {
+                  switch (popup.popupFunction) {
+                    case PopupFunctions.LOGOUT:
+                      console.log('THis is rthe dpasje');
+                  }
+                }
               }}
               type="light"
               buttonStyle={{width: wp('70%')}}

@@ -17,6 +17,12 @@ import Colors from '../../theme/Colors';
 import Fonts from '../../theme/Fonts';
 import SVGIcon from '../../utility/svg/SVGIcon';
 import Spacer from '../layout/Spacer';
+import {hp, wp} from '../../utility/responsive/ScreenResponsive';
+import AdaptiveButton from '../button/AdaptiveButton';
+import {useSelector} from 'react-redux';
+import {ApiSliceState} from '../../models/interfaces/ApiStoreInterface';
+import {RootState} from '../../store/Store';
+import GaNoInternetFound from '../GaNoInternetFound';
 
 export type TabbarProps = {
   descriptors: BottomTabDescriptorMap;
@@ -57,8 +63,12 @@ const kTabItems: TabItem[] = [
 
 const CustomTabBar = ({state, descriptors, navigation}: TabbarProps) => {
   const tempRoutes = state.routes;
+  const {internetAvailable} = useSelector<RootState, ApiSliceState>(state => {
+    return state.api;
+  });
   return (
     <View style={styles.main}>
+      {!internetAvailable && <GaNoInternetFound children={<View />} />}
       <SafeAreaView>
         <View style={styles.container}>
           {tempRoutes.map((route, index) => {
